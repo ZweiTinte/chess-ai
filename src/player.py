@@ -13,12 +13,6 @@ class Player:
 		# True if the player is in check
 		self.isInCheck = False
 		
-	# returns the position of the king
-	def getKingPosition(self):
-		for u in self.unit_list:
-			if u.getPower() == 7:
-				return str(u.getPos_x()) + str(u.getPos_y())
-		
 	# getter and setter
 	def getColor(self):
 		return self.color
@@ -40,3 +34,6 @@ class Player:
 
 	def castlingIsPermitted(self):
 		return self.castling_permitted
+
+	def setCastlingNotPermitted(self):
+		self.castling_permitted = False

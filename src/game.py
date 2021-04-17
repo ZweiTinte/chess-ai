@@ -67,6 +67,30 @@ class Game:
 				y = upy + 1
 			# remove opponent pawn from the board
 			self.board[x][upy] = None
+		# castling move setup
+		elif x == "c":
+			if y == "l":
+				x = upx - 2
+				# move the rook
+				if self.turn.getColor() == "black":
+					self.board[3][7] = self.board[0][7]
+					self.board[0][7] = None
+				else:
+					self.board[3][0] = self.board[0][0]
+					self.board[0][0] = None
+			else:
+				x = upx + 2
+				# move the rook
+				if self.turn.getColor() == "black":
+					self.board[5][7] = self.board[7][7]
+					self.board[7][7] = None
+				else:
+					self.board[5][0] = self.board[7][0]
+					self.board[7][0] = None
+			# disallow castling for the rest of the match
+			self.turn.setCastlingNotPermitted()
+			y = upy
+		# set up the target coordinates
 		else:
 			x = int(x)
 			y = int(y)
