@@ -498,7 +498,7 @@ class Game:
                                 unit.addMove(str(x - 1) + str(y))
                         # castling calculation
                         if initialCall:
-                            playerIsInCheck(player)
+                            self.playerIsInCheck(player)
                             if not player.isInCheck() and player.castlingIsPermitted():
                                 if player == self.black:
                                     if self.board[0][7] != None and self.board[0][7].getPower() == 2 and not self.board[0][7].moved:
