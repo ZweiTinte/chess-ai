@@ -105,7 +105,7 @@ class Game:
         if targetField != None:
             # king is target
             if targetField.getPower() == 7:
-                self.endGame()
+                self.endGame(self.turn)
 
         # sets our own unit to the target field
         targetField = self.board[upx][upy]
