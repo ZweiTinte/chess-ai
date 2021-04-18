@@ -186,7 +186,6 @@ class Game:
         writeData(jsonFileString, data)
 
     # calculates the possible moves for all units of a player
-
     def calculatePossibleMoves(self, player, initialCall):
         for x in range(self.limit):
             for y in range(self.limit):
@@ -648,7 +647,7 @@ class Game:
         for x in range(8):
             board.append([])
             for y in range(8):
-                board[x].append(None)
+                board[x][y].append(None)
         return board
 
     # sets units on the board
