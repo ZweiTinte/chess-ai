@@ -107,6 +107,10 @@ class Game:
             if targetField.getPower() == 7:
                 self.endGame(self.turn)
 
+        # set the rook varaiable for castling conditions to True
+        if self.board[upx][upy].getPower() == 2:
+            self.board[upx][upy].moved = True
+
         # sets our own unit to the target field
         targetField = self.board[upx][upy]
 
