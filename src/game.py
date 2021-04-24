@@ -6,7 +6,7 @@ import datetime
 import os.path
 from player import *
 from unit import *
-from database import *
+from database import loadData, writeData
 
 
 class Game:
@@ -39,7 +39,18 @@ class Game:
 
     # ends the game and increments the win loss chances
     def endGame(self, winner):
-        print("not implemented yet!")
+        # increment winners win values
+        for i in range(len(winner.getMoves())):
+            unit = winner.getMoves()[i][0]
+            move = winner.getMoves()[i][1]
+            state = winner.getSituations()[i]
+            self.incrementMoveChance(unit, move, True, state)
+        # increment losers loss values
+        for i in range(len(winner.getOpponent().getMoves())):
+            unit = winner.getOpponent().getMoves()[i][0]
+            move = winner.getOpponent().getMoves()[i][1]
+            state = winner.getOpponent().getSituations()[i]
+            self.incrementMoveChance(unit, move, False, state)
 
     # resets the passant possible variable for the pawns
     def resetPassantPossible(self):
@@ -49,6 +60,27 @@ class Game:
                     if self.board[x][y].getPower() == 1:
                         if self.board[x][y].getOwner() == self.turn:
                             self.board[x][y].en_passant_possible = False
+
+    # checks if the json file for this turn already exists or not
+    def jsonFileExists(self):
+        dbLocationString = self.generateDatabaseLocationString()
+        if not os.path.exists(dbLocationString):
+            return False
+        return True
+
+    # makes a turn
+    def makeATurn(self):
+        # prepare the possible moves file if it doesn't exist
+        if not self.jsonFileExists():
+            self.calculatePossibleMoves(self.turn, True)
+            self.writeUnitMovesToFile(self.turn)
+        # add move and situation for the learning process
+        self.turn.addSituation(self.generateDatabaseLocationString())
+        self.turn.addMove(self.getBestMove())
+        # make the best move for the turn
+        self.moveUnit()
+        # set the opponent player as turn
+        self.turn = self.turn.getOpponent()
 
     # moves a unit
     def moveUnit(self):
@@ -139,8 +171,7 @@ class Game:
                         self.board[x + 1][y].en_passant_possible = True
 
     # increments the win or loss value of a move in the json file
-    def incrementMoveChance(self, unit, move, win):
-        jsonFileString = self.generateDatabaseLocationString()
+    def incrementMoveChance(self, unit, move, win, jsonFileString):
         data = loadData(jsonFileString)
         if win:
             data[unit][move]["w"] += 1
@@ -521,20 +552,14 @@ class Game:
     # starts the game
     def start(self):
         print("--- NEW GAME ---")
-        """for x in range(8):
-			for y in range(8):
-				if self.board[y][x] != None:
-					print(self.board[y][x].getPowerString() + " " \
-					+ self.board[y][x].getOwner().getColor())"""
-        # self.calculatePossibleMoves(self.turn)
-        """for m in self.board[0][1].getMoves():
-			print(m)
-		for m in self.board[0][0].getMoves():
-			print(m)"""
-        # self.writeUnitMovesToFile(self.turn)
-        self.incrementMoveChance("3_2", "52", True)
-        result = self.getBestMove()
-        print(result[0] + " " + result[1])
+        # using a number because we're still in test
+        turns = 0
+        while True:
+            self.makeATurn()
+            turns += 1
+            if turns == 100:
+                break
+        print("--- GAME END ---")
 
     # return true if the player is in check
     def playerIsInCheck(self, player):
@@ -690,6 +715,7 @@ class Game:
         self.board[4][0] = Unit(7, self.white)
 
         # getters and setters
+        """
         def getWhite(self):
             return self.white
 
@@ -718,4 +744,4 @@ class Game:
             return self.limit
 
         def setLimit(self, limit):
-            self.limit = limit
+            self.limit = limit"""

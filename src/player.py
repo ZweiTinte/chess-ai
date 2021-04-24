@@ -15,6 +15,10 @@ class Player:
         self.castling_permitted = True
         # True if the player is in check
         self.inCheck = False
+        # stores each move made in the game
+        self.moves = []
+        # stores the board situations of the game
+        self.situations = []
 
     # getter and setter
     def getColor(self):
@@ -40,3 +44,15 @@ class Player:
 
     def setCastlingNotPermitted(self):
         self.castling_permitted = False
+
+    def getSituations(self):
+        return self.situations
+
+    def addSituation(self, situation):
+        self.situations.append(situation)
+
+    def getMoves(self):
+        return self.moves
+
+    def addMove(self, move):
+        self.moves.append(move)
