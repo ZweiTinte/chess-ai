@@ -644,10 +644,10 @@ class Game:
     # generates a blank chess board
     def generateBoard(self):
         board = []
-        for x in range(8):
+        for x in range(self.limit):
             board.append([])
-            for y in range(8):
-                board[x][y].append(None)
+            for y in range(self.limit):
+                board[x].append(None)
         return board
 
     # sets units on the board
