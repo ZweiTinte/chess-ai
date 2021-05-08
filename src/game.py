@@ -26,16 +26,19 @@ class Game:
         self.turn = self.white
 
     # returns a unit's position
-    def getUnitPosition(self, unitString):
+    def getUnitPosition(self, unitString, color):
+        print(unitString)
         unitNumber = 1
         for x in range(8):
             for y in range(8):
-                field = self.board[x][y]
-                if field != None:
-                    if field.getPower() == unitString[0]:
-                        if unitNumber == unitString[2]:
-                            return [x, y]
-                        unitNumber += 1
+                if self.board[x][y] != None:
+                    unit = self.board[x][y]
+                    if unit.getPower() == int(unitString[0]):
+                        if unitNumber == int(unitString[2]):
+                            if unit.getOwner() == self.turn:
+                                return [x, y]
+                        else:
+                            unitNumber += 1
 
     # ends the game and increments the win loss chances
     def endGame(self, winner):
@@ -117,9 +120,9 @@ class Game:
     # moves a unit
     def moveUnit(self):
         move = self.getBestMove()
-        unitPosition = self.getUnitPosition(move[0])
-        upx = int(unitPosition[0])
-        upy = int(unitPosition[1])
+        unitPosition = self.getUnitPosition(move[0], self.turn)
+        upx = unitPosition[0]
+        upy = unitPosition[1]
         x = move[1][0]
         y = move[1][1]
 
@@ -226,7 +229,7 @@ class Game:
                 moveChance = data[u][m]["w"] / \
                     (data[u][m]["w"] + data[u][m]["l"])
                 # test line
-                print(str(moveChance))
+                # print(str(moveChance))
                 if moveChance > chance:
                     chance = moveChance
                     unit = u
@@ -599,7 +602,7 @@ class Game:
     # return true if the player is in check
     def playerIsInCheck(self, player):
         self.calculatePossibleMoves(player.getOpponent(), False)
-        king_position = player.getKingPosition()
+        king_position = player.getKingPosition(self.board)
         for x in range(self.limit):
             for y in range(self.limit):
                 unit = self.board[x][y]

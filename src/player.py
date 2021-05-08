@@ -20,6 +20,16 @@ class Player:
         # stores the board situations of the game
         self.situations = []
 
+    # returns the players king position
+    def getKingPosition(self, board):
+        for x in range(8):
+            for y in range(8):
+                if board[x][y] != None:
+                    unit = board[x][y]
+                    if unit.getPower() == 7 and unit.getOwner() == self.color:
+                        move_string = str(x) + str(y)
+                        return move_string
+
     # getter and setter
     def getColor(self):
         return self.color

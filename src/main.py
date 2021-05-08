@@ -1,7 +1,9 @@
 # coding: utf-8
 from random import shuffle, randint
-import sys, json, datetime
-from game import *
+import sys
+import json
+import datetime
+from game import Game
 
 game = Game()
 game.start()
