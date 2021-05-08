@@ -16,14 +16,14 @@ class Game:
         self.black = Player("black")
         self.white.setOpponent(self.black)
         self.black.setOpponent(self.white)
+        # border limit
+        self.limit = 8
         # generating the board
         self.board = self.generateBoard()
         # placing the units on the board
         self.setUnits()
         # who's turn is it?
         self.turn = self.white
-        # border limit
-        self.limit = 8
 
     # returns a unit's position
     def getUnitPosition(self, unitString):
@@ -82,6 +82,38 @@ class Game:
         # set the opponent player as turn
         self.turn = self.turn.getOpponent()
 
+    def getCharacterOfNumber(self, number):
+        if number == 0:
+            return "A"
+        elif number == 1:
+            return "B"
+        elif number == 2:
+            return "C"
+        elif number == 3:
+            return "D"
+        elif number == 4:
+            return "E"
+        elif number == 5:
+            return "F"
+        elif number == 6:
+            return "G"
+        elif number == 7:
+            return "H"
+
+    # logs move on console
+    def logMove(self, upx, upy, x, y):
+        # preapare output string
+        player = self.turn.getColor()
+        unit = self.board[upx][upy].getPowerString()
+        position_x = self.getCharacterOfNumber(upx)
+        position_y = str(upy + 1)
+        target_x = self.getCharacterOfNumber(x)
+        target_y = str(y + 1)
+
+        # log to the console
+        print(player + " moves " + unit + " from " +
+              position_x + position_y + " to " + target_x + target_y)
+
     # moves a unit
     def moveUnit(self):
         move = self.getBestMove()
@@ -130,6 +162,9 @@ class Game:
         else:
             x = int(x)
             y = int(y)
+
+        # log the move to the console
+        self.logMove(upx, upy, x, y)
 
         # the target field gets set
         targetField = self.board[x][y]
@@ -557,7 +592,7 @@ class Game:
         while True:
             self.makeATurn()
             turns += 1
-            if turns == 100:
+            if turns == 10:
                 break
         print("--- GAME END ---")
 
