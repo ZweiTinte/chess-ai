@@ -675,7 +675,7 @@ class Game:
         board = []
         for x in range(self.limit):
             board.append([])
-            for y in range(self.limit):
+            for _ in range(self.limit):
                 board[x].append(None)
         return board
 
