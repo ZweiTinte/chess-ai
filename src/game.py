@@ -27,7 +27,6 @@ class Game:
 
     # returns a unit's position
     def getUnitPosition(self, unitString, color):
-        print(unitString)
         unitNumber = 1
         for x in range(8):
             for y in range(8):
