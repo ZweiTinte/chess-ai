@@ -28,16 +28,16 @@ class Game:
     # returns a unit's position
     def getUnitPosition(self, unitString, color):
         unitNumber = 1
-        for x in range(8):
-            for y in range(8):
+        for x in range(self.limit):
+            for y in range(self.limit):
                 if self.board[x][y] != None:
                     unit = self.board[x][y]
-                    if unit.getPower() == int(unitString[0]):
-                        if unitNumber == int(unitString[2]):
-                            if unit.getOwner() == self.turn:
+                    if unit.getOwner() == self.turn:
+                        if unit.getPower() == int(unitString[0]):
+                            if unitNumber == int(unitString[2]):
                                 return [x, y]
-                        else:
-                            unitNumber += 1
+                            else:
+                                unitNumber += 1
 
     # ends the game and increments the win loss chances
     def endGame(self, winner):
@@ -70,10 +70,19 @@ class Game:
             return False
         return True
 
+    # resets the possible moves of all turn player units
+    def resetPossibleMoves(self):
+        for x in range(8):
+            for y in range(8):
+                if self.board[x][y] != None:
+                    if self.board[x][y].getOwner() == self.turn:
+                        self.board[x][y].resetMoves()
+
     # makes a turn
     def makeATurn(self):
         # prepare the possible moves file if it doesn't exist
         if not self.jsonFileExists():
+            self.resetPossibleMoves()
             self.calculatePossibleMoves(self.turn, True)
             self.writeUnitMovesToFile(self.turn)
         # add move and situation for the learning process
@@ -84,6 +93,7 @@ class Game:
         # set the opponent player as turn
         self.turn = self.turn.getOpponent()
 
+    # returns the character for the field number (A1, C5...)
     def getCharacterOfNumber(self, number):
         if number == 0:
             return "A"
@@ -115,6 +125,18 @@ class Game:
         # log to the console
         print(player + " moves " + unit + " from " +
               position_x + position_y + " to " + target_x + target_y)
+
+    # logs the chess board to console
+    def logBoard(self):
+        for y in range(self.limit):
+            logString = ""
+            for x in range(self.limit):
+                if self.board[x][y] == None:
+                    logString += "_"
+                else:
+                    logString += str(self.board[x][y].getPower())
+                logString += " "
+            print(logString)
 
     # moves a unit
     def moveUnit(self):
@@ -168,12 +190,9 @@ class Game:
         # log the move to the console
         self.logMove(upx, upy, x, y)
 
-        # the target field gets set
-        targetField = self.board[x][y]
-
-        if targetField != None:
+        if self.board[x][y] != None:
             # king is target
-            if targetField.getPower() == 7:
+            if self.board[x][y].getPower() == 7:
                 self.endGame(self.turn)
 
         # set the rook varaiable for castling conditions to True
@@ -181,18 +200,21 @@ class Game:
             self.board[upx][upy].moved = True
 
         # sets our own unit to the target field
-        targetField = self.board[upx][upy]
+        self.board[x][y] = self.board[upx][upy]
 
         # removes our unit from the previous field
         self.board[upx][upy] = None
 
+        # log the board to the console
+        self.logBoard()
+
         # pawn promotion
-        if targetField.getOwner() == self.white:
+        if self.board[x][y].getOwner() == self.white:
             promotionRow = self.limit - 1
         else:
             promotionRow = 0
-        if targetField.getPower() == 1 and y == promotionRow:
-            targetField = Unit(move[1][2], self.turn)
+        if self.board[x][y].getPower() == 1 and y == promotionRow:
+            self.board[x][y] = Unit(move[1][2], self.turn)
 
         # reset passant possible variable for the turn player pawns
         self.resetPassantPossible()
@@ -200,10 +222,10 @@ class Game:
         # sets passant variable True for opponent pawns nextby
         if move[0][0] == "1":
             if (self.turn == self.white and y == upy + 2) or (self.turn == self.black and y == upy - 2):
-                if self.board[x - 1][y] != None:
+                if x - 1 > 0 and self.board[x - 1][y] != None:
                     if self.board[x - 1][y].getOwner() == self.black:
                         self.board[x - 1][y].en_passant_possible = True
-                if self.board[x + 1][y] != None:
+                if x + 1 < self.limit and self.board[x + 1][y] != None:
                     if self.board[x + 1][y].getOwner() == self.black:
                         self.board[x + 1][y].en_passant_possible = True
 
@@ -247,13 +269,14 @@ class Game:
                 for y in range(self.limit):
                     if self.board[x][y] != None and self.board[x][y].getOwner() == player:
                         if self.board[x][y].getPower() == u:
-                            jsonUnitString = str(u) + "_" + str(unitNumber)
-                            data[jsonUnitString] = {}
-                            for m in self.board[x][y].getMoves():
-                                data[jsonUnitString][str(m)] = {}
-                                data[jsonUnitString][str(m)]["w"] = 1
-                                data[jsonUnitString][str(m)]["l"] = 1
-                            unitNumber += 1
+                            if len(self.board[x][y].getMoves()) != 0:
+                                jsonUnitString = str(u) + "_" + str(unitNumber)
+                                data[jsonUnitString] = {}
+                                for m in self.board[x][y].getMoves():
+                                    data[jsonUnitString][str(m)] = {}
+                                    data[jsonUnitString][str(m)]["w"] = 1
+                                    data[jsonUnitString][str(m)]["l"] = 1
+                                unitNumber += 1
         # write the data to a json file
         writeData(jsonFileString, data)
 
@@ -312,10 +335,10 @@ class Game:
                         # en_passant calculation
                         if (y == 4 and self.board[x][y].getOwner() == self.white) or (y == 3 and self.board[x][y].getOwner() == self.black):
                             if x < 7:
-                                if self.board[x + 1][y] != None and self.board[x + 1][y].getPower() == 1 and self.board[x + 1][y].en_passant_pssible:
+                                if self.board[x + 1][y] != None and self.board[x + 1][y].getPower() == 1 and self.board[x + 1][y].en_passant_possible:
                                     unit.addMove("pr")
                             if x > 0:
-                                if self.board[x - 1][y] != None and self.board[x - 1][y].getPower() == 1 and self.board[x - 1][y].en_passant_pssible:
+                                if self.board[x - 1][y] != None and self.board[x - 1][y].getPower() == 1 and self.board[x - 1][y].en_passant_possible:
                                     unit.addMove("pl")
                     # rook moves
                     elif unit.getPower() == 2:
