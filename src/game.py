@@ -81,9 +81,9 @@ class Game:
     # makes a turn
     def makeATurn(self):
         # prepare the possible moves file if it doesn't exist
+        self.resetPossibleMoves()
+        self.calculatePossibleMoves(self.turn, True)
         if not self.jsonFileExists():
-            self.resetPossibleMoves()
-            self.calculatePossibleMoves(self.turn, True)
             self.writeUnitMovesToFile(self.turn)
         # add move and situation for the learning process
         self.turn.addSituation(self.generateDatabaseLocationString())
@@ -138,6 +138,14 @@ class Game:
                 logString += " "
             print(logString)
 
+    # logs the possible moves of a unit
+    def logPossibleMoves(self, x, y):
+        possibleMoves = ""
+        for m in self.board[x][y].moves:
+            possibleMoves += m + ", "
+        possibleMoves = possibleMoves[:-2]
+        print("possible moves: " + possibleMoves)
+
     # moves a unit
     def moveUnit(self):
         move = self.getBestMove()
@@ -146,6 +154,8 @@ class Game:
         upy = unitPosition[1]
         x = move[1][0]
         y = move[1][1]
+
+        self.logPossibleMoves(upx, upy)
 
         # en passant move setup
         if x == "p":
@@ -276,7 +286,7 @@ class Game:
                                     data[jsonUnitString][str(m)] = {}
                                     data[jsonUnitString][str(m)]["w"] = 1
                                     data[jsonUnitString][str(m)]["l"] = 1
-                                unitNumber += 1
+                            unitNumber += 1
         # write the data to a json file
         writeData(jsonFileString, data)
 
