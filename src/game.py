@@ -24,6 +24,10 @@ class Game:
         self.setUnits()
         # who's turn is it?
         self.turn = self.white
+        # a counter for turns in a row without any hit
+        self.noHitTurns = 0
+        # when a game reaches this limit, both players lose
+        self.noHitTurnsLimit = 100
 
     # returns a unit's position
     def getUnitPosition(self, unitString, color):
@@ -146,6 +150,14 @@ class Game:
         possibleMoves = possibleMoves[:-2]
         print("possible moves: " + possibleMoves)
 
+    # increases the counter of turns without hits
+    def increaseNoHitCounter(self):
+        self.noHitTurns += 1
+
+    # resets the counter of turns without hits
+    def resetNoHitTurns(self):
+        self.noHitTurns = 0
+
     # moves a unit
     def moveUnit(self):
         move = self.getBestMove()
@@ -201,9 +213,17 @@ class Game:
         self.logMove(upx, upy, x, y)
 
         if self.board[x][y] != None:
+            self.resetNoHitTurns()
             # king is target
             if self.board[x][y].getPower() == 7:
                 self.endGame(self.turn)
+        else:
+            # increase no hit counter of the game
+            self.increaseNoHitCounter()
+            # if the counter reaches the limit, the game ends
+            if self.noHitTurns == self.noHitTurnsLimit:
+                self.endGame(self.turn)
+                self.endGame(self.turn.getOpponent())
 
         # set the rook varaiable for castling conditions to True
         if self.board[upx][upy].getPower() == 2:
@@ -627,7 +647,7 @@ class Game:
         while True:
             self.makeATurn()
             turns += 1
-            if turns == 10:
+            if turns == 20:
                 break
         print("--- GAME END ---")
 
