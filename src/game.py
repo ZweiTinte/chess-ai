@@ -147,8 +147,16 @@ class Game:
         possibleMoves = ""
         for m in self.board[x][y].moves:
             possibleMoves += m + ", "
-        possibleMoves = possibleMoves[:-2]
-        print("possible moves: " + possibleMoves)
+        print("possible moves: " + possibleMoves[:-2])
+
+    # logs the moveable units of the turn player
+    def logMoveableUnits(self):
+        jsonFileString = self.generateDatabaseLocationString()
+        data = loadData(jsonFileString)
+        units = ""
+        for u in data:
+            units += u + ", "
+        print("moveable units: " + units[:-2])
 
     # increases the counter of turns without hits
     def increaseNoHitCounter(self):
@@ -168,6 +176,7 @@ class Game:
         y = move[1][1]
 
         self.logPossibleMoves(upx, upy)
+        self.logMoveableUnits()
 
         # en passant move setup
         if x == "p":
