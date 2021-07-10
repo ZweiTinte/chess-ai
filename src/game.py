@@ -449,7 +449,7 @@ class Game:
                                     unit.addMove(str(x - 2) + str(y - 1))
                             if x < 6:
                                 if self.board[x + 2][y - 1] == None:
-                                    unit.addMove(str(x + 2) + str(y + 1))
+                                    unit.addMove(str(x + 2) + str(y - 1))
                                 elif self.board[x + 2][y - 1] != None and self.board[x + 2][y - 1].getOwner() == player.getOpponent():
                                     unit.addMove(str(x + 2) + str(y - 1))
                             if y > 1:
