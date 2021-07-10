@@ -18,16 +18,20 @@ class Game:
         self.black.setOpponent(self.white)
         # border limit
         self.limit = 8
+        # when a game reaches this limit, both players lose
+        self.noHitTurnsLimit = 100
+        self.resetGame()
+
+    # resets the game
+    def resetGame(self):
         # generating the board
         self.board = self.generateBoard()
         # placing the units on the board
         self.setUnits()
-        # who's turn is it?
-        self.turn = self.white
         # a counter for turns in a row without any hit
         self.noHitTurns = 0
-        # when a game reaches this limit, both players lose
-        self.noHitTurnsLimit = 100
+        # who's turn is it?
+        self.turn = self.white
 
     # returns a unit's position
     def getUnitPosition(self, unitString, color):
