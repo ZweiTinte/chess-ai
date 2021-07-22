@@ -19,7 +19,7 @@ class Game:
         # border limit
         self.limit = 8
         # when a game reaches this limit, both players lose
-        self.noHitTurnsLimit = 100
+        self.noHitTurnsLimit = 20
         self.resetGame()
 
     # resets the game
@@ -120,7 +120,13 @@ class Game:
         elif number == 7:
             return "H"
 
-    # logs move on console
+    # appends text to the log file
+    def logToFile(self, text):
+        f = open(os.path.abspath(os.pardir) + "/game_log.txt", "a")
+        f.write(text + "\n")
+        f.close()
+
+    # logs move to log file
     def logMove(self, upx, upy, x, y):
         # preapare output string
         player = self.turn.getColor()
@@ -130,11 +136,11 @@ class Game:
         target_x = self.getCharacterOfNumber(x)
         target_y = str(y + 1)
 
-        # log to the console
-        print(player + " moves " + unit + " from " +
-              position_x + position_y + " to " + target_x + target_y)
+        # log to log file
+        self.logToFile(player + " moves " + unit + " from " +
+                       position_x + position_y + " to " + target_x + target_y)
 
-    # logs the chess board to console
+    # logs the chess board to log file
     def logBoard(self):
         for y in range(self.limit):
             logString = ""
@@ -144,14 +150,14 @@ class Game:
                 else:
                     logString += str(self.board[x][y].getPower())
                 logString += " "
-            print(logString)
+            self.logToFile(logString)
 
     # logs the possible moves of a unit
     def logPossibleMoves(self, x, y):
         possibleMoves = ""
         for m in self.board[x][y].moves:
             possibleMoves += m + ", "
-        print("possible moves: " + possibleMoves[:-2])
+        self.logToFile("possible moves: " + possibleMoves[:-2])
 
     # logs the moveable units of the turn player
     def logMoveableUnits(self):
@@ -160,7 +166,7 @@ class Game:
         units = ""
         for u in data:
             units += u + ", "
-        print("moveable units: " + units[:-2])
+        self.logToFile("moveable units: " + units[:-2])
 
     # increases the counter of turns without hits
     def increaseNoHitCounter(self):
@@ -662,15 +668,15 @@ class Game:
 
     # starts the game
     def start(self):
-        print("--- NEW GAME ---")
+        self.logToFile("--- NEW GAME ---")
         # using a number because we're still in test
         turns = 0
         while True:
             self.makeATurn()
             turns += 1
-            if turns == 20:
+            if turns == 30:
                 break
-        print("--- GAME END ---")
+        self.logToFile("--- GAME END ---")
 
     # return true if the player is in check
     def playerIsInCheck(self, player):
