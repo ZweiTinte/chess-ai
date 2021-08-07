@@ -6,6 +6,7 @@ import datetime
 import os.path
 from player import *
 from unit import *
+from log import *
 from database import loadData, writeData
 
 
@@ -120,54 +121,6 @@ class Game:
         elif number == 7:
             return "H"
 
-    # appends text to the log file
-    def logToFile(self, text):
-        f = open(os.path.abspath(os.pardir) + "/game_log.txt", "a")
-        f.write(text + "\n")
-        f.close()
-
-    # logs move to log file
-    def logMove(self, upx, upy, x, y):
-        # preapare output string
-        player = self.turn.getColor()
-        unit = self.board[upx][upy].getPowerString()
-        position_x = self.getCharacterOfNumber(upx)
-        position_y = str(upy + 1)
-        target_x = self.getCharacterOfNumber(x)
-        target_y = str(y + 1)
-
-        # log to log file
-        self.logToFile(player + " moves " + unit + " from " +
-                       position_x + position_y + " to " + target_x + target_y)
-
-    # logs the chess board to log file
-    def logBoard(self):
-        for y in range(self.limit):
-            logString = ""
-            for x in range(self.limit):
-                if self.board[x][y] == None:
-                    logString += "_"
-                else:
-                    logString += str(self.board[x][y].getPower())
-                logString += " "
-            self.logToFile(logString)
-
-    # logs the possible moves of a unit
-    def logPossibleMoves(self, x, y):
-        possibleMoves = ""
-        for m in self.board[x][y].moves:
-            possibleMoves += m + ", "
-        self.logToFile("possible moves: " + possibleMoves[:-2])
-
-    # logs the moveable units of the turn player
-    def logMoveableUnits(self):
-        jsonFileString = self.generateDatabaseLocationString()
-        data = loadData(jsonFileString)
-        units = ""
-        for u in data:
-            units += u + ", "
-        self.logToFile("moveable units: " + units[:-2])
-
     # increases the counter of turns without hits
     def increaseNoHitCounter(self):
         self.noHitTurns += 1
@@ -185,8 +138,8 @@ class Game:
         x = move[1][0]
         y = move[1][1]
 
-        self.logPossibleMoves(upx, upy)
-        self.logMoveableUnits()
+        logPossibleMoves(self, upx, upy)
+        logMoveableUnits(self)
 
         # en passant move setup
         if x == "p":
@@ -229,7 +182,7 @@ class Game:
             y = int(y)
 
         # log the move to the console
-        self.logMove(upx, upy, x, y)
+        logMove(self, upx, upy, x, y)
 
         if self.board[x][y] != None:
             self.resetNoHitTurns()
@@ -255,7 +208,7 @@ class Game:
         self.board[upx][upy] = None
 
         # log the board to the console
-        self.logBoard()
+        logBoard(self)
 
         # pawn promotion
         if self.board[x][y].getOwner() == self.white:
@@ -668,7 +621,7 @@ class Game:
 
     # starts the game
     def start(self):
-        self.logToFile("--- NEW GAME ---")
+        logToFile("--- NEW GAME ---")
         # using a number because we're still in test
         turns = 0
         while True:
@@ -676,7 +629,7 @@ class Game:
             turns += 1
             if turns == 30:
                 break
-        self.logToFile("--- GAME END ---")
+        logToFile("--- GAME END ---")
 
     # return true if the player is in check
     def playerIsInCheck(self, player):
