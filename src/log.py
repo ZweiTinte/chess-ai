@@ -27,8 +27,9 @@ def logBoard(game):
         logString = ""
         for x in range(game.limit):
             if game.board[x][y] == None:
-                logString += "_"
+                logString += "__"
             else:
+                logString += game.board[x][y].getOwner().color[0].upper()
                 logString += str(game.board[x][y].getPower())
             logString += " "
         logToFile(logString)

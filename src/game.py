@@ -1,8 +1,4 @@
 # coding: utf-8
-from random import shuffle, randint
-import sys
-import json
-import datetime
 import os.path
 from player import *
 from unit import *
