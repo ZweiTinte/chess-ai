@@ -39,7 +39,7 @@ def logPossibleMoves(game, x, y):
     possibleMoves = ""
     for m in game.board[x][y].moves:
         possibleMoves += m + ", "
-    logToFile("possible moves: " + possibleMoves[:-2])
+    logToFile("\npossible moves: " + possibleMoves[:-2])
 
 # logs the moveable units of the turn player
 def logMoveableUnits(game):

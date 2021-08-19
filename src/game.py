@@ -203,16 +203,16 @@ class Game:
         # removes our unit from the previous field
         self.board[upx][upy] = None
 
-        # log the board to the console
-        logBoard(self)
-
         # pawn promotion
         if self.board[x][y].getOwner() == self.white:
             promotionRow = self.limit - 1
         else:
             promotionRow = 0
         if self.board[x][y].getPower() == 1 and y == promotionRow:
-            self.board[x][y] = Unit(move[1][2], self.turn)
+            self.board[x][y] = Unit(int(move[1][2]), self.turn)
+
+        # log the board to the console
+        logBoard(self)
 
         # reset passant possible variable for the turn player pawns
         self.resetPassantPossible()
@@ -298,14 +298,14 @@ class Game:
                                             unit.addMove(str(x) + str(y + 2))
                                 if x - 1 >= 0 and self.board[x - 1][y + 1] != None and self.board[x - 1][y + 1].getOwner() == self.black:
                                     if y + 2 == self.limit:
-                                        unit.addMove(str(x) + str(y + 1) + "6")
-                                        unit.addMove(str(x) + str(y + 1) + "3")
+                                        unit.addMove(str(x - 1) + str(y + 1) + "6")
+                                        unit.addMove(str(x - 1) + str(y + 1) + "3")
                                     else:
                                         unit.addMove(str(x - 1) + str(y + 1))
                                 if x + 1 < self.limit and self.board[x + 1][y + 1] != None and self.board[x + 1][y + 1].getOwner() == self.black:
                                     if y + 2 == self.limit:
-                                        unit.addMove(str(x) + str(y + 1) + "6")
-                                        unit.addMove(str(x) + str(y + 1) + "3")
+                                        unit.addMove(str(x + 1) + str(y + 1) + "6")
+                                        unit.addMove(str(x + 1) + str(y + 1) + "3")
                                     else:
                                         unit.addMove(str(x + 1) + str(y + 1))
                         elif player == self.black:
@@ -320,14 +320,14 @@ class Game:
                                             unit.addMove(str(x) + str(y - 2))
                                 if x - 1 >= 0 and self.board[x - 1][y - 1] != None and self.board[x - 1][y - 1].getOwner() == self.white:
                                     if y - 1 == 0:
-                                        unit.addMove(str(x) + str(y - 1) + "6")
-                                        unit.addMove(str(x) + str(y - 1) + "3")
+                                        unit.addMove(str(x - 1) + str(y - 1) + "6")
+                                        unit.addMove(str(x - 1) + str(y - 1) + "3")
                                     else:
                                         unit.addMove(str(x - 1) + str(y - 1))
                                 if x + 1 < self.limit and self.board[x + 1][y - 1] != None and self.board[x + 1][y - 1].getOwner() == self.white:
                                     if y - 1 == 0:
-                                        unit.addMove(str(x) + str(y - 1) + "6")
-                                        unit.addMove(str(x) + str(y - 1) + "3")
+                                        unit.addMove(str(x + 1) + str(y - 1) + "6")
+                                        unit.addMove(str(x + 1) + str(y - 1) + "3")
                                     else:
                                         unit.addMove(str(x + 1) + str(y - 1))
                         # en_passant calculation
@@ -617,13 +617,13 @@ class Game:
 
     # starts the game
     def start(self):
-        logToFile("--- NEW GAME ---")
+        logToFile("\n--- NEW GAME ---")
         # using a number because we're still in test
         turns = 0
         while True:
             self.makeATurn()
             turns += 1
-            if turns == 30:
+            if turns == 50:
                 break
         logToFile("--- GAME END ---")
 
