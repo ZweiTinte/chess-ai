@@ -1,7 +1,6 @@
 # coding: utf-8
 import codecs
-from random import shuffle, randint
-import sys, json, datetime
+import json
 
 # load the data from file
 def loadData(locationString):
@@ -16,12 +15,12 @@ def writeData(locationString, data):
 
 # get all lines from a file
 def getLines(locationString):
-	with open(locationString, "r") as f:
+	with codecs.open(locationString, "r", encoding='utf-8') as f:
 		return f.readlines()
 
 # removes all spaces in a file
 def removeSpaces(locationString):
 	lines = getLines(locationString)
 	lines = [line.replace(" ", "") for line in lines]
-	with open(locationString, "w") as f:
+	with codecs.open(locationString, "w", encoding='utf-8') as f:
 		f.writelines(lines)
