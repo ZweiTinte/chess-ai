@@ -234,6 +234,11 @@ class Game:
             data[unit][move]["w"] += 1
         else:
             data[unit][move]["l"] += 1
+        # reduce json file size with dividing by 2
+        while data[unit][move]["l"] % 2 == 0 and data[unit][move]["w"] % 2 == 0:
+            data[unit][move]["l"] /= 2
+            data[unit][move]["w"] /= 2
+        # update the json file
         writeData(jsonFileString, data)
 
     # returns the move with best win/loss chance
