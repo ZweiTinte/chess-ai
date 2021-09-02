@@ -3,6 +3,7 @@ import os.path
 from player import *
 from unit import *
 from log import *
+from databaseLocationString import generateDatabaseLocationString
 from database import loadData, writeData
 
 
@@ -70,7 +71,7 @@ class Game:
 
     # checks if the json file for this turn already exists or not
     def jsonFileExists(self):
-        dbLocationString = self.generateDatabaseLocationString()
+        dbLocationString = generateDatabaseLocationString(self)
         if not os.path.exists(dbLocationString):
             return False
         return True
@@ -91,7 +92,7 @@ class Game:
         if not self.jsonFileExists():
             self.writeUnitMovesToFile(self.turn)
         # add move and situation for the learning process
-        self.turn.addSituation(self.generateDatabaseLocationString())
+        self.turn.addSituation(generateDatabaseLocationString(self))
         self.turn.addMove(self.getBestMove())
         # make the best move for the turn
         self.moveUnit()
@@ -243,7 +244,7 @@ class Game:
 
     # returns the move with best win/loss chance
     def getBestMove(self):
-        jsonFileString = self.generateDatabaseLocationString()
+        jsonFileString = generateDatabaseLocationString(self)
         data = loadData(jsonFileString)
         move = ""
         chance = 0
@@ -263,7 +264,7 @@ class Game:
 
     # writes the possible moves to a json file
     def writeUnitMovesToFile(self, player):
-        jsonFileString = self.generateDatabaseLocationString()
+        jsonFileString = generateDatabaseLocationString(self)
         data = {}
         # Go through all unit types and write the moves to the file
         for u in range(8):
@@ -645,101 +646,6 @@ class Game:
                             if move == king_position:
                                 player.setIsInCheck(True)
         player.setIsInCheck(False)
-
-    # returns database location string for current state
-    def generateDatabaseLocationString(self):
-        dbLocationString = os.path.abspath(os.pardir) + "/db/"
-        dbLocationString += str(self.getNumberOfUnits()) + "/"
-        if not os.path.exists(dbLocationString):
-            os.makedirs(dbLocationString)
-        dbLocationString += str(self.getNumberOfWhiteUnits()) + "/"
-        if not os.path.exists(dbLocationString):
-            os.makedirs(dbLocationString)
-        dbLocationString += self.getWhiteUnitsString() + "/"
-        if not os.path.exists(dbLocationString):
-            os.makedirs(dbLocationString)
-        dbLocationString += self.getBlackUnitsString() + "/"
-        if not os.path.exists(dbLocationString):
-            os.makedirs(dbLocationString)
-        dbLocationString += self.getWhiteUnitsPositionsString() + "/"
-        if not os.path.exists(dbLocationString):
-            os.makedirs(dbLocationString)
-        dbLocationString += self.getBlackUnitsPositionsString() + "/"
-        if not os.path.exists(dbLocationString):
-            os.makedirs(dbLocationString)
-        dbLocationString += self.turn.getColor() + "/"
-        if not os.path.exists(dbLocationString):
-            os.makedirs(dbLocationString)
-        return dbLocationString + "data.json"
-
-    # returns the black units positions string for the database
-    def getBlackUnitsPositionsString(self):
-        blackUnitsPositionsString = ""
-        for p in range(7):
-            for x in range(8):
-                for y in range(8):
-                    if self.board[x][y] != None:
-                        if self.board[x][y].getOwner() == self.black:
-                            if self.board[x][y].getPower() == p + 1:
-                                blackUnitsPositionsString += str(x)
-                                blackUnitsPositionsString += str(y)
-        return blackUnitsPositionsString
-
-    # returns the white units positions string for the database
-    def getWhiteUnitsPositionsString(self):
-        whiteUnitsPositionsString = ""
-        for p in range(7):
-            for x in range(8):
-                for y in range(8):
-                    if self.board[x][y] != None:
-                        if self.board[x][y].getOwner() == self.white:
-                            if self.board[x][y].getPower() == p + 1:
-                                whiteUnitsPositionsString += str(x)
-                                whiteUnitsPositionsString += str(y)
-        return whiteUnitsPositionsString
-
-    # returns the black units string for the database
-    def getBlackUnitsString(self):
-        blackUnitsString = ""
-        for p in range(7):
-            for x in range(8):
-                for y in range(8):
-                    if self.board[x][y] != None:
-                        if self.board[x][y].getOwner() == self.black:
-                            if self.board[x][y].getPower() == p + 1:
-                                blackUnitsString += str(p + 1)
-        return blackUnitsString
-
-    # returns the white units string for the database
-    def getWhiteUnitsString(self):
-        whiteUnitsString = ""
-        for p in range(7):
-            for x in range(8):
-                for y in range(8):
-                    if self.board[x][y] != None:
-                        if self.board[x][y].getOwner() == self.white:
-                            if self.board[x][y].getPower() == p + 1:
-                                whiteUnitsString += str(p + 1)
-        return whiteUnitsString
-
-    # returns number of units on the board
-    def getNumberOfUnits(self):
-        numberOfUnits = 0
-        for x in range(8):
-            for y in range(8):
-                if self.board[x][y] != None:
-                    numberOfUnits += 1
-        return numberOfUnits
-
-    # returns number of white units on the board
-    def getNumberOfWhiteUnits(self):
-        numberOfWhiteUnits = 0
-        for x in range(8):
-            for y in range(8):
-                if self.board[x][y] != None:
-                    if self.board[x][y].getOwner() == self.white:
-                        numberOfWhiteUnits += 1
-        return numberOfWhiteUnits
 
     # generates a blank chess board
     def generateBoard(self):

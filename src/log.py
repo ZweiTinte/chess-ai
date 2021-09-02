@@ -1,6 +1,7 @@
 # coding: utf-8
 import os.path
-from database import loadData, writeData
+from database import loadData
+from databaseLocationString import generateDatabaseLocationString
 
 # appends text to the log file
 def logToFile(text):
@@ -43,7 +44,7 @@ def logPossibleMoves(game, x, y):
 
 # logs the moveable units of the turn player
 def logMoveableUnits(game):
-    jsonFileString = game.generateDatabaseLocationString()
+    jsonFileString = generateDatabaseLocationString(game)
     data = loadData(jsonFileString)
     units = ""
     for u in data:
