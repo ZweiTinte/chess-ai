@@ -784,35 +784,3 @@ class Game:
         self.board[4][7] = Unit(7, self.black)
         # white king
         self.board[4][0] = Unit(7, self.white)
-
-        # getters and setters
-        """
-        def getWhite(self):
-            return self.white
-
-        def setWhite(self, white):
-            self.white = white
-
-        def getBlack(self):
-            return self.black
-
-        def setBlack(self, black):
-            self.black = black
-
-        def getBoard(self):
-            return self.board
-
-        def setBoard(self, board):
-            self.board = board
-
-        def getTurn(self):
-            return self.turn
-
-        def setTurn(self, turn):
-            self.turn = turn
-
-        def getLimit(self):
-            return self.limit
-
-        def setLimit(self, limit):
-            self.limit = limit"""
