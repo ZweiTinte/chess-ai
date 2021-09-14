@@ -1,9 +1,4 @@
 # coding: utf-8
-from random import shuffle, randint
-import sys
-import json
-import datetime
-
 
 class Player:
     def __init__(self, color):
@@ -29,6 +24,13 @@ class Player:
                     if unit.getPower() == 7 and unit.getOwner() == self.color:
                         move_string = str(x) + str(y)
                         return move_string
+
+    # resets the player's game relevant attributes
+    def reset(self):
+        self.moves = []
+        self.situations = []
+        self.inCheck = False
+        self.castling_permitted = True
 
     # getter and setter
     def getColor(self):

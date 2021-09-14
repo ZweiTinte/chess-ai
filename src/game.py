@@ -28,6 +28,9 @@ class Game:
         self.setUnits()
         # a counter for turns in a row without any hit
         self.noHitTurns = 0
+        # reset moves and situations
+        self.white.reset()
+        self.black.reset()
         # who's turn is it?
         self.turn = self.white
 
@@ -84,6 +87,13 @@ class Game:
                     if self.board[x][y].getOwner() == self.turn:
                         self.board[x][y].resetMoves()
 
+    # returns True if the move/state combination already exists for this game
+    def situationWithMoveAlreadyExists(self, situation, move):
+        for s in range(len(self.turn.situations)):
+                if self.turn.situations[s] == situation:
+                    if self.turn.moves[s] == move:
+                        return True
+
     # makes a turn
     def makeATurn(self):
         # prepare the possible moves file if it doesn't exist
@@ -92,8 +102,11 @@ class Game:
         if not self.jsonFileExists():
             self.writeUnitMovesToFile(self.turn)
         # add move and situation for the learning process
-        self.turn.addSituation(generateDatabaseLocationString(self))
-        self.turn.addMove(self.getBestMove())
+        dbLocationString = generateDatabaseLocationString(self)
+        bestMove = self.getBestMove()
+        if not self.situationWithMoveAlreadyExists(dbLocationString, bestMove):
+            self.turn.addSituation(dbLocationString)
+            self.turn.addMove(bestMove)
         # make the best move for the turn
         self.moveUnit()
         # set the opponent player as turn
