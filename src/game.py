@@ -285,7 +285,7 @@ class Game:
             unitNumber = 1
             for x in range(self.upperLimit):
                 for y in range(self.upperLimit):
-                    if self.board[x][y] != None and self.board[x][y].getOwner() == player:
+                    if not self.fieldIsEmpty(x, y) and self.board[x][y].getOwner() == player:
                         if self.board[x][y].getPower() == u:
                             if len(self.board[x][y].getMoves()) != 0:
                                 jsonUnitString = str(u) + "_" + str(unitNumber)
@@ -358,7 +358,7 @@ class Game:
                                         else:
                                             unit.addMove(str(x + 1) + str(y - 1))
                         # en_passant calculation
-                        if (y == 4 and self.board[x][y].getOwner() == self.white) or (y == 3 and self.board[x][y].getOwner() == self.black):
+                        if (y == 4 and unit.getOwner() == self.white) or (y == 3 and unit.getOwner() == self.black):
                             if x < 7:
                                 if not self.fieldIsEmpty(x + 1, y):
                                     if self.board[x + 1][y].getPower() == 1:
