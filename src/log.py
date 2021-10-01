@@ -1,11 +1,10 @@
 # coding: utf-8
-import os.path
 from database import loadData
 from databaseLocationString import generateDatabaseLocationString
 
 # appends text to the log file
 def logToFile(text):
-    f = open(os.path.abspath(os.pardir) + "/game_log.txt", "a")
+    f = open("game_log.txt", "a")
     f.write(text + "\n")
     f.close()
 
@@ -24,9 +23,9 @@ def logMove(game, upx, upy, x, y):
 
 # logs the chess board to log file
 def logBoard(game):
-    for y in range(game.limit):
+    for y in range(game.upperLimit):
         logString = ""
-        for x in range(game.limit):
+        for x in range(game.upperLimit):
             if game.board[x][y] == None:
                 logString += "__"
             else:
