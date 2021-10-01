@@ -297,6 +297,11 @@ class Game:
         # write the data to a json file
         writeData(jsonFileString, data)
 
+    # adds promotion moves to a unit
+    def addPromotionMovesToUnit(self, unit, x, y):
+        unit.addMove(str(x) + str(y) + "6")
+        unit.addMove(str(x) + str(y) + "3")
+
     # calculates the possible moves for all units of a player
     def calculatePossibleMoves(self, player, initialCall):
         for x in range(self.limit):
@@ -309,44 +314,38 @@ class Game:
                             if y + 1 < self.limit:
                                 if self.board[x][y + 1] == None:
                                     if y + 2 == self.limit:
-                                        unit.addMove(str(x) + str(y + 1) + "6")
-                                        unit.addMove(str(x) + str(y + 1) + "3")
+                                        self.addPromotionMovesToUnit(unit, x, y + 1)
                                     else:
                                         unit.addMove(str(x) + str(y + 1))
                                         if self.board[x][y + 2] == None and y == 1:
                                             unit.addMove(str(x) + str(y + 2))
                                 if x - 1 >= 0 and self.board[x - 1][y + 1] != None and self.board[x - 1][y + 1].getOwner() == self.black:
                                     if y + 2 == self.limit:
-                                        unit.addMove(str(x - 1) + str(y + 1) + "6")
-                                        unit.addMove(str(x - 1) + str(y + 1) + "3")
+                                        self.addPromotionMovesToUnit(unit, x - 1, y + 1)
                                     else:
                                         unit.addMove(str(x - 1) + str(y + 1))
                                 if x + 1 < self.limit and self.board[x + 1][y + 1] != None and self.board[x + 1][y + 1].getOwner() == self.black:
                                     if y + 2 == self.limit:
-                                        unit.addMove(str(x + 1) + str(y + 1) + "6")
-                                        unit.addMove(str(x + 1) + str(y + 1) + "3")
+                                        self.addPromotionMovesToUnit(unit, x + 1, y + 1)
                                     else:
                                         unit.addMove(str(x + 1) + str(y + 1))
                         elif player == self.black:
                             if y - 1 >= 0:
                                 if self.board[x][y - 1] == None:
                                     if y - 1 == 0:
-                                        unit.addMove(str(x) + str(y - 1) + "6")
-                                        unit.addMove(str(x) + str(y - 1) + "3")
+                                        self.addPromotionMovesToUnit(unit, x, y - 1)
                                     else:
                                         unit.addMove(str(x) + str(y - 1))
                                         if self.board[x][y - 2] == None and y == 6:
                                             unit.addMove(str(x) + str(y - 2))
                                 if x - 1 >= 0 and self.board[x - 1][y - 1] != None and self.board[x - 1][y - 1].getOwner() == self.white:
                                     if y - 1 == 0:
-                                        unit.addMove(str(x - 1) + str(y - 1) + "6")
-                                        unit.addMove(str(x - 1) + str(y - 1) + "3")
+                                        self.addPromotionMovesToUnit(unit, x - 1, y - 1)
                                     else:
                                         unit.addMove(str(x - 1) + str(y - 1))
                                 if x + 1 < self.limit and self.board[x + 1][y - 1] != None and self.board[x + 1][y - 1].getOwner() == self.white:
                                     if y - 1 == 0:
-                                        unit.addMove(str(x + 1) + str(y - 1) + "6")
-                                        unit.addMove(str(x + 1) + str(y - 1) + "3")
+                                        self.addPromotionMovesToUnit(unit, x + 1, y - 1)
                                     else:
                                         unit.addMove(str(x + 1) + str(y - 1))
                         # en_passant calculation
