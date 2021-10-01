@@ -15,7 +15,8 @@ class Game:
         self.white.setOpponent(self.black)
         self.black.setOpponent(self.white)
         # border limit
-        self.limit = 8
+        self.upperLimit = 8
+        self.lowerLimit = 0
         # when a game reaches this limit, both players lose
         self.noHitTurnsLimit = 20
         self.resetGame()
@@ -37,8 +38,8 @@ class Game:
     # returns a unit's position
     def getUnitPosition(self, unitString, color):
         unitNumber = 1
-        for x in range(self.limit):
-            for y in range(self.limit):
+        for x in range(self.upperLimit):
+            for y in range(self.upperLimit):
                 if self.board[x][y] != None:
                     unit = self.board[x][y]
                     if unit.getOwner() == self.turn:
@@ -219,9 +220,9 @@ class Game:
 
         # pawn promotion
         if self.board[x][y].getOwner() == self.white:
-            promotionRow = self.limit - 1
+            promotionRow = self.upperLimit - 1
         else:
-            promotionRow = 0
+            promotionRow = self.lowerLimit
         if self.board[x][y].getPower() == 1 and y == promotionRow:
             self.board[x][y] = Unit(int(move[1][2]), self.turn)
 
@@ -234,10 +235,10 @@ class Game:
         # sets passant variable True for opponent pawns nextby
         if move[0][0] == "1":
             if (self.turn == self.white and y == upy + 2) or (self.turn == self.black and y == upy - 2):
-                if x - 1 > 0 and self.board[x - 1][y] != None:
+                if x - 1 > self.lowerLimit and self.board[x - 1][y] != None:
                     if self.board[x - 1][y].getOwner() == self.black:
                         self.board[x - 1][y].en_passant_possible = True
-                if x + 1 < self.limit and self.board[x + 1][y] != None:
+                if x + 1 < self.upperLimit and self.board[x + 1][y] != None:
                     if self.board[x + 1][y].getOwner() == self.black:
                         self.board[x + 1][y].en_passant_possible = True
 
@@ -282,8 +283,8 @@ class Game:
         # Go through all unit types and write the moves to the file
         for u in range(8):
             unitNumber = 1
-            for x in range(self.limit):
-                for y in range(self.limit):
+            for x in range(self.upperLimit):
+                for y in range(self.upperLimit):
                     if self.board[x][y] != None and self.board[x][y].getOwner() == player:
                         if self.board[x][y].getPower() == u:
                             if len(self.board[x][y].getMoves()) != 0:
@@ -304,47 +305,47 @@ class Game:
 
     # calculates the possible moves for all units of a player
     def calculatePossibleMoves(self, player, initialCall):
-        for x in range(self.limit):
-            for y in range(self.limit):
+        for x in range(self.upperLimit):
+            for y in range(self.upperLimit):
                 unit = self.board[x][y]
                 if unit != None and unit.getOwner() == player:
                     # pawn moves
                     if unit.getPower() == 1:
                         if player == self.white:
-                            if y + 1 < self.limit:
+                            if y + 1 < self.upperLimit:
                                 if self.board[x][y + 1] == None:
-                                    if y + 2 == self.limit:
+                                    if y + 2 == self.upperLimit:
                                         self.addPromotionMovesToUnit(unit, x, y + 1)
                                     else:
                                         unit.addMove(str(x) + str(y + 1))
                                         if self.board[x][y + 2] == None and y == 1:
                                             unit.addMove(str(x) + str(y + 2))
-                                if x - 1 >= 0 and self.board[x - 1][y + 1] != None and self.board[x - 1][y + 1].getOwner() == self.black:
-                                    if y + 2 == self.limit:
+                                if x - 1 >= self.lowerLimit and self.board[x - 1][y + 1] != None and self.board[x - 1][y + 1].getOwner() == self.black:
+                                    if y + 2 == self.upperLimit:
                                         self.addPromotionMovesToUnit(unit, x - 1, y + 1)
                                     else:
                                         unit.addMove(str(x - 1) + str(y + 1))
-                                if x + 1 < self.limit and self.board[x + 1][y + 1] != None and self.board[x + 1][y + 1].getOwner() == self.black:
-                                    if y + 2 == self.limit:
+                                if x + 1 < self.upperLimit and self.board[x + 1][y + 1] != None and self.board[x + 1][y + 1].getOwner() == self.black:
+                                    if y + 2 == self.upperLimit:
                                         self.addPromotionMovesToUnit(unit, x + 1, y + 1)
                                     else:
                                         unit.addMove(str(x + 1) + str(y + 1))
                         elif player == self.black:
-                            if y - 1 >= 0:
+                            if y - 1 >= self.lowerLimit:
                                 if self.board[x][y - 1] == None:
-                                    if y - 1 == 0:
+                                    if y - 1 == self.lowerLimit:
                                         self.addPromotionMovesToUnit(unit, x, y - 1)
                                     else:
                                         unit.addMove(str(x) + str(y - 1))
                                         if self.board[x][y - 2] == None and y == 6:
                                             unit.addMove(str(x) + str(y - 2))
-                                if x - 1 >= 0 and self.board[x - 1][y - 1] != None and self.board[x - 1][y - 1].getOwner() == self.white:
-                                    if y - 1 == 0:
+                                if x - 1 >= self.lowerLimit and self.board[x - 1][y - 1] != None and self.board[x - 1][y - 1].getOwner() == self.white:
+                                    if y - 1 == self.lowerLimit:
                                         self.addPromotionMovesToUnit(unit, x - 1, y - 1)
                                     else:
                                         unit.addMove(str(x - 1) + str(y - 1))
-                                if x + 1 < self.limit and self.board[x + 1][y - 1] != None and self.board[x + 1][y - 1].getOwner() == self.white:
-                                    if y - 1 == 0:
+                                if x + 1 < self.upperLimit and self.board[x + 1][y - 1] != None and self.board[x + 1][y - 1].getOwner() == self.white:
+                                    if y - 1 == self.lowerLimit:
                                         self.addPromotionMovesToUnit(unit, x + 1, y - 1)
                                     else:
                                         unit.addMove(str(x + 1) + str(y - 1))
@@ -353,13 +354,13 @@ class Game:
                             if x < 7:
                                 if self.board[x + 1][y] != None and self.board[x + 1][y].getPower() == 1 and self.board[x + 1][y].en_passant_possible:
                                     unit.addMove("pr")
-                            if x > 0:
+                            if x > self.lowerLimit:
                                 if self.board[x - 1][y] != None and self.board[x - 1][y].getPower() == 1 and self.board[x - 1][y].en_passant_possible:
                                     unit.addMove("pl")
                     # rook moves
                     elif unit.getPower() == 2:
-                        if y < self.limit - 1:
-                            for i in range(self.limit - (y + 1)):
+                        if y < self.upperLimit - 1:
+                            for i in range(self.upperLimit - (y + 1)):
                                 if self.board[x][y + i + 1] == None:
                                     unit.addMove(str(x) + str(y + i + 1))
                                 elif self.board[x][y + i + 1] != None and self.board[x][y + i + 1].getOwner() == player.getOpponent():
@@ -367,7 +368,7 @@ class Game:
                                     break
                                 else:
                                     break
-                        if y > 0:
+                        if y > self.lowerLimit:
                             for i in range(y):
                                 if self.board[x][y - (i + 1)] == None:
                                     unit.addMove(str(x) + str(y - i - 1))
@@ -376,8 +377,8 @@ class Game:
                                     break
                                 else:
                                     break
-                        if x < self.limit - 1:
-                            for i in range(self.limit - (x + 1)):
+                        if x < self.upperLimit - 1:
+                            for i in range(self.upperLimit - (x + 1)):
                                 if self.board[x + i + 1][y] == None:
                                     unit.addMove(str(x + i + 1) + str(y))
                                 elif self.board[x + i + 1][y] != None and self.board[x + i + 1][y].getOwner() == player.getOpponent():
@@ -385,7 +386,7 @@ class Game:
                                     break
                                 else:
                                     break
-                        if x > 0:
+                        if x > self.lowerLimit:
                             for i in range(x):
                                 if self.board[x - (i + 1)][y] == None:
                                     unit.addMove(str(x - i - 1) + str(y))
@@ -396,7 +397,7 @@ class Game:
                                     break
                     # knight moves
                     elif unit.getPower() == 3:
-                        if y < self.limit - 1:
+                        if y < self.upperLimit - 1:
                             if x > 1:
                                 if self.board[x - 2][y + 1] == None:
                                     unit.addMove(str(x - 2) + str(y + 1))
@@ -407,8 +408,8 @@ class Game:
                                     unit.addMove(str(x + 2) + str(y + 1))
                                 elif self.board[x + 2][y + 1] != None and self.board[x + 2][y + 1].getOwner() == player.getOpponent():
                                     unit.addMove(str(x + 2) + str(y + 1))
-                            if y < self.limit - 2:
-                                if x > 0:
+                            if y < self.upperLimit - 2:
+                                if x > self.lowerLimit:
                                     if self.board[x - 1][y + 2] == None:
                                         unit.addMove(str(x - 1) + str(y + 2))
                                     elif self.board[x - 1][y + 2] != None and self.board[x - 1][y + 2].getOwner() == player.getOpponent():
@@ -418,7 +419,7 @@ class Game:
                                         unit.addMove(str(x + 1) + str(y + 2))
                                     elif self.board[x + 1][y + 2] != None and self.board[x + 1][y + 2].getOwner() == player.getOpponent():
                                         unit.addMove(str(x + 1) + str(y + 2))
-                        if y > 0:
+                        if y > self.lowerLimit:
                             if x > 1:
                                 if self.board[x - 2][y - 1] == None:
                                     unit.addMove(str(x - 2) + str(y - 1))
@@ -430,7 +431,7 @@ class Game:
                                 elif self.board[x + 2][y - 1] != None and self.board[x + 2][y - 1].getOwner() == player.getOpponent():
                                     unit.addMove(str(x + 2) + str(y - 1))
                             if y > 1:
-                                if x > 0:
+                                if x > self.lowerLimit:
                                     if self.board[x - 1][y - 2] == None:
                                         unit.addMove(str(x - 1) + str(y - 2))
                                     elif self.board[x - 1][y - 2] != None and self.board[x - 1][y - 2].getOwner() == player.getOpponent():
@@ -443,8 +444,8 @@ class Game:
                     # bishop moves
                     elif unit.getPower() == 4 or unit.getPower() == 5:
                         if y < 7:
-                            for i in range(self.limit - (y + 1)):
-                                if y + i < self.limit - 1 and x + i < self.limit - 1:
+                            for i in range(self.upperLimit - (y + 1)):
+                                if y + i < self.upperLimit - 1 and x + i < self.upperLimit - 1:
                                     if self.board[x + i + 1][y + i + 1] == None:
                                         unit.addMove(
                                             str(x + i + 1) + str(y + i + 1))
@@ -454,8 +455,8 @@ class Game:
                                         break
                                     else:
                                         break
-                            for i in range(self.limit - (y + 1)):
-                                if y + i < self.limit - 1 and x - i > 0:
+                            for i in range(self.upperLimit - (y + 1)):
+                                if y + i < self.upperLimit - 1 and x - i > self.lowerLimit:
                                     if self.board[x - i - 1][y + i + 1] == None:
                                         unit.addMove(
                                             str(x - i - 1) + str(y + i + 1))
@@ -465,9 +466,9 @@ class Game:
                                         break
                                     else:
                                         break
-                        if y > 0:
+                        if y > self.lowerLimit:
                             for i in range(y):
-                                if y - i > 0 and x + i < self.limit - 1:
+                                if y - i > self.lowerLimit and x + i < self.upperLimit - 1:
                                     if self.board[x + i + 1][y - i - 1] == None:
                                         unit.addMove(
                                             str(x + i + 1) + str(y - i - 1))
@@ -478,7 +479,7 @@ class Game:
                                     else:
                                         break
                             for i in range(y):
-                                if y - i > 0 and x - i > 0:
+                                if y - i > self.lowerLimit and x - i > self.lowerLimit:
                                     if self.board[x - i - 1][y - i - 1] == None:
                                         unit.addMove(
                                             str(x - i - 1) + str(y - i - 1))
@@ -491,8 +492,8 @@ class Game:
                     # queen moves
                     elif unit.getPower() == 6:
                         if y < 7:
-                            for i in range(self.limit - (y + 1)):
-                                if y + i < self.limit - 1 and x + i < self.limit - 1:
+                            for i in range(self.upperLimit - (y + 1)):
+                                if y + i < self.upperLimit - 1 and x + i < self.upperLimit - 1:
                                     if self.board[x + i + 1][y + i + 1] == None:
                                         unit.addMove(
                                             str(x + i + 1) + str(y + i + 1))
@@ -502,8 +503,8 @@ class Game:
                                         break
                                     else:
                                         break
-                            for i in range(self.limit - (y + 1)):
-                                if y + i < self.limit - 1 and x - i > 0:
+                            for i in range(self.upperLimit - (y + 1)):
+                                if y + i < self.upperLimit - 1 and x - i > self.lowerLimit:
                                     if self.board[x - i - 1][y + i + 1] == None:
                                         unit.addMove(
                                             str(x - i - 1) + str(y + i + 1))
@@ -513,9 +514,9 @@ class Game:
                                         break
                                     else:
                                         break
-                        if y > 0:
+                        if y > self.lowerLimit:
                             for i in range(y):
-                                if y - i > 0 and x + i < self.limit - 1:
+                                if y - i > self.lowerLimit and x + i < self.upperLimit - 1:
                                     if self.board[x + i + 1][y - i - 1] == None:
                                         unit.addMove(
                                             str(x + i + 1) + str(y - i - 1))
@@ -526,7 +527,7 @@ class Game:
                                     else:
                                         break
                             for i in range(y):
-                                if y - i > 0 and x - i > 0:
+                                if y - i > self.lowerLimit and x - i > self.lowerLimit:
                                     if self.board[x - i - 1][y - i - 1] == None:
                                         unit.addMove(
                                             str(x - i - 1) + str(y - i - 1))
@@ -537,7 +538,7 @@ class Game:
                                     else:
                                         break
                         if y < 7:
-                            for i in range(self.limit - (y + 1)):
+                            for i in range(self.upperLimit - (y + 1)):
                                 if self.board[x][y + i + 1] == None:
                                     unit.addMove(str(x) + str(y + i + 1))
                                 elif self.board[x][y + i + 1] != None and self.board[x][y + i + 1].getOwner() == player.getOpponent():
@@ -545,7 +546,7 @@ class Game:
                                     break
                                 else:
                                     break
-                        if y > 0:
+                        if y > self.lowerLimit:
                             for i in range(y):
                                 if self.board[x][y - (i + 1)] == None:
                                     unit.addMove(str(x) + str(y - i - 1))
@@ -555,7 +556,7 @@ class Game:
                                 else:
                                     break
                         if x < 7:
-                            for i in range(self.limit - (x + 1)):
+                            for i in range(self.upperLimit - (x + 1)):
                                 if self.board[x + i + 1][y] == None:
                                     unit.addMove(str(x + i + 1) + str(y))
                                 elif self.board[x + i + 1][y] != None and self.board[x + i + 1][y].getOwner() == player.getOpponent():
@@ -563,7 +564,7 @@ class Game:
                                     break
                                 else:
                                     break
-                        if x > 0:
+                        if x > self.lowerLimit:
                             for i in range(x):
                                 if self.board[x - (i + 1)][y] == None:
                                     unit.addMove(str(x - i - 1) + str(y))
@@ -579,37 +580,37 @@ class Game:
                                 unit.addMove(str(x) + str(y + 1))
                             elif self.board[x][y + 1] != None and self.board[x][y + 1].getOwner() == player.getOpponent():
                                 unit.addMove(str(x) + str(y + 1))
-                            if x < self.limit - 1:
+                            if x < self.upperLimit - 1:
                                 if self.board[x + 1][y + 1] == None:
                                     unit.addMove(str(x + 1) + str(y + 1))
                                 elif self.board[x + 1][y + 1] != None and self.board[x + 1][y + 1].getOwner() == player.getOpponent():
                                     unit.addMove(str(x + 1) + str(y + 1))
-                            if x > 0:
+                            if x > self.lowerLimit:
                                 if self.board[x - 1][y + 1] == None:
                                     unit.addMove(str(x - 1) + str(y + 1))
                                 elif self.board[x - 1][y + 1] != None and self.board[x - 1][y + 1].getOwner() == player.getOpponent():
                                     unit.addMove(str(x - 1) + str(y + 1))
-                        if y > 0:
+                        if y > self.lowerLimit:
                             if self.board[x][y - 1] == None:
                                 unit.addMove(str(x) + str(y - 1))
                             elif self.board[x][y - 1] != None and self.board[x][y - 1].getOwner() == player.getOpponent():
                                 unit.addMove(str(x) + str(y - 1))
-                            if x < self.limit - 1:
+                            if x < self.upperLimit - 1:
                                 if self.board[x + 1][y - 1] == None:
                                     unit.addMove(str(x + 1) + str(y - 1))
                                 elif self.board[x + 1][y - 1] != None and self.board[x + 1][y - 1].getOwner() == player.getOpponent():
                                     unit.addMove(str(x + 1) + str(y - 1))
-                            if x - i > 0:
+                            if x - i > self.lowerLimit:
                                 if self.board[x - 1][y - 1] == None:
                                     unit.addMove(str(x - 1) + str(y - 1))
                                 elif self.board[x - 1][y - 1] != None and self.board[x - 1][y - 1].getOwner() == player.getOpponent():
                                     unit.addMove(str(x - 1) + str(y - 1))
-                        if x < self.limit - 1:
+                        if x < self.upperLimit - 1:
                             if self.board[x + 1][y] == None:
                                 unit.addMove(str(x + 1) + str(y))
                             elif self.board[x + 1][y] != None and self.board[x + 1][y].getOwner() == player.getOpponent():
                                 unit.addMove(str(x + 1) + str(y))
-                        if x > 0:
+                        if x > self.lowerLimit:
                             if self.board[x - 1][y] == None:
                                 unit.addMove(str(x - 1) + str(y))
                             elif self.board[x - 1][y] != None and self.board[x - 1][y].getOwner() == player.getOpponent():
@@ -649,8 +650,8 @@ class Game:
     def playerIsInCheck(self, player):
         self.calculatePossibleMoves(player.getOpponent(), False)
         king_position = player.getKingPosition(self.board)
-        for x in range(self.limit):
-            for y in range(self.limit):
+        for x in range(self.upperLimit):
+            for y in range(self.upperLimit):
                 unit = self.board[x][y]
                 if unit != None:
                     if unit.getOwner() == player.getOpponent():
@@ -662,9 +663,9 @@ class Game:
     # generates a blank chess board
     def generateBoard(self):
         board = []
-        for x in range(self.limit):
+        for x in range(self.upperLimit):
             board.append([])
-            for _ in range(self.limit):
+            for _ in range(self.upperLimit):
                 board[x].append(None)
         return board
 
