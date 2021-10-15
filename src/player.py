@@ -21,7 +21,7 @@ class Player:
             for y in range(8):
                 if board[x][y] != None:
                     unit = board[x][y]
-                    if unit.getPower() == 7 and unit.getOwner() == self.color:
+                    if unit.getPower() == 7 and unit.owner == self.color:
                         move_string = str(x) + str(y)
                         return move_string
 
@@ -38,18 +38,6 @@ class Player:
 
     def setColor(self, color):
         self.color = color
-
-    def getOpponent(self):
-        return self.opponent
-
-    def isInCheck(self):
-        return self.inCheck
-
-    def setIsInCheck(self, isInCheck):
-        self.inCheck = isInCheck
-
-    def setOpponent(self, opponent):
-        self.opponent = opponent
 
     def castlingIsPermitted(self):
         return self.castling_permitted

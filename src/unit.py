@@ -56,12 +56,6 @@ class Unit:
     def setMoves(self, moves):
         self.moves = moves
 
-    def getOwner(self):
-        return self.owner
-
-    def setOwner(self, owner):
-        self.owner = owner
-
     def getPower(self):
         return self.power
 

@@ -34,7 +34,7 @@ def getBlackUnitsPositionsString(game):
         for x in range(8):
             for y in range(8):
                 if game.board[x][y] != None:
-                    if game.board[x][y].getOwner() == game.black:
+                    if game.board[x][y].owner == game.black:
                         if game.board[x][y].getPower() == p + 1:
                             blackUnitsPositionsString += str(x)
                             blackUnitsPositionsString += str(y)
@@ -47,7 +47,7 @@ def getWhiteUnitsPositionsString(game):
         for x in range(8):
             for y in range(8):
                 if game.board[x][y] != None:
-                    if game.board[x][y].getOwner() == game.white:
+                    if game.board[x][y].owner == game.white:
                         if game.board[x][y].getPower() == p + 1:
                             whiteUnitsPositionsString += str(x)
                             whiteUnitsPositionsString += str(y)
@@ -60,7 +60,7 @@ def getBlackUnitsString(game):
         for x in range(8):
             for y in range(8):
                 if game.board[x][y] != None:
-                    if game.board[x][y].getOwner() == game.black:
+                    if game.board[x][y].owner == game.black:
                         if game.board[x][y].getPower() == p + 1:
                             blackUnitsString += str(p + 1)
     return blackUnitsString
@@ -72,7 +72,7 @@ def getWhiteUnitsString(game):
         for x in range(8):
             for y in range(8):
                 if game.board[x][y] != None:
-                    if game.board[x][y].getOwner() == game.white:
+                    if game.board[x][y].owner == game.white:
                         if game.board[x][y].getPower() == p + 1:
                             whiteUnitsString += str(p + 1)
     return whiteUnitsString
@@ -92,6 +92,6 @@ def getNumberOfWhiteUnits(game):
     for x in range(8):
         for y in range(8):
             if game.board[x][y] != None:
-                if game.board[x][y].getOwner() == game.white:
+                if game.board[x][y].owner == game.white:
                     numberOfWhiteUnits += 1
     return numberOfWhiteUnits
