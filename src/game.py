@@ -1,11 +1,11 @@
 # coding: utf-8
 import os.path
-from player import *
-from unit import *
-from log import *
-from databaseLocationString import generateDatabaseLocationString
-from database import loadData, writeData
-from moveCalculations import calculatePossibleMoves
+from src.player import *
+from src.unit import *
+from src.log import *
+from src.databaseLocationString import generateDatabaseLocationString
+from src.database import loadData, writeData
+from src.moveCalculations import calculatePossibleMoves
 
 
 class Game:
@@ -361,3 +361,9 @@ class Game:
         self.board[4][7] = Unit(7, self.black)
         # white king
         self.board[4][0] = Unit(7, self.white)
+
+    # clears the board
+    def clearBoard(self):
+        for x in range(self.upperLimit):
+            for y in range(self.upperLimit):
+                self.board[x][y] = None

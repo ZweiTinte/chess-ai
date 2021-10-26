@@ -1,6 +1,6 @@
 # coding: utf-8
-from database import loadData
-from databaseLocationString import generateDatabaseLocationString
+from src.database import loadData
+from src.databaseLocationString import generateDatabaseLocationString
 
 # appends text to the log file
 def logToFile(text):
