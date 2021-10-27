@@ -3,7 +3,7 @@ import unittest
 from src.unit import *
 from src.game import *
 
-class TestPawnMoves(unittest.TestCase):
+class TestWhitePawnMoves(unittest.TestCase):
 
     def setUp(self):
         self.game = Game()
