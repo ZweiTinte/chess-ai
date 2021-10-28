@@ -1,1 +1,1 @@
-from testMoves import *
+from testPawnMoves import *
