@@ -1,20 +1,18 @@
 # coding: utf-8
 
+# unit power values
+PAWN = 1
+ROOK = 2
+KNIGHT = 3
+BISHOPL = 4
+BISHOPR = 5
+QUEEN = 6
+KING = 7
 
 class Unit:
     def __init__(self, power, owner):
         # setting owner of the unit (black | white)
         self.owner = owner
-        # setting power of the unit
-        """
-		1 = pawn
-		2 = rook
-		3 = knight
-		4 = left bishop
-		5 = right bishop
-		6 = queen
-		7 = king
-		"""
         self.power = power
         self.moves = []
         # special pawn move
