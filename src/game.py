@@ -280,20 +280,22 @@ class Game:
         jsonFileString = generateDatabaseLocationString(self)
         data = {}
         # Go through all unit types and write the moves to the file
-        for u in range(8):
+        for u in range(PAWN, KING + 1):
             unitNumber = 1
             for x in range(self.upperLimit):
                 for y in range(self.upperLimit):
-                    if not self.fieldIsEmpty(x, y) and self.board[x][y].owner == player:
-                        if self.board[x][y].getPower() == u:
-                            if len(self.board[x][y].getMoves()) != 0:
-                                jsonUnitString = str(u) + "_" + str(unitNumber)
-                                data[jsonUnitString] = {}
-                                for m in self.board[x][y].getMoves():
-                                    data[jsonUnitString][str(m)] = {}
-                                    data[jsonUnitString][str(m)]["w"] = 1
-                                    data[jsonUnitString][str(m)]["l"] = 1
-                            unitNumber += 1
+                    if not self.fieldIsEmpty(x, y):
+                        unit = self.board[x][y]
+                        if unit.owner == player:
+                            if unit.getPower() == u:
+                                if len(unit.getMoves()) != 0:
+                                    jsonUnitString = str(u) + "_" + str(unitNumber)
+                                    data[jsonUnitString] = {}
+                                    for m in unit.getMoves():
+                                        data[jsonUnitString][str(m)] = {}
+                                        data[jsonUnitString][str(m)]["w"] = 1
+                                        data[jsonUnitString][str(m)]["l"] = 1
+                                unitNumber += 1
         # write the data to a json file
         writeData(jsonFileString, data)
 
@@ -331,39 +333,43 @@ class Game:
     def setUnits(self):
         # black pawns
         for x in range(8):
-            self.board[x][6] = Unit(1, self.black)
+            self.setUnitOnBoard(x, 6, Unit(PAWN, self.black))
         # white pawns
         for x in range(8):
-            self.board[x][1] = Unit(1, self.white)
+            self.setUnitOnBoard(x, 1, Unit(PAWN, self.white))
         # black rooks
-        self.board[0][7] = Unit(2, self.black)
-        self.board[7][7] = Unit(2, self.black)
+        self.setUnitOnBoard(0, 7, Unit(ROOK, self.black))
+        self.setUnitOnBoard(7, 7, Unit(ROOK, self.black))
         # white rooks
-        self.board[0][0] = Unit(2, self.white)
-        self.board[7][0] = Unit(2, self.white)
+        self.setUnitOnBoard(0, 0, Unit(ROOK, self.white))
+        self.setUnitOnBoard(7, 0, Unit(ROOK, self.white))
         # black knights
-        self.board[1][7] = Unit(3, self.black)
-        self.board[6][7] = Unit(3, self.black)
+        self.setUnitOnBoard(1, 7, Unit(KNIGHT, self.black))
+        self.setUnitOnBoard(6, 7, Unit(KNIGHT, self.black))
         # white knights
-        self.board[1][0] = Unit(3, self.white)
-        self.board[6][0] = Unit(3, self.white)
+        self.setUnitOnBoard(1, 0, Unit(KNIGHT, self.white))
+        self.setUnitOnBoard(6, 0, Unit(KNIGHT, self.white))
         # black bishops
-        self.board[2][7] = Unit(5, self.black)
-        self.board[5][7] = Unit(4, self.black)
+        self.setUnitOnBoard(2, 7, Unit(BISHOPR, self.black))
+        self.setUnitOnBoard(5, 7, Unit(BISHOPL, self.black))
         # white bishops
-        self.board[2][0] = Unit(4, self.white)
-        self.board[5][0] = Unit(5, self.white)
+        self.setUnitOnBoard(2, 0, Unit(BISHOPL, self.white))
+        self.setUnitOnBoard(5, 0, Unit(BISHOPR, self.white))
         # black queen
-        self.board[3][7] = Unit(6, self.black)
+        self.setUnitOnBoard(3, 7, Unit(QUEEN, self.black))
         # white queen
-        self.board[3][0] = Unit(6, self.white)
+        self.setUnitOnBoard(3, 0, Unit(QUEEN, self.white))
         # black king
-        self.board[4][7] = Unit(7, self.black)
+        self.setUnitOnBoard(4, 7, Unit(KING, self.black))
         # white king
-        self.board[4][0] = Unit(7, self.white)
+        self.setUnitOnBoard(4, 0, Unit(KING, self.white))
 
     # clears the board
     def clearBoard(self):
         for x in range(self.upperLimit):
             for y in range(self.upperLimit):
                 self.board[x][y] = None
+    
+    # sets a unit on the chess board
+    def setUnitOnBoard(self, posX, posY, unit):
+        self.board[posX][posY] = unit
