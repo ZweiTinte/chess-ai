@@ -1,1 +1,2 @@
-from testPawnMoves import *
+from testWhitePawnMoves import *
+from testBlackPawnMoves import *

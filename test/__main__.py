@@ -1,6 +1,5 @@
 import sys
 import unittest
-from unittest.suite import TestSuite
 
 sys.path.append("../src")
 loader = unittest.TestLoader()
