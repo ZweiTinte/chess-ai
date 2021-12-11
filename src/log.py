@@ -2,9 +2,11 @@
 from src.database import loadData
 from src.databaseLocationString import generateDatabaseLocationString
 
+LOG_FILE_NAME = "game_log.txt"
+
 # appends text to the log file
 def logToFile(text):
-    f = open("game_log.txt", "a")
+    f = open(LOG_FILE_NAME, "a")
     f.write(text + "\n")
     f.close()
 

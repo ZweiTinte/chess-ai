@@ -230,17 +230,19 @@ class Game:
         # log the board to the console
         logBoard(self)
 
-        # reset passant possible variable for the turn player pawns
+        # update en passant
         self.resetPassantPossible()
+        self.setEnPassant(move, x, y, upy)
 
-        # sets passant variable True for opponent pawns nextby
+    # sets passant variable True for opponent pawns nextby
+    def setEnPassant(self, move, x, y, upy):
         if move[0][0] == "1":
             if (self.turn == self.white and y == upy + 2) or (self.turn == self.black and y == upy - 2):
                 if x - 1 > self.lowerLimit and self.board[x - 1][y] != None:
-                    if self.board[x - 1][y].owner == self.black:
+                    if self.board[x - 1][y].owner == self.turn.opponent:
                         self.board[x - 1][y].en_passant_possible = True
                 if x + 1 < self.upperLimit and self.board[x + 1][y] != None:
-                    if self.board[x + 1][y].owner == self.black:
+                    if self.board[x + 1][y].owner == self.turn.opponent:
                         self.board[x + 1][y].en_passant_possible = True
 
     # increments the win or loss value of a move in the json file

@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from src.unit import PAWN
+
 # calculates the possible moves for all units of a player
 def calculatePossibleMoves(game, player, initialCall):
     for x in range(game.upperLimit):
@@ -52,15 +54,15 @@ def calculatePossibleMoves(game, player, initialCall):
                                         unit.addMove(str(x + 1) + str(y - 1))
                     # en_passant calculation
                     if (y == 4 and unit.owner == game.white) or (y == 3 and unit.owner == game.black):
-                        if x < 7:
+                        if x < game.upperLimit - 1:
                             if not game.fieldIsEmpty(x + 1, y):
-                                if game.board[x + 1][y].getPower() == 1:
-                                    if game.board[x + 1][y].en_passant_possible:
+                                if game.board[x + 1][y].getPower() == PAWN:
+                                    if unit.en_passant_possible:
                                         unit.addMove("pr")
                         if x > game.lowerLimit:
                             if not game.fieldIsEmpty(x - 1, y):
-                                if game.board[x - 1][y].getPower() == 1:
-                                    if game.board[x - 1][y].en_passant_possible:
+                                if game.board[x - 1][y].getPower() == PAWN:
+                                    if unit.en_passant_possible:
                                         unit.addMove("pl")
                 # rook moves
                 elif unit.getPower() == 2:

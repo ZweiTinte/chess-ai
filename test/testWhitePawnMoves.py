@@ -1,5 +1,7 @@
 # coding: utf-8
 import unittest
+import shutil
+from src.databaseLocationString import DB_DIR_NAME
 from src.unit import *
 from src.game import *
 from test.testHelpers import assertExpectedMovesResults, assertNumberOfWhiteAndTotalUnits
@@ -146,3 +148,45 @@ class TestWhitePawnMoves(unittest.TestCase):
         calculatePossibleMoves(self.game, self.game.turn, True)
         assertExpectedMovesResults(["173", "176"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 2, 2)
+
+    def testWhiteEnPassantLeft(self):
+        game = self.game
+        opponentUnit = Unit(PAWN, game.black)
+        game.setUnitOnBoard(1, 4, self.pawnUnit)
+        game.setUnitOnBoard(0, 6, opponentUnit)
+        # black turn
+        game.turn = game.turn.opponent
+        calculatePossibleMoves(game, game.turn, True)
+        assertExpectedMovesResults(["05", "04"], opponentUnit)
+        opponentUnit.moves = ["04"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        game.turn = game.turn.opponent
+        # white turn
+        calculatePossibleMoves(game, game.turn, True)
+        assertExpectedMovesResults(["15", "pl"], self.pawnUnit)
+        assertNumberOfWhiteAndTotalUnits(game, 1, 2)
+        # clean up database and logfile
+        os.remove(LOG_FILE_NAME)
+        shutil.rmtree(DB_DIR_NAME)
+
+    def testWhiteEnPassantRight(self):
+        game = self.game
+        opponentUnit = Unit(PAWN, game.black)
+        game.setUnitOnBoard(1, 4, self.pawnUnit)
+        game.setUnitOnBoard(2, 6, opponentUnit)
+        # black turn
+        game.turn = game.turn.opponent
+        calculatePossibleMoves(game, game.turn, True)
+        assertExpectedMovesResults(["25", "24"], opponentUnit)
+        opponentUnit.moves = ["24"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        game.turn = game.turn.opponent
+        # white turn
+        calculatePossibleMoves(game, game.turn, True)
+        assertExpectedMovesResults(["15", "pr"], self.pawnUnit)
+        assertNumberOfWhiteAndTotalUnits(game, 1, 2)
+        # clean up database and logfile
+        os.remove(LOG_FILE_NAME)
+        shutil.rmtree(DB_DIR_NAME)

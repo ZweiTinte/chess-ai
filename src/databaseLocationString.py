@@ -1,9 +1,11 @@
 # coding: utf-8
 import os.path
 
+DB_DIR_NAME = "db"
+
 # returns database location string for current state
 def generateDatabaseLocationString(game):
-    dbLocationString = "db/"
+    dbLocationString = DB_DIR_NAME + "/"
     dbLocationString += str(getNumberOfUnits(game)) + "/"
     if not os.path.exists(dbLocationString):
         os.makedirs(dbLocationString)
