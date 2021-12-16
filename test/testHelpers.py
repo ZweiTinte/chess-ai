@@ -1,7 +1,10 @@
 # coding: utf-8
 from unittest.case import TestCase
-from src.databaseLocationString import getNumberOfUnits, getNumberOfWhiteUnits
+from src.log import LOG_FILE_NAME
+from src.databaseLocationString import DB_DIR_NAME, getNumberOfUnits, getNumberOfWhiteUnits
 from unittest import TestCase
+import shutil
+import os
 
 tc = TestCase()
 
@@ -13,3 +16,7 @@ def assertExpectedMovesResults(expectedMoves, unit):
     for move in expectedMoves:
         tc.assertTrue(move in unit.moves)
     tc.assertEqual(len(unit.moves), len(expectedMoves))
+
+def removeLogFileAndDatabase():
+    os.remove(LOG_FILE_NAME)
+    shutil.rmtree(DB_DIR_NAME)

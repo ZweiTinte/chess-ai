@@ -1,10 +1,8 @@
 # coding: utf-8
 import unittest
-import shutil
-from src.databaseLocationString import DB_DIR_NAME
 from src.unit import *
 from src.game import *
-from test.testHelpers import assertExpectedMovesResults, assertNumberOfWhiteAndTotalUnits
+from test.testHelpers import assertExpectedMovesResults, assertNumberOfWhiteAndTotalUnits, removeLogFileAndDatabase
 
 class TestBlackPawnMoves(unittest.TestCase):
 
@@ -168,8 +166,7 @@ class TestBlackPawnMoves(unittest.TestCase):
         assertExpectedMovesResults(["12", "pr"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(game, 1, 2)
         # clean up database and logfile
-        os.remove(LOG_FILE_NAME)
-        shutil.rmtree(DB_DIR_NAME)
+        removeLogFileAndDatabase()
 
     def testBlackEnPassantLeft(self):
         game = self.game
@@ -189,5 +186,4 @@ class TestBlackPawnMoves(unittest.TestCase):
         assertExpectedMovesResults(["12", "pl"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(game, 1, 2)
         # clean up database and logfile
-        os.remove(LOG_FILE_NAME)
-        shutil.rmtree(DB_DIR_NAME)
+        removeLogFileAndDatabase()

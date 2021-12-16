@@ -2,6 +2,68 @@
 
 from src.unit import PAWN
 
+PASSANT_RIGHT = "pr"
+PASSANT_LEFT = "pl"
+
+def calculatePawnMoves(unit, player, game):
+    position = game.getPositionOfUnit(unit)
+    x = position[0]
+    y = position[1]
+    if player == game.white:
+        if y + 1 < game.upperLimit:
+            if game.fieldIsEmpty(x, y + 1):
+                if y + 2 == game.upperLimit:
+                    game.addPromotionMovesToUnit(unit, x, y + 1)
+                else:
+                    unit.addMove(str(x) + str(y + 1))
+                    if game.fieldIsEmpty(x, y + 2) and y == 1:
+                        unit.addMove(str(x) + str(y + 2))
+            if x - 1 >= game.lowerLimit and not game.fieldIsEmpty(x - 1, y + 1):
+                if game.board[x - 1][y + 1].owner == game.black:
+                    if y + 2 == game.upperLimit:
+                        game.addPromotionMovesToUnit(unit, x - 1, y + 1)
+                    else:
+                        unit.addMove(str(x - 1) + str(y + 1))
+            if x + 1 < game.upperLimit and not game.fieldIsEmpty(x + 1, y + 1):
+                if game.board[x + 1][y + 1].owner == game.black:
+                    if y + 2 == game.upperLimit:
+                        game.addPromotionMovesToUnit(unit, x + 1, y + 1)
+                    else:
+                        unit.addMove(str(x + 1) + str(y + 1))
+    elif player == game.black:
+        if y - 1 >= game.lowerLimit:
+            if game.fieldIsEmpty(x, y - 1):
+                if y - 1 == game.lowerLimit:
+                    game.addPromotionMovesToUnit(unit, x, y - 1)
+                else:
+                    unit.addMove(str(x) + str(y - 1))
+                    if game.fieldIsEmpty(x, y - 2) and y == 6:
+                        unit.addMove(str(x) + str(y - 2))
+            if x - 1 >= game.lowerLimit and not game.fieldIsEmpty(x - 1, y - 1):
+                if game.board[x - 1][y - 1].owner == game.white:
+                    if y - 1 == game.lowerLimit:
+                        game.addPromotionMovesToUnit(unit, x - 1, y - 1)
+                    else:
+                        unit.addMove(str(x - 1) + str(y - 1))
+            if x + 1 < game.upperLimit and not game.fieldIsEmpty(x + 1, y - 1):
+                if game.board[x + 1][y - 1].owner == game.white:
+                    if y - 1 == game.lowerLimit:
+                        game.addPromotionMovesToUnit(unit, x + 1, y - 1)
+                    else:
+                        unit.addMove(str(x + 1) + str(y - 1))
+    # en_passant calculation
+    if (y == 4 and unit.owner == game.white) or (y == 3 and unit.owner == game.black):
+        if x < game.upperLimit - 1:
+            if not game.fieldIsEmpty(x + 1, y):
+                if game.board[x + 1][y].getPower() == PAWN:
+                    if unit.en_passant_possible:
+                        unit.addMove(PASSANT_RIGHT)
+        if x > game.lowerLimit:
+            if not game.fieldIsEmpty(x - 1, y):
+                if game.board[x - 1][y].getPower() == PAWN:
+                    if unit.en_passant_possible:
+                        unit.addMove(PASSANT_LEFT)
+
 # calculates the possible moves for all units of a player
 def calculatePossibleMoves(game, player, initialCall):
     for x in range(game.upperLimit):
@@ -9,61 +71,8 @@ def calculatePossibleMoves(game, player, initialCall):
             unit = game.board[x][y]
             if unit != None and unit.owner == player:
                 # pawn moves
-                if unit.getPower() == 1:
-                    if player == game.white:
-                        if y + 1 < game.upperLimit:
-                            if game.fieldIsEmpty(x, y + 1):
-                                if y + 2 == game.upperLimit:
-                                    game.addPromotionMovesToUnit(unit, x, y + 1)
-                                else:
-                                    unit.addMove(str(x) + str(y + 1))
-                                    if game.fieldIsEmpty(x, y + 2) and y == 1:
-                                        unit.addMove(str(x) + str(y + 2))
-                            if x - 1 >= game.lowerLimit and not game.fieldIsEmpty(x - 1, y + 1):
-                                if game.board[x - 1][y + 1].owner == game.black:
-                                    if y + 2 == game.upperLimit:
-                                        game.addPromotionMovesToUnit(unit, x - 1, y + 1)
-                                    else:
-                                        unit.addMove(str(x - 1) + str(y + 1))
-                            if x + 1 < game.upperLimit and not game.fieldIsEmpty(x + 1, y + 1):
-                                if game.board[x + 1][y + 1].owner == game.black:
-                                    if y + 2 == game.upperLimit:
-                                        game.addPromotionMovesToUnit(unit, x + 1, y + 1)
-                                    else:
-                                        unit.addMove(str(x + 1) + str(y + 1))
-                    elif player == game.black:
-                        if y - 1 >= game.lowerLimit:
-                            if game.fieldIsEmpty(x, y - 1):
-                                if y - 1 == game.lowerLimit:
-                                    game.addPromotionMovesToUnit(unit, x, y - 1)
-                                else:
-                                    unit.addMove(str(x) + str(y - 1))
-                                    if game.fieldIsEmpty(x, y - 2) and y == 6:
-                                        unit.addMove(str(x) + str(y - 2))
-                            if x - 1 >= game.lowerLimit and not game.fieldIsEmpty(x - 1, y - 1):
-                                if game.board[x - 1][y - 1].owner == game.white:
-                                    if y - 1 == game.lowerLimit:
-                                        game.addPromotionMovesToUnit(unit, x - 1, y - 1)
-                                    else:
-                                        unit.addMove(str(x - 1) + str(y - 1))
-                            if x + 1 < game.upperLimit and not game.fieldIsEmpty(x + 1, y - 1):
-                                if game.board[x + 1][y - 1].owner == game.white:
-                                    if y - 1 == game.lowerLimit:
-                                        game.addPromotionMovesToUnit(unit, x + 1, y - 1)
-                                    else:
-                                        unit.addMove(str(x + 1) + str(y - 1))
-                    # en_passant calculation
-                    if (y == 4 and unit.owner == game.white) or (y == 3 and unit.owner == game.black):
-                        if x < game.upperLimit - 1:
-                            if not game.fieldIsEmpty(x + 1, y):
-                                if game.board[x + 1][y].getPower() == PAWN:
-                                    if unit.en_passant_possible:
-                                        unit.addMove("pr")
-                        if x > game.lowerLimit:
-                            if not game.fieldIsEmpty(x - 1, y):
-                                if game.board[x - 1][y].getPower() == PAWN:
-                                    if unit.en_passant_possible:
-                                        unit.addMove("pl")
+                if unit.power == PAWN:
+                    calculatePawnMoves(unit, player, game)
                 # rook moves
                 elif unit.getPower() == 2:
                     if y < game.upperLimit - 1:

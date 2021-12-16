@@ -7,7 +7,6 @@ from src.databaseLocationString import generateDatabaseLocationString
 from src.database import loadData, writeData
 from src.moveCalculations import calculatePossibleMoves
 
-
 class Game:
     def __init__(self):
         # setting players
@@ -37,7 +36,7 @@ class Game:
         self.turn = self.white
 
     # returns a unit's position
-    def getUnitPosition(self, unitString, color):
+    def getUnitPosition(self, unitString):
         unitNumber = 1
         for x in range(self.upperLimit):
             for y in range(self.upperLimit):
@@ -144,7 +143,7 @@ class Game:
     # moves a unit
     def moveUnit(self):
         move = self.getBestMove()
-        unitPosition = self.getUnitPosition(move[0], self.turn)
+        unitPosition = self.getUnitPosition(move[0])
         upx = unitPosition[0]
         upy = unitPosition[1]
         x = move[1][0]
@@ -375,3 +374,10 @@ class Game:
     # sets a unit on the chess board
     def setUnitOnBoard(self, posX, posY, unit):
         self.board[posX][posY] = unit
+
+    def getPositionOfUnit(self, unit):
+        for x in range(self.upperLimit):
+            for y in range(self.upperLimit):
+                field = self.board[x][y]
+                if not self.fieldIsEmpty(x, y) and field == unit:
+                    return (x, y)
