@@ -150,6 +150,7 @@ class TestWhitePawnMoves(unittest.TestCase):
     def testWhiteEnPassantLeft(self):
         game = self.game
         opponentUnit = Unit(PAWN, game.black)
+        opponentUnit2 = Unit(PAWN, game.black)
         game.setUnitOnBoard(1, 4, self.pawnUnit)
         game.setUnitOnBoard(0, 6, opponentUnit)
         # black turn
@@ -161,15 +162,17 @@ class TestWhitePawnMoves(unittest.TestCase):
         game.moveUnit()
         game.turn = game.turn.opponent
         # white turn
+        game.setUnitOnBoard(2, 4, opponentUnit2)
         calculatePossibleMoves(game, game.turn, True)
         assertExpectedMovesResults(["15", "pl"], self.pawnUnit)
-        assertNumberOfWhiteAndTotalUnits(game, 1, 2)
+        assertNumberOfWhiteAndTotalUnits(game, 1, 3)
         # clean up database and logfile
         removeLogFileAndDatabase()
 
     def testWhiteEnPassantRight(self):
         game = self.game
         opponentUnit = Unit(PAWN, game.black)
+        opponentUnit2 = Unit(PAWN, game.black)
         game.setUnitOnBoard(1, 4, self.pawnUnit)
         game.setUnitOnBoard(2, 6, opponentUnit)
         # black turn
@@ -181,9 +184,10 @@ class TestWhitePawnMoves(unittest.TestCase):
         game.moveUnit()
         game.turn = game.turn.opponent
         # white turn
+        game.setUnitOnBoard(0, 4, opponentUnit2)
         calculatePossibleMoves(game, game.turn, True)
         assertExpectedMovesResults(["15", "pr"], self.pawnUnit)
-        assertNumberOfWhiteAndTotalUnits(game, 1, 2)
+        assertNumberOfWhiteAndTotalUnits(game, 1, 3)
         # clean up database and logfile
         removeLogFileAndDatabase()
         

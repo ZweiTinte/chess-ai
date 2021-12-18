@@ -68,10 +68,21 @@ class Game:
     def resetPassantPossible(self):
         for x in range(8):
             for y in range(8):
-                if self.board[x][y] != None:
-                    if self.board[x][y].getPower() == 1:
-                        if self.board[x][y].owner == self.turn:
-                            self.board[x][y].en_passant_possible = False
+                unit = self.board[x][y]
+                if unit != None:
+                    if unit.getPower() == 1:
+                        if unit.owner == self.turn:
+                            unit.en_passant_possible = False
+
+    # resets the passant possible units of the turn player
+    def resetPassantPossible(self):
+        for x in range(8):
+            for y in range(8):
+                unit = self.board[x][y]
+                if unit != None:
+                    if unit.getPower() == 1:
+                        if unit.owner == self.turn:
+                            unit.isPassantUnit = False
 
     # checks if the json file for this turn already exists or not
     def jsonFileExists(self):
@@ -99,6 +110,7 @@ class Game:
     def makeATurn(self):
         # prepare the possible moves file if it doesn't exist
         self.resetPossibleMoves()
+        self.resetPassantUnits()
         calculatePossibleMoves(self, self.turn, True)
         if not self.jsonFileExists():
             self.writeUnitMovesToFile(self.turn)
@@ -235,14 +247,22 @@ class Game:
 
     # sets passant variable True for opponent pawns nextby
     def setEnPassant(self, move, x, y, upy):
-        if move[0][0] == "1":
+        if move[0][0] == str(PAWN):
             if (self.turn == self.white and y == upy + 2) or (self.turn == self.black and y == upy - 2):
-                if x - 1 > self.lowerLimit and self.board[x - 1][y] != None:
-                    if self.board[x - 1][y].owner == self.turn.opponent:
-                        self.board[x - 1][y].en_passant_possible = True
-                if x + 1 < self.upperLimit and self.board[x + 1][y] != None:
-                    if self.board[x + 1][y].owner == self.turn.opponent:
-                        self.board[x + 1][y].en_passant_possible = True
+                # passant right
+                if x > self.lowerLimit:
+                    opponentUnit = self.board[x - 1][y]
+                    if opponentUnit != None:
+                        if opponentUnit.owner == self.turn.opponent:
+                            opponentUnit.en_passant_possible = True
+                            self.board[x][y].isPassantUnit = True
+                # passant left
+                if x + 1 < self.upperLimit:
+                    opponentUnit = self.board[x + 1][y]
+                    if opponentUnit != None:
+                        if opponentUnit.owner == self.turn.opponent:
+                            opponentUnit.en_passant_possible = True
+                            self.board[x][y].isPassantUnit = True
 
     # increments the win or loss value of a move in the json file
     def incrementMoveChance(self, unit, move, win, jsonFileString):
