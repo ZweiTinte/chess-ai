@@ -232,7 +232,6 @@ class Game:
         logBoard(self)
 
         # update en passant
-        self.resetPassantPossible()
         self.setEnPassant(move, x, y, upy)
 
     # sets passant variable True for opponent pawns nextby
