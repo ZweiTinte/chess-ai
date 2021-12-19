@@ -65,13 +65,11 @@ def calculateEnPassantMoves(unit, game, x, y):
         if x < game.upperLimit - 1:
             opponentUnit = game.board[x + 1][y]
             if unitIsPassantPossible(opponentUnit):
-                if unit.en_passant_possible:
-                    unit.addMove(PASSANT_RIGHT)
+                unit.addMove(PASSANT_RIGHT)
         if x > game.lowerLimit:
             opponentUnit = game.board[x - 1][y]
             if unitIsPassantPossible(opponentUnit):
-                if unit.en_passant_possible:
-                    unit.addMove(PASSANT_LEFT)
+                unit.addMove(PASSANT_LEFT)
 
 def unitIsPassantPossible(unit):
     if unit != None:

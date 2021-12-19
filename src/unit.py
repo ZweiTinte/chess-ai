@@ -16,7 +16,6 @@ class Unit:
         self.power = power
         self.moves = []
         # special pawn move
-        self.en_passant_possible = False
         self.isPassantUnit = False
         # rook castling variable
         self.moved = False

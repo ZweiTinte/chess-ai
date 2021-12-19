@@ -64,23 +64,13 @@ class Game:
             state = winner.opponent.getSituations()[i]
             self.incrementMoveChance(unit, move, False, state)
 
-    # resets the passant possible variable for the pawns
-    def resetPassantPossible(self):
-        for x in range(8):
-            for y in range(8):
-                unit = self.board[x][y]
-                if unit != None:
-                    if unit.getPower() == 1:
-                        if unit.owner == self.turn:
-                            unit.en_passant_possible = False
-
     # resets the passant possible units of the turn player
     def resetPassantPossible(self):
         for x in range(8):
             for y in range(8):
                 unit = self.board[x][y]
                 if unit != None:
-                    if unit.getPower() == 1:
+                    if unit.getPower() == PAWN:
                         if unit.owner == self.turn:
                             unit.isPassantUnit = False
 
@@ -110,7 +100,7 @@ class Game:
     def makeATurn(self):
         # prepare the possible moves file if it doesn't exist
         self.resetPossibleMoves()
-        self.resetPassantUnits()
+        self.resetPassantPossible()
         calculatePossibleMoves(self, self.turn, True)
         if not self.jsonFileExists():
             self.writeUnitMovesToFile(self.turn)
@@ -254,14 +244,12 @@ class Game:
                     opponentUnit = self.board[x - 1][y]
                     if opponentUnit != None:
                         if opponentUnit.owner == self.turn.opponent:
-                            opponentUnit.en_passant_possible = True
                             self.board[x][y].isPassantUnit = True
                 # passant left
                 if x + 1 < self.upperLimit:
                     opponentUnit = self.board[x + 1][y]
                     if opponentUnit != None:
                         if opponentUnit.owner == self.turn.opponent:
-                            opponentUnit.en_passant_possible = True
                             self.board[x][y].isPassantUnit = True
 
     # increments the win or loss value of a move in the json file
