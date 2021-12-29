@@ -1,7 +1,8 @@
 # coding: utf-8
 
+from src.rookMoveCalculations import calculateRookMoves
 from src.pawnMoveCalculations import calculatePawnMoves
-from src.unit import PAWN
+from src.unit import PAWN, ROOK
 
 # calculates the possible moves for all units of a player
 def calculatePossibleMoves(game, player, initialCall):
@@ -13,43 +14,8 @@ def calculatePossibleMoves(game, player, initialCall):
                 if unit.power == PAWN:
                     calculatePawnMoves(unit, player, game)
                 # rook moves
-                elif unit.getPower() == 2:
-                    if y < game.upperLimit - 1:
-                        for i in range(game.upperLimit - (y + 1)):
-                            if game.fieldIsEmpty(x, y + i + 1):
-                                unit.addMove(str(x) + str(y + i + 1))
-                            elif game.board[x][y + i + 1].owner == player.opponent:
-                                unit.addMove(str(x) + str(y + i + 1))
-                                break
-                            else:
-                                break
-                    if y > game.lowerLimit:
-                        for i in range(y):
-                            if game.fieldIsEmpty(x, y - (i + 1)):
-                                unit.addMove(str(x) + str(y - i - 1))
-                            elif game.board[x][y - (i + 1)].owner == player.opponent:
-                                unit.addMove(str(x) + str(y - i - 1))
-                                break
-                            else:
-                                break
-                    if x < game.upperLimit - 1:
-                        for i in range(game.upperLimit - (x + 1)):
-                            if game.fieldIsEmpty(x + i + 1, y):
-                                unit.addMove(str(x + i + 1) + str(y))
-                            elif game.board[x + i + 1][y].owner == player.opponent:
-                                unit.addMove(str(x + i + 1) + str(y))
-                                break
-                            else:
-                                break
-                    if x > game.lowerLimit:
-                        for i in range(x):
-                            if game.fieldIsEmpty(x - (i + 1), y):
-                                unit.addMove(str(x - i - 1) + str(y))
-                            elif game.board[x - (i + 1)][y].owner == player.opponent:
-                                unit.addMove(str(x - i - 1) + str(y))
-                                break
-                            else:
-                                break
+                elif unit.getPower() == ROOK:
+                    calculateRookMoves(unit, player, game)
                 # knight moves
                 elif unit.getPower() == 3:
                     if y < game.upperLimit - 1:
