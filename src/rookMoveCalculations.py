@@ -19,9 +19,9 @@ def calculateUpMoves(unit, player, game):
     for i in range(game.upperLimit - (y + 1)):
         targetY = y + i + 1
         if game.fieldIsEmpty(x, targetY):
-            addRookMove(unit, x, targetY)
+            unit.addMoveByPosition(x, targetY)
         elif game.board[x][targetY].owner == player.opponent:
-            addRookMove(unit, x, targetY)
+            unit.addMoveByPosition(x, targetY)
             break
         else:
             break
@@ -30,9 +30,9 @@ def calculateDownMoves(unit, player, game):
     for i in range(y):
         targetY = y - i - 1
         if game.fieldIsEmpty(x, targetY):
-            addRookMove(unit, x, targetY)
+            unit.addMoveByPosition(x, targetY)
         elif game.board[x][targetY].owner == player.opponent:
-            addRookMove(unit, x, targetY)
+            unit.addMoveByPosition(x, targetY)
             break
         else:
             break
@@ -41,9 +41,9 @@ def calculateRightMoves(unit, player, game):
     for i in range(game.upperLimit - (x + 1)):
         targetX = x + i + 1
         if game.fieldIsEmpty(targetX, y):
-            addRookMove(unit, targetX, y)
+            unit.addMoveByPosition(targetX, y)
         elif game.board[targetX][y].owner == player.opponent:
-            addRookMove(unit, targetX, y)
+            unit.addMoveByPosition(targetX, y)
             break
         else:
             break
@@ -52,12 +52,9 @@ def calculateLeftMoves(unit, player, game):
     for i in range(x):
         targetX = x - i - 1
         if game.fieldIsEmpty(targetX, y):
-            addRookMove(unit, targetX, y)
+            unit.addMoveByPosition(targetX, y)
         elif game.board[targetX][y].owner == player.opponent:
-            addRookMove(unit, targetX, y)
+            unit.addMoveByPosition(targetX, y)
             break
         else:
             break
-
-def addRookMove(unit, x, y):
-    unit.addMove(str(x) + str(y))

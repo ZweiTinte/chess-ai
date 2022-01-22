@@ -24,6 +24,9 @@ class Unit:
     def addMove(self, move):
         self.moves.append(move)
 
+    def addMoveByPosition(self, x, y):
+        self.addMove(str(x) + str(y))
+
     # returns the power of a unit as word
     def getPowerString(self):
         if self.power == 1:
