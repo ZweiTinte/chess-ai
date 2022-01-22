@@ -150,3 +150,17 @@ class TestKnightMoves(unittest.TestCase):
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 9)
 
     # --- ALLY UNITS ---
+
+    def testMidGamePositionKnightBlockedMoves(self):
+        self.game.setUnitOnBoard(3, 4, self.knightUnit)
+        self.game.setUnitOnBoard(4, 6, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(2, 6, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(4, 2, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(2, 2, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(5, 5, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(5, 3, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(1, 5, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(1, 3, Unit(KNIGHT, self.game.white))
+        calculatePossibleMoves(self.game, self.game.turn, True)
+        assertExpectedMovesResults([], self.knightUnit)
+        assertNumberOfWhiteAndTotalUnits(self.game, 9, 9)
