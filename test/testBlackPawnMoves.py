@@ -16,19 +16,19 @@ class TestBlackPawnMoves(unittest.TestCase):
 
     def testStartPositionBlackPawnMoves(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["15", "14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 1)
 
     def testMidGameBlackPawnMoves(self):
         self.game.setUnitOnBoard(1, 5, self.pawnUnit)
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 1)
 
     def testBlackPawnPromotion(self):
         self.game.setUnitOnBoard(1, 1, self.pawnUnit)
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["103", "106"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 1)
     
@@ -37,56 +37,56 @@ class TestBlackPawnMoves(unittest.TestCase):
     def testStartPositionBlackPawnMovesBlockedFront(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(1, 5, Unit(PAWN, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults([], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
     def testStartPositionBlackPawnMovesBlockedFront2(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(1, 4, Unit(PAWN, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["15"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
     def testStartPositionBlackPawnMovesLeftHit(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(2, 5, Unit(PAWN, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["25", "15", "14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
     def testStartPositionBlackPawnMovesRightHit(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(0, 5, Unit(PAWN, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["05", "15", "14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
     def testMidGameWhiteBlackMovesBlockedFront2(self):
         self.game.setUnitOnBoard(1, 5, self.pawnUnit)
         self.game.setUnitOnBoard(1, 3, Unit(PAWN, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
     def testBlackPawnPromotionBlockedFront(self):
         self.game.setUnitOnBoard(1, 1, self.pawnUnit)
         self.game.setUnitOnBoard(1, 0, Unit(ROOK, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults([], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
     def testBlackPawnPromotionLeftHit(self):
         self.game.setUnitOnBoard(1, 1, self.pawnUnit)
         self.game.setUnitOnBoard(2, 0, Unit(ROOK, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["203", "103", "206", "106"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
     def testBlackPawnPromotionRightHit(self):
         self.game.setUnitOnBoard(1, 1, self.pawnUnit)
         self.game.setUnitOnBoard(0, 0, Unit(ROOK, self.game.white))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["003", "103", "006", "106"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 2)
 
@@ -95,56 +95,56 @@ class TestBlackPawnMoves(unittest.TestCase):
     def testStartPositionBlackPawnMovesBlockedFrontBlack(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(1, 5, Unit(PAWN, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults([], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 
     def testStartPositionBlackPawnMovesBlockedFront2Black(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(1, 4, Unit(PAWN, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["15"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 
     def testStartPositionBlackPawnMovesLeftBlocked(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(0, 5, Unit(PAWN, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["15", "14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 
     def testStartPositionBlackPawnMovesRightBlocked(self):
         self.game.setUnitOnBoard(1, 6, self.pawnUnit)
         self.game.setUnitOnBoard(2, 5, Unit(PAWN, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["15", "14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 
     def testMidGameBlackPawnMovesBlockedFront2Black(self):
         self.game.setUnitOnBoard(1, 5, self.pawnUnit)
         self.game.setUnitOnBoard(1, 3, Unit(PAWN, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["14"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 
     def testBlackPawnPromotionBlockedFrontBlack(self):
         self.game.setUnitOnBoard(1, 1, self.pawnUnit)
         self.game.setUnitOnBoard(1, 0, Unit(ROOK, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults([], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 
     def testBlackPawnPromotionLeftBlocked(self):
         self.game.setUnitOnBoard(1, 1, self.pawnUnit)
         self.game.setUnitOnBoard(0, 0, Unit(ROOK, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["103", "106"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 
     def testBlackPawnPromotionRightBlocked(self):
         self.game.setUnitOnBoard(1, 1, self.pawnUnit)
         self.game.setUnitOnBoard(2, 0, Unit(ROOK, self.game.black))
-        calculatePossibleMoves(self.game, self.game.turn, True)
+        calculatePossibleMoves(self.game, self.game.turn)
         assertExpectedMovesResults(["103", "106"], self.pawnUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 2)
 

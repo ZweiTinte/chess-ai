@@ -6,7 +6,7 @@ from src.pawnMoveCalculations import calculatePawnMoves
 from src.unit import PAWN, ROOK
 
 # calculates the possible moves for all units of a player
-def calculatePossibleMoves(game, player, initialCall):
+def calculatePossibleMoves(game, player, initialCall = True):
     for x in range(game.upperLimit):
         for y in range(game.upperLimit):
             unit = game.board[x][y]
