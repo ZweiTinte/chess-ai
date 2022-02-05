@@ -330,12 +330,7 @@ class Game:
 
     # generates a blank chess board
     def generateBoard(self):
-        board = []
-        for x in range(self.upperLimit):
-            board.append([])
-            for _ in range(self.upperLimit):
-                board[x].append(None)
-        return board
+        return [[None for _ in range(self.upperLimit)] for _ in range(self.upperLimit)]
 
     # sets units on the board
     def setUnits(self):

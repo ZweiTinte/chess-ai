@@ -1,9 +1,10 @@
 # coding: utf-8
 
+from src.bishopMoveCalculations import calculateBishopMoves
 from src.knightMoveCalculations import calculateKnightMoves
 from src.rookMoveCalculations import calculateRookMoves
 from src.pawnMoveCalculations import calculatePawnMoves
-from src.unit import PAWN, ROOK
+from src.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, ROOK
 
 # calculates the possible moves for all units of a player
 def calculatePossibleMoves(game, player, initialCall = True):
@@ -18,56 +19,11 @@ def calculatePossibleMoves(game, player, initialCall = True):
                 elif unit.getPower() == ROOK:
                     calculateRookMoves(unit, player, game)
                 # knight moves
-                elif unit.getPower() == 3:
+                elif unit.getPower() == KNIGHT:
                     calculateKnightMoves(unit, player, game)
                 # bishop moves
-                elif unit.getPower() == 4 or unit.getPower() == 5:
-                    if y < 7:
-                        for i in range(game.upperLimit - (y + 1)):
-                            if y + i < game.upperLimit - 1 and x + i < game.upperLimit - 1:
-                                if game.fieldIsEmpty(x + i + 1, y + i + 1):
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y + i + 1))
-                                elif game.board[x + i + 1][y + i + 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y + i + 1))
-                                    break
-                                else:
-                                    break
-                        for i in range(game.upperLimit - (y + 1)):
-                            if y + i < game.upperLimit - 1 and x - i > game.lowerLimit:
-                                if game.fieldIsEmpty(x - i - 1, y + i + 1):
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y + i + 1))
-                                elif game.board[x - i - 1][y + i + 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y + i + 1))
-                                    break
-                                else:
-                                    break
-                    if y > game.lowerLimit:
-                        for i in range(y):
-                            if y - i > game.lowerLimit and x + i < game.upperLimit - 1:
-                                if game.fieldIsEmpty(x + i + 1, y - i - 1):
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y - i - 1))
-                                elif game.board[x + i + 1][y - i - 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y - i - 1))
-                                    break
-                                else:
-                                    break
-                        for i in range(y):
-                            if y - i > game.lowerLimit and x - i > game.lowerLimit:
-                                if game.fieldIsEmpty(x - i - 1, y - i - 1):
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y - i - 1))
-                                elif game.board[x - i - 1][y - i - 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y - i - 1))
-                                    break
-                                else:
-                                    break
+                elif unit.getPower() == BISHOPL or unit.getPower() == BISHOPR:
+                    calculateBishopMoves(unit, player, game)
                 # queen moves
                 elif unit.getPower() == 6:
                     if y < 7:

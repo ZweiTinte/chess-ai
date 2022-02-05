@@ -99,3 +99,31 @@ class TestBishopMoves(unittest.TestCase):
         expectedMoves = ["16", "25", "43", "52", "61", "07", "70", "45", "56", "67", "23", "12", "01"]
         assertExpectedMovesResults(expectedMoves, bishopUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 1)
+
+    # --- OPPONENT UNITS ---
+
+    def testMidGamePositionBishopHitMoves(self):
+        bishopUnit = Unit(BISHOPR, self.game.white)
+        self.game.setUnitOnBoard(3, 4, bishopUnit)
+        self.game.setUnitOnBoard(4, 5, Unit(KNIGHT, self.game.black))
+        self.game.setUnitOnBoard(5, 2, Unit(KNIGHT, self.game.black))
+        self.game.setUnitOnBoard(2, 3, Unit(KNIGHT, self.game.black))
+        self.game.setUnitOnBoard(1, 6, Unit(KNIGHT, self.game.black))
+        calculatePossibleMoves(self.game, self.game.turn)
+        expectedMoves = ["16", "23", "45", "52", "43", "25"]
+        assertExpectedMovesResults(expectedMoves, bishopUnit)
+        assertNumberOfWhiteAndTotalUnits(self.game, 1, 5)
+
+    # --- ALLY UNITS ---
+
+    def testMidGamePositionBishopNoHitMoves(self):
+        bishopUnit = Unit(BISHOPR, self.game.white)
+        self.game.setUnitOnBoard(3, 4, bishopUnit)
+        self.game.setUnitOnBoard(4, 5, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(5, 2, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(2, 3, Unit(KNIGHT, self.game.white))
+        self.game.setUnitOnBoard(1, 6, Unit(KNIGHT, self.game.white))
+        calculatePossibleMoves(self.game, self.game.turn)
+        expectedMoves = ["43", "25"]
+        assertExpectedMovesResults(expectedMoves, bishopUnit)
+        assertNumberOfWhiteAndTotalUnits(self.game, 5, 5)
