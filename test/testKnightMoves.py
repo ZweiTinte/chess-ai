@@ -2,7 +2,7 @@
 import unittest
 from src.unit import *
 from src.game import *
-from test.testHelpers import assertExpectedMovesResults, assertNumberOfWhiteAndTotalUnits
+from test.testHelpers import *
 
 class TestKnightMoves(unittest.TestCase):
 

@@ -73,6 +73,17 @@ class TestQueenMoves(unittest.TestCase):
         assertExpectedMovesResults(expectedMoves, self.queenUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 1, 1)
 
+    def testMidGameQueenMoves(self):
+        self.game.setUnitOnBoard(3, 4, self.queenUnit)
+        calculatePossibleMoves(self.game, self.game.turn)
+        vMoves = ["31", "32", "33", "30", "35", "36", "37"]
+        hMoves = ["24", "14", "44", "74", "54", "64", "04"]
+        diagonalMovesUp = ["45", "56", "67", "25", "16", "07"]
+        diagonalMovesDown = ["43", "52", "61", "70", "23", "12", "01"]
+        expectedMoves = vMoves + hMoves + diagonalMovesUp + diagonalMovesDown
+        assertExpectedMovesResults(expectedMoves, self.queenUnit)
+        assertNumberOfWhiteAndTotalUnits(self.game, 1, 1)
+
     # --- OPPONENT UNITS ---
 
     # --- ALLY UNITS ---
