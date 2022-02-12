@@ -4,7 +4,7 @@ from src.bishopMoveCalculations import calculateBishopMoves
 from src.knightMoveCalculations import calculateKnightMoves
 from src.rookMoveCalculations import calculateRookMoves
 from src.pawnMoveCalculations import calculatePawnMoves
-from src.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, ROOK
+from src.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, QUEEN, ROOK
 
 # calculates the possible moves for all units of a player
 def calculatePossibleMoves(game, player, initialCall = True):
@@ -25,7 +25,7 @@ def calculatePossibleMoves(game, player, initialCall = True):
                 elif unit.getPower() == BISHOPL or unit.getPower() == BISHOPR:
                     calculateBishopMoves(unit, player, game)
                 # queen moves
-                elif unit.getPower() == 6:
+                elif unit.getPower() == QUEEN:
                     if y < 7:
                         for i in range(game.upperLimit - (y + 1)):
                             if y + i < game.upperLimit - 1 and x + i < game.upperLimit - 1:
