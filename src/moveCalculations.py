@@ -23,7 +23,6 @@ def calculatePossibleMoves(game, player, initialCall = True):
                     calculateBishopMoves(unit, player, game)
                 elif unit.getPower() == QUEEN:
                     calculateQueenMoves(unit, player, game)
-                # king moves
                 elif unit.getPower() == 7:
                     if y < 7:
                         if game.fieldIsEmpty(x, y + 1):
@@ -50,7 +49,7 @@ def calculatePossibleMoves(game, player, initialCall = True):
                                 unit.addMove(str(x + 1) + str(y - 1))
                             elif game.board[x + 1][y - 1].owner == player.opponent:
                                 unit.addMove(str(x + 1) + str(y - 1))
-                        if x - i > game.lowerLimit:
+                        if x - 1 > game.lowerLimit:
                             if game.fieldIsEmpty(x - 1, y - 1):
                                 unit.addMove(str(x - 1) + str(y - 1))
                             elif game.board[x - 1][y - 1].owner == player.opponent:
