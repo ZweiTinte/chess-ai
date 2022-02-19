@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from src.queenMoveCalculations import calculateQueenMoves
 from src.bishopMoveCalculations import calculateBishopMoves
 from src.knightMoveCalculations import calculateKnightMoves
 from src.rookMoveCalculations import calculateRookMoves
@@ -12,102 +13,16 @@ def calculatePossibleMoves(game, player, initialCall = True):
         for y in range(game.upperLimit):
             unit = game.board[x][y]
             if unit != None and unit.owner == player:
-                # pawn moves
                 if unit.power == PAWN:
                     calculatePawnMoves(unit, player, game)
-                # rook moves
                 elif unit.getPower() == ROOK:
                     calculateRookMoves(unit, player, game)
-                # knight moves
                 elif unit.getPower() == KNIGHT:
                     calculateKnightMoves(unit, player, game)
-                # bishop moves
                 elif unit.getPower() == BISHOPL or unit.getPower() == BISHOPR:
                     calculateBishopMoves(unit, player, game)
-                # queen moves
                 elif unit.getPower() == QUEEN:
-                    if y < 7:
-                        for i in range(game.upperLimit - (y + 1)):
-                            if y + i < game.upperLimit - 1 and x + i < game.upperLimit - 1:
-                                if game.fieldIsEmpty(x + i + 1, y + i + 1):
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y + i + 1))
-                                elif game.board[x + i + 1][y + i + 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y + i + 1))
-                                    break
-                                else:
-                                    break
-                        for i in range(game.upperLimit - (y + 1)):
-                            if y + i < game.upperLimit - 1 and x - i > game.lowerLimit:
-                                if game.fieldIsEmpty(x - i - 1, y + i + 1):
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y + i + 1))
-                                elif game.board[x - i - 1][y + i + 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y + i + 1))
-                                    break
-                                else:
-                                    break
-                    if y > game.lowerLimit:
-                        for i in range(y):
-                            if y - i > game.lowerLimit and x + i < game.upperLimit - 1:
-                                if game.fieldIsEmpty(x + i + 1, y - i - 1):
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y - i - 1))
-                                elif game.board[x + i + 1][y - i - 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x + i + 1) + str(y - i - 1))
-                                    break
-                                else:
-                                    break
-                        for i in range(y):
-                            if y - i > game.lowerLimit and x - i > game.lowerLimit:
-                                if game.fieldIsEmpty(x - i - 1, y - i - 1):
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y - i - 1))
-                                elif game.board[x - i - 1][y - i - 1].owner == player.opponent:
-                                    unit.addMove(
-                                        str(x - i - 1) + str(y - i - 1))
-                                    break
-                                else:
-                                    break
-                    if y < 7:
-                        for i in range(game.upperLimit - (y + 1)):
-                            if game.fieldIsEmpty(x, y + i + 1):
-                                unit.addMove(str(x) + str(y + i + 1))
-                            elif game.board[x][y + i + 1].owner == player.opponent:
-                                unit.addMove(str(x) + str(y + i + 1))
-                                break
-                            else:
-                                break
-                    if y > game.lowerLimit:
-                        for i in range(y):
-                            if game.fieldIsEmpty(x, y - (i + 1)):
-                                unit.addMove(str(x) + str(y - i - 1))
-                            elif game.board[x][y - (i + 1)].owner == player.opponent:
-                                unit.addMove(str(x) + str(y - i - 1))
-                                break
-                            else:
-                                break
-                    if x < 7:
-                        for i in range(game.upperLimit - (x + 1)):
-                            if game.fieldIsEmpty(x + i + 1, y):
-                                unit.addMove(str(x + i + 1) + str(y))
-                            elif game.board[x + i + 1][y].owner == player.opponent:
-                                unit.addMove(str(x + i + 1) + str(y))
-                                break
-                            else:
-                                break
-                    if x > game.lowerLimit:
-                        for i in range(x):
-                            if game.fieldIsEmpty(x - (i + 1), y):
-                                unit.addMove(str(x - i - 1) + str(y))
-                            elif game.board[x - (i + 1)][y].owner == player.opponent:
-                                unit.addMove(str(x - i - 1) + str(y))
-                                break
-                            else:
-                                break
+                    calculateQueenMoves(unit, player, game)
                 # king moves
                 elif unit.getPower() == 7:
                     if y < 7:
