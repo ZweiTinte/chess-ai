@@ -86,4 +86,42 @@ class TestQueenMoves(unittest.TestCase):
 
     # --- OPPONENT UNITS ---
 
+    def testMidGameQueenHitMoves(self):
+        self.game.setUnitOnBoard(3, 4, self.queenUnit)
+        self.game.setUnitOnBoard(3, 6, Unit(QUEEN, self.game.black))
+        self.game.setUnitOnBoard(3, 2, Unit(QUEEN, self.game.black))
+        self.game.setUnitOnBoard(5, 4, Unit(QUEEN, self.game.black))
+        self.game.setUnitOnBoard(1, 4, Unit(QUEEN, self.game.black))
+        self.game.setUnitOnBoard(5, 6, Unit(QUEEN, self.game.black))
+        self.game.setUnitOnBoard(1, 2, Unit(QUEEN, self.game.black))
+        self.game.setUnitOnBoard(5, 2, Unit(QUEEN, self.game.black))
+        self.game.setUnitOnBoard(1, 6, Unit(QUEEN, self.game.black))
+        calculatePossibleMoves(self.game, self.game.turn)
+        vMoves = ["32", "33", "35", "36"]
+        hMoves = ["24", "14", "44", "54"]
+        diagonalMovesUp = ["45", "56", "25", "16"]
+        diagonalMovesDown = ["43", "52", "23", "12"]
+        expectedMoves = vMoves + hMoves + diagonalMovesUp + diagonalMovesDown
+        assertExpectedMovesResults(expectedMoves, self.queenUnit)
+        assertNumberOfWhiteAndTotalUnits(self.game, 1, 9)
+
     # --- ALLY UNITS ---
+
+    def testMidGameQueenAllyMoves(self):
+        self.game.setUnitOnBoard(3, 4, self.queenUnit)
+        self.game.setUnitOnBoard(3, 6, Unit(QUEEN, self.game.white))
+        self.game.setUnitOnBoard(3, 2, Unit(QUEEN, self.game.white))
+        self.game.setUnitOnBoard(5, 4, Unit(QUEEN, self.game.white))
+        self.game.setUnitOnBoard(1, 4, Unit(QUEEN, self.game.white))
+        self.game.setUnitOnBoard(5, 6, Unit(QUEEN, self.game.white))
+        self.game.setUnitOnBoard(1, 2, Unit(QUEEN, self.game.white))
+        self.game.setUnitOnBoard(5, 2, Unit(QUEEN, self.game.white))
+        self.game.setUnitOnBoard(1, 6, Unit(QUEEN, self.game.white))
+        calculatePossibleMoves(self.game, self.game.turn)
+        vMoves = ["33", "35"]
+        hMoves = ["24", "44"]
+        diagonalMovesUp = ["45", "25"]
+        diagonalMovesDown = ["43", "23"]
+        expectedMoves = vMoves + hMoves + diagonalMovesUp + diagonalMovesDown
+        assertExpectedMovesResults(expectedMoves, self.queenUnit)
+        assertNumberOfWhiteAndTotalUnits(self.game, 9, 9)
