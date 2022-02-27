@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from src.kingMoveCalculations import calculateKingMoves
 from src.queenMoveCalculations import calculateQueenMoves
 from src.bishopMoveCalculations import calculateBishopMoves
 from src.knightMoveCalculations import calculateKnightMoves
@@ -15,56 +16,16 @@ def calculatePossibleMoves(game, player, initialCall = True):
             if unit != None and unit.owner == player:
                 if unit.power == PAWN:
                     calculatePawnMoves(unit, player, game)
-                elif unit.getPower() == ROOK:
+                elif unit.power == ROOK:
                     calculateRookMoves(unit, player, game)
-                elif unit.getPower() == KNIGHT:
+                elif unit.power == KNIGHT:
                     calculateKnightMoves(unit, player, game)
-                elif unit.getPower() == BISHOPL or unit.getPower() == BISHOPR:
+                elif unit.power == BISHOPL or unit.power == BISHOPR:
                     calculateBishopMoves(unit, player, game)
-                elif unit.getPower() == QUEEN:
+                elif unit.power == QUEEN:
                     calculateQueenMoves(unit, player, game)
-                elif unit.getPower() == 7:
-                    if y < 7:
-                        if game.fieldIsEmpty(x, y + 1):
-                            unit.addMove(str(x) + str(y + 1))
-                        elif game.board[x][y + 1].owner == player.opponent:
-                            unit.addMove(str(x) + str(y + 1))
-                        if x < game.upperLimit - 1:
-                            if game.fieldIsEmpty(x + 1, y + 1):
-                                unit.addMove(str(x + 1) + str(y + 1))
-                            elif game.board[x + 1][y + 1].owner == player.opponent:
-                                unit.addMove(str(x + 1) + str(y + 1))
-                        if x > game.lowerLimit:
-                            if game.fieldIsEmpty(x - 1, y + 1):
-                                unit.addMove(str(x - 1) + str(y + 1))
-                            elif game.board[x - 1][y + 1].owner == player.opponent:
-                                unit.addMove(str(x - 1) + str(y + 1))
-                    if y > game.lowerLimit:
-                        if game.fieldIsEmpty(x, y - 1):
-                            unit.addMove(str(x) + str(y - 1))
-                        elif game.board[x][y - 1].owner == player.opponent:
-                            unit.addMove(str(x) + str(y - 1))
-                        if x < game.upperLimit - 1:
-                            if game.fieldIsEmpty(x + 1, y - 1):
-                                unit.addMove(str(x + 1) + str(y - 1))
-                            elif game.board[x + 1][y - 1].owner == player.opponent:
-                                unit.addMove(str(x + 1) + str(y - 1))
-                        if x - 1 > game.lowerLimit:
-                            if game.fieldIsEmpty(x - 1, y - 1):
-                                unit.addMove(str(x - 1) + str(y - 1))
-                            elif game.board[x - 1][y - 1].owner == player.opponent:
-                                unit.addMove(str(x - 1) + str(y - 1))
-                    if x < game.upperLimit - 1:
-                        if game.fieldIsEmpty(x + 1, y):
-                            unit.addMove(str(x + 1) + str(y))
-                        elif game.board[x + 1][y].owner == player.opponent:
-                            unit.addMove(str(x + 1) + str(y))
-                    if x > game.lowerLimit:
-                        if game.fieldIsEmpty(x - 1, y):
-                            unit.addMove(str(x - 1) + str(y))
-                        elif game.board[x - 1][y].owner == player.opponent:
-                            unit.addMove(str(x - 1) + str(y))
-                    # castling calculation
+                elif unit.power == 7:
+                    calculateKingMoves(unit, player, game)
                     if initialCall:
                         calculateCastling(game, player, unit)
                             
