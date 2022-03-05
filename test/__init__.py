@@ -5,3 +5,4 @@ from testKnightMoves import *
 from testBishopMoves import *
 from testQueenMoves import *
 from testKingMoves import *
+from testPlayerIsInCheck import *

@@ -4,7 +4,7 @@ from src.unit import *
 from src.game import *
 from test.testHelpers import *
 
-class TestQueenMoves(unittest.TestCase):
+class TestKingMoves(unittest.TestCase):
 
     def setUp(self):
         self.game = Game()

@@ -21,9 +21,8 @@ class Player:
             for y in range(8):
                 if board[x][y] != None:
                     unit = board[x][y]
-                    if unit.getPower() == 7 and unit.owner == self.color:
-                        move_string = str(x) + str(y)
-                        return move_string
+                    if unit.power == 7 and unit.owner == self:
+                        return str(x) + str(y)
 
     # resets the player's game relevant attributes
     def reset(self):

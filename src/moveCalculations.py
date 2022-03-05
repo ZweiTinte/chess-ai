@@ -62,16 +62,16 @@ def calculateCastling(game, player, unit):
                             if game.fieldIsEmpty(game.upperLimit - 3, game.lowerLimit):
                                 unit.addMove("cr")
 
-# return true if the player is in check
 def playerIsInCheck(game, player):
     calculatePossibleMoves(game, player.opponent, False)
-    king_position = player.getKingPosition(game.board)
+    kingPosition = player.getKingPosition(game.board)
     for x in range(game.upperLimit):
         for y in range(game.upperLimit):
             unit = game.board[x][y]
             if unit != None:
                 if unit.owner == player.opponent:
-                    for move in unit.getMoves():
-                        if move == king_position:
+                    for move in unit.moves:
+                        if move == kingPosition:
                             player.inCheck = True
+                            return
     player.inCheck = False
