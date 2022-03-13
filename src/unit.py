@@ -9,6 +9,9 @@ BISHOPR = 5
 QUEEN = 6
 KING = 7
 
+CASTLING_LEFT = "cl"
+CASTLING_RIGHT = "cr"
+
 class Unit:
     def __init__(self, power, owner):
         # setting owner of the unit (black | white)

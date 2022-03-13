@@ -6,7 +6,7 @@ from src.bishopMoveCalculations import calculateBishopMoves
 from src.knightMoveCalculations import calculateKnightMoves
 from src.rookMoveCalculations import calculateRookMoves
 from src.pawnMoveCalculations import calculatePawnMoves
-from src.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, QUEEN, ROOK
+from src.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, QUEEN, ROOK, CASTLING_LEFT, CASTLING_RIGHT
 
 # calculates the possible moves for all units of a player
 def calculatePossibleMoves(game, player, initialCall = True):
@@ -35,32 +35,32 @@ def calculateCastling(game, player, unit):
     if not player.inCheck and player.castlingIsPermitted():
         if player == game.black:
             if not game.fieldIsEmpty(game.lowerLimit, game.upperLimit - 1):
-                if game.board[0][7].getPower() == 2:
+                if game.board[0][7].power == ROOK:
                     if not game.board[game.lowerLimit][game.upperLimit - 1].moved:
                         if game.fieldIsEmpty(game.lowerLimit + 1, game.upperLimit - 1):
                             if game.fieldIsEmpty(game.lowerLimit + 2, game.upperLimit - 1):
                                 if game.fieldIsEmpty(game.lowerLimit + 3, game.upperLimit - 1):
-                                    unit.addMove("cl")
+                                    unit.addMove(CASTLING_LEFT)
             if not game.fieldIsEmpty(game.upperLimit - 1, game.upperLimit - 1):
-                if game.board[game.upperLimit - 1][game.upperLimit - 1].getPower() == 2:
+                if game.board[game.upperLimit - 1][game.upperLimit - 1].power == ROOK:
                     if not game.board[game.upperLimit - 1][game.upperLimit - 1].moved:
                         if game.fieldIsEmpty(game.upperLimit - 2, game.upperLimit - 1):
                             if game.fieldIsEmpty(game.upperLimit - 3, game.upperLimit - 1):
-                                unit.addMove("cr")
-        elif player == game.white:
+                                unit.addMove(CASTLING_RIGHT)
+        else:
             if not game.fieldIsEmpty(game.lowerLimit, game.lowerLimit):
-                if game.board[game.lowerLimit][game.lowerLimit].getPower() == 2:
+                if game.board[game.lowerLimit][game.lowerLimit].power == ROOK:
                     if not game.board[game.lowerLimit][game.lowerLimit].moved:
                         if game.fieldIsEmpty(game.lowerLimit + 1, game.lowerLimit):
                             if game.fieldIsEmpty(game.lowerLimit + 2, game.lowerLimit):
                                 if game.fieldIsEmpty(game.lowerLimit + 3, game.lowerLimit):
-                                    unit.addMove("cl")
+                                    unit.addMove(CASTLING_LEFT)
             if not game.fieldIsEmpty(game.upperLimit - 1, game.lowerLimit):
-                if game.board[game.upperLimit - 1][game.lowerLimit].getPower() == 2:
+                if game.board[game.upperLimit - 1][game.lowerLimit].power == ROOK:
                     if not game.board[game.upperLimit - 1][game.lowerLimit].moved:
                         if game.fieldIsEmpty(game.upperLimit - 2, game.lowerLimit):
                             if game.fieldIsEmpty(game.upperLimit - 3, game.lowerLimit):
-                                unit.addMove("cr")
+                                unit.addMove(CASTLING_RIGHT)
 
 def playerIsInCheck(game, player):
     calculatePossibleMoves(game, player.opponent, False)
