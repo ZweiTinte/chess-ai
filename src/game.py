@@ -210,8 +210,8 @@ class Game:
                 self.endGame(self.turn)
                 self.endGame(self.turn.opponent)
 
-        # set the rook varaiable for castling conditions to True
-        if self.board[upx][upy].getPower() == 2:
+        # set the rook/king variable for castling conditions to True
+        if self.board[upx][upy].power in (ROOK, KING):
             self.board[upx][upy].moved = True
 
         # sets our own unit to the target field

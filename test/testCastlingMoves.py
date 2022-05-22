@@ -66,3 +66,30 @@ class TestKingMoves(unittest.TestCase):
         expectedMoves = BLACK_KING_MOVES + [CASTLING_LEFT, CASTLING_RIGHT]
         assertExpectedMovesResults(expectedMoves, self.blackKingUnit)
         assertNumberOfWhiteAndTotalUnits(self.game, 0, 3)
+
+# --- CASTLING NOT POSSIBLE ---
+
+    def testStartPositionWhiteKingMoved(self):
+        game = self.game
+        game.setUnitOnBoard(4, 0, self.whiteKingUnit)
+        # move forward
+        calculatePossibleMoves(game, game.turn, True)
+        self.whiteKingUnit.moves = ["41"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        # move back
+        self.game.resetPossibleMoves()
+        calculatePossibleMoves(game, game.turn, True)
+        self.whiteKingUnit.moves = ["40"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        # set the rook units
+        game.setUnitOnBoard(7, 0, Unit(ROOK, game.white))
+        game.setUnitOnBoard(0, 0, Unit(ROOK, game.white))
+        # assertions
+        game.resetPossibleMoves()
+        calculatePossibleMoves(game, game.turn)
+        assertExpectedMovesResults(WHITE_KING_MOVES, self.whiteKingUnit)
+        assertNumberOfWhiteAndTotalUnits(game, 3, 3)
+        # clean up database and logfile
+        removeLogFileAndDatabase()
