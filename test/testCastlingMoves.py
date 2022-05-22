@@ -73,13 +73,13 @@ class TestKingMoves(unittest.TestCase):
         game = self.game
         game.setUnitOnBoard(4, 0, self.whiteKingUnit)
         # move forward
-        calculatePossibleMoves(game, game.turn, True)
+        calculatePossibleMoves(game, game.turn)
         self.whiteKingUnit.moves = ["41"]
         game.writeUnitMovesToFile(game.turn)
         game.moveUnit()
         # move back
         self.game.resetPossibleMoves()
-        calculatePossibleMoves(game, game.turn, True)
+        calculatePossibleMoves(game, game.turn)
         self.whiteKingUnit.moves = ["40"]
         game.writeUnitMovesToFile(game.turn)
         game.moveUnit()
@@ -90,6 +90,60 @@ class TestKingMoves(unittest.TestCase):
         game.resetPossibleMoves()
         calculatePossibleMoves(game, game.turn)
         assertExpectedMovesResults(WHITE_KING_MOVES, self.whiteKingUnit)
+        assertNumberOfWhiteAndTotalUnits(game, 3, 3)
+        # clean up database and logfile
+        removeLogFileAndDatabase()
+
+    def testStartPositionWhiteLeftRookMoved(self):
+        game = self.game
+        leftRookUnit = Unit(ROOK, game.white)
+        game.setUnitOnBoard(0, 0, leftRookUnit)
+        # move forward
+        calculatePossibleMoves(game, game.turn)
+        leftRookUnit.moves = ["01"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        # move back
+        self.game.resetPossibleMoves()
+        calculatePossibleMoves(game, game.turn)
+        leftRookUnit.moves = ["00"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        # set the right rook and king
+        game.setUnitOnBoard(7, 0, Unit(ROOK, game.white))
+        game.setUnitOnBoard(4, 0, self.whiteKingUnit)
+        # assertions
+        game.resetPossibleMoves()
+        calculatePossibleMoves(game, game.turn)
+        expectedMoves = [CASTLING_RIGHT] + WHITE_KING_MOVES
+        assertExpectedMovesResults(expectedMoves, self.whiteKingUnit)
+        assertNumberOfWhiteAndTotalUnits(game, 3, 3)
+        # clean up database and logfile
+        removeLogFileAndDatabase()
+
+    def testStartPositionWhiteRightRookMoved(self):
+        game = self.game
+        rightRookUnit = Unit(ROOK, game.white)
+        game.setUnitOnBoard(7, 0, rightRookUnit)
+        # move forward
+        calculatePossibleMoves(game, game.turn)
+        rightRookUnit.moves = ["71"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        # move back
+        self.game.resetPossibleMoves()
+        calculatePossibleMoves(game, game.turn)
+        rightRookUnit.moves = ["70"]
+        game.writeUnitMovesToFile(game.turn)
+        game.moveUnit()
+        # set the left rook and king
+        game.setUnitOnBoard(0, 0, Unit(ROOK, game.white))
+        game.setUnitOnBoard(4, 0, self.whiteKingUnit)
+        # assertions
+        game.resetPossibleMoves()
+        calculatePossibleMoves(game, game.turn)
+        expectedMoves = [CASTLING_LEFT] + WHITE_KING_MOVES
+        assertExpectedMovesResults(expectedMoves, self.whiteKingUnit)
         assertNumberOfWhiteAndTotalUnits(game, 3, 3)
         # clean up database and logfile
         removeLogFileAndDatabase()
