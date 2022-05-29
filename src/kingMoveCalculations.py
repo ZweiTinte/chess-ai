@@ -17,31 +17,25 @@ def calculateUpperMoves(unit, player, game):
     targetY = y + 1
     addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
     if x < game.upperLimit - 1:
-        targetX = x + 1
-        addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
+        addMoveIfTargetFieldIsEmptyOrOpponentUnit(x + 1, targetY, unit, player, game)
     if x > game.lowerLimit:
-        targetX = x - 1
-        addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
+        addMoveIfTargetFieldIsEmptyOrOpponentUnit(x - 1, targetY, unit, player, game)
 
 def calculateLowerMoves(unit, player, game):
     targetX = x
     targetY = y - 1
     addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
     if x < game.upperLimit - 1:
-        targetX = x +1
-        addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
+        addMoveIfTargetFieldIsEmptyOrOpponentUnit(x +1, targetY, unit, player, game)
     if x - 1 > game.lowerLimit:
-        targetX = x - 1
-        addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
+        addMoveIfTargetFieldIsEmptyOrOpponentUnit(x - 1, targetY, unit, player, game)
 
 def calculateHorizontalMoves(unit, player, game):
     targetY = y
     if x < game.upperLimit - 1:
-        targetX = x + 1
-        addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
+        addMoveIfTargetFieldIsEmptyOrOpponentUnit(x + 1, targetY, unit, player, game)
     if x > game.lowerLimit:
-        targetX = x -1
-        addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game)
+        addMoveIfTargetFieldIsEmptyOrOpponentUnit(x -1, targetY, unit, player, game)
 
 def addMoveIfTargetFieldIsEmptyOrOpponentUnit(targetX, targetY, unit, player, game):
     if game.fieldIsEmpty(targetX, targetY):

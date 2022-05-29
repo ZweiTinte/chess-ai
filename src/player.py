@@ -1,5 +1,8 @@
 # coding: utf-8
 
+from src.unit import KING
+
+
 class Player:
     def __init__(self, color):
         # setting the color (black | white)
@@ -21,7 +24,7 @@ class Player:
             for y in range(8):
                 if board[x][y] != None:
                     unit = board[x][y]
-                    if unit.power == 7 and unit.owner == self:
+                    if unit.power == KING and unit.owner == self:
                         return str(x) + str(y)
 
     # resets the player's game relevant attributes
@@ -31,27 +34,8 @@ class Player:
         self.inCheck = False
         self.castling_permitted = True
 
-    # getter and setter
-    def getColor(self):
-        return self.color
-
-    def setColor(self, color):
-        self.color = color
-
-    def castlingIsPermitted(self):
-        return self.castling_permitted
-
-    def setCastlingNotPermitted(self):
-        self.castling_permitted = False
-
-    def getSituations(self):
-        return self.situations
-
     def addSituation(self, situation):
         self.situations.append(situation)
-
-    def getMoves(self):
-        return self.moves
 
     def addMove(self, move):
         self.moves.append(move)

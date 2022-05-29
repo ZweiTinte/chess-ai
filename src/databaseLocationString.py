@@ -24,7 +24,7 @@ def generateDatabaseLocationString(game):
     dbLocationString += getBlackUnitsPositionsString(game) + "/"
     if not os.path.exists(dbLocationString):
         os.makedirs(dbLocationString)
-    dbLocationString += game.turn.getColor() + "/"
+    dbLocationString += game.turn.color + "/"
     if not os.path.exists(dbLocationString):
         os.makedirs(dbLocationString)
     return dbLocationString + "data.json"
@@ -37,7 +37,7 @@ def getBlackUnitsPositionsString(game):
             for y in range(8):
                 if game.board[x][y] != None:
                     if game.board[x][y].owner == game.black:
-                        if game.board[x][y].getPower() == p + 1:
+                        if game.board[x][y].power == p + 1:
                             blackUnitsPositionsString += str(x)
                             blackUnitsPositionsString += str(y)
     return blackUnitsPositionsString
@@ -50,7 +50,7 @@ def getWhiteUnitsPositionsString(game):
             for y in range(8):
                 if game.board[x][y] != None:
                     if game.board[x][y].owner == game.white:
-                        if game.board[x][y].getPower() == p + 1:
+                        if game.board[x][y].power == p + 1:
                             whiteUnitsPositionsString += str(x)
                             whiteUnitsPositionsString += str(y)
     return whiteUnitsPositionsString
@@ -63,7 +63,7 @@ def getBlackUnitsString(game):
             for y in range(8):
                 if game.board[x][y] != None:
                     if game.board[x][y].owner == game.black:
-                        if game.board[x][y].getPower() == p + 1:
+                        if game.board[x][y].power == p + 1:
                             blackUnitsString += str(p + 1)
     return blackUnitsString
 
@@ -75,7 +75,7 @@ def getWhiteUnitsString(game):
             for y in range(8):
                 if game.board[x][y] != None:
                     if game.board[x][y].owner == game.white:
-                        if game.board[x][y].getPower() == p + 1:
+                        if game.board[x][y].power == p + 1:
                             whiteUnitsString += str(p + 1)
     return whiteUnitsString
 

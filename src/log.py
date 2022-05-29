@@ -13,7 +13,7 @@ def logToFile(text):
 # logs move to log file
 def logMove(game, upx, upy, x, y):
     # preapare output string
-    player = game.turn.getColor()
+    player = game.turn.color
     unit = game.board[upx][upy].getPowerString()
     position_x = game.getCharacterOfNumber(upx)
     position_y = str(upy + 1)
@@ -32,7 +32,7 @@ def logBoard(game):
                 logString += "__"
             else:
                 logString += game.board[x][y].owner.color[0].upper()
-                logString += str(game.board[x][y].getPower())
+                logString += str(game.board[x][y].power)
             logString += " "
         logToFile(logString)
 

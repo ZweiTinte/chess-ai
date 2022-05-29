@@ -32,10 +32,10 @@ def calculatePossibleMoves(game, player, initialCall = True):
 # castling calculation
 def calculateCastling(game, player, unit):
     playerIsInCheck(game, player)
-    if not player.inCheck and player.castlingIsPermitted() and not unit.moved:
+    if not player.inCheck and player.castling_permitted and not unit.moved:
         if player == game.black:
             if not game.fieldIsEmpty(game.lowerLimit, game.upperLimit - 1):
-                if game.board[0][7].power == ROOK:
+                if game.board[game.lowerLimit][game.upperLimit - 1].power == ROOK:
                     if not game.board[game.lowerLimit][game.upperLimit - 1].moved:
                         if game.fieldIsEmpty(game.lowerLimit + 1, game.upperLimit - 1):
                             if game.fieldIsEmpty(game.lowerLimit + 2, game.upperLimit - 1):

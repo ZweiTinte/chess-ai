@@ -43,7 +43,7 @@ class Game:
                 if self.board[x][y] != None:
                     unit = self.board[x][y]
                     if unit.owner == self.turn:
-                        if unit.getPower() == int(unitString[0]):
+                        if unit.power == int(unitString[0]):
                             if unitNumber == int(unitString[2]):
                                 return [x, y]
                             else:
@@ -52,16 +52,16 @@ class Game:
     # ends the game and increments the win loss chances
     def endGame(self, winner):
         # increment winners win values
-        for i in range(len(winner.getMoves())):
-            unit = winner.getMoves()[i][0]
-            move = winner.getMoves()[i][1]
-            state = winner.getSituations()[i]
+        for i in range(len(winner.moves)):
+            unit = winner.moves[i][0]
+            move = winner.moves[i][1]
+            state = winner.situations[i]
             self.incrementMoveChance(unit, move, True, state)
         # increment losers loss values
-        for i in range(len(winner.opponent.getMoves())):
-            unit = winner.opponent.getMoves()[i][0]
-            move = winner.opponent.getMoves()[i][1]
-            state = winner.opponent.getSituations()[i]
+        for i in range(len(winner.opponent.moves)):
+            unit = winner.opponent.moves[i][0]
+            move = winner.opponent.moves[i][1]
+            state = winner.opponent.situations[i]
             self.incrementMoveChance(unit, move, False, state)
 
     # resets the passant possible units of the turn player
@@ -70,7 +70,7 @@ class Game:
             for y in range(8):
                 unit = self.board[x][y]
                 if unit != None:
-                    if unit.getPower() == PAWN:
+                    if unit.power == PAWN:
                         if unit.owner == self.turn:
                             unit.isPassantUnit = False
 
@@ -171,7 +171,7 @@ class Game:
             if y == "l":
                 x = upx - 2
                 # move the rook
-                if self.turn.getColor() == "black":
+                if self.turn.color == "black":
                     self.board[3][7] = self.board[0][7]
                     self.board[0][7] = None
                 else:
@@ -180,14 +180,14 @@ class Game:
             else:
                 x = upx + 2
                 # move the rook
-                if self.turn.getColor() == "black":
+                if self.turn.color == "black":
                     self.board[5][7] = self.board[7][7]
                     self.board[7][7] = None
                 else:
                     self.board[5][0] = self.board[7][0]
                     self.board[7][0] = None
             # disallow castling for the rest of the match
-            self.turn.setCastlingNotPermitted()
+            self.turn.castling_permitted = False
             y = upy
         # set up the target coordinates
         else:
@@ -200,7 +200,7 @@ class Game:
         if self.board[x][y] != None:
             self.resetNoHitTurns()
             # king is target
-            if self.board[x][y].getPower() == 7:
+            if self.board[x][y].power == 7:
                 self.endGame(self.turn)
         else:
             # increase no hit counter of the game
@@ -225,7 +225,7 @@ class Game:
             promotionRow = self.upperLimit - 1
         else:
             promotionRow = self.lowerLimit
-        if self.board[x][y].getPower() == 1 and y == promotionRow:
+        if self.board[x][y].power == 1 and y == promotionRow:
             self.board[x][y] = Unit(int(move[1][2]), self.turn)
 
         # log the board to the console
@@ -295,11 +295,11 @@ class Game:
                     if not self.fieldIsEmpty(x, y):
                         unit = self.board[x][y]
                         if unit.owner == player:
-                            if unit.getPower() == u:
-                                if len(unit.getMoves()) != 0:
+                            if unit.power == u:
+                                if len(unit.moves) != 0:
                                     jsonUnitString = str(u) + "_" + str(unitNumber)
                                     data[jsonUnitString] = {}
-                                    for m in unit.getMoves():
+                                    for m in unit.moves:
                                         data[jsonUnitString][str(m)] = {}
                                         data[jsonUnitString][str(m)]["w"] = 1
                                         data[jsonUnitString][str(m)]["l"] = 1

@@ -14,14 +14,16 @@ class TestQueenMoves(unittest.TestCase):
     # --- OPPONENT UNITS ---
 
     def testNotInCheck(self):
-        self.game.setUnitOnBoard(3, 4, self.kingUnit)
-        self.game.setUnitOnBoard(0, 0, Unit(QUEEN, self.game.black))
-        playerIsInCheck(self.game, self.game.turn)
-        self.assertFalse(self.game.turn.inCheck)
+        game = self.game
+        game.setUnitOnBoard(3, 4, self.kingUnit)
+        game.setUnitOnBoard(0, 0, Unit(QUEEN, game.black))
+        playerIsInCheck(game, game.turn)
+        self.assertFalse(game.turn.inCheck)
 
     def testInCheck(self):
-        self.game.setUnitOnBoard(3, 4, self.kingUnit)
-        self.game.setUnitOnBoard(0, 1, Unit(QUEEN, self.game.black))
-        playerIsInCheck(self.game, self.game.turn)
-        self.assertTrue(self.game.turn.inCheck)
+        game = self.game
+        game.setUnitOnBoard(3, 4, self.kingUnit)
+        game.setUnitOnBoard(0, 1, Unit(QUEEN, game.black))
+        playerIsInCheck(game, game.turn)
+        self.assertTrue(game.turn.inCheck)
         

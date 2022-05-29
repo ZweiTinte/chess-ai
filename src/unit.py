@@ -46,28 +46,7 @@ class Unit:
             return "queen"
         elif self.power == 7:
             return "king"
-        else:
-            return "ERROR"
 
     # resets the moves array
     def resetMoves(self):
         self.moves = []
-
-    # getter and setter
-    def getMoves(self):
-        return self.moves
-
-    def setMoves(self, moves):
-        self.moves = moves
-
-    def getPower(self):
-        return self.power
-
-    def setPower(self, power):
-        self.power = power
-
-    def isInGame(self):
-        return self.inGame
-
-    def setInGame(self, inGame):
-        self.inGame = inGame

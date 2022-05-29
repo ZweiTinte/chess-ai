@@ -147,3 +147,14 @@ class TestKingMoves(unittest.TestCase):
         assertNumberOfWhiteAndTotalUnits(game, 3, 3)
         # clean up database and logfile
         removeLogFileAndDatabase()
+
+    def testStartPositionWhiteKingInCheck(self):
+        game = self.game
+        game.setUnitOnBoard(7, 0, Unit(ROOK, game.white))
+        game.setUnitOnBoard(0, 0, Unit(ROOK, game.white))
+        game.setUnitOnBoard(4, 7, Unit(ROOK, game.black))
+        game.setUnitOnBoard(4, 0, self.whiteKingUnit)
+        # assertions
+        calculatePossibleMoves(game, game.turn)
+        assertExpectedMovesResults(WHITE_KING_MOVES, self.whiteKingUnit)
+        assertNumberOfWhiteAndTotalUnits(game, 3, 4)
