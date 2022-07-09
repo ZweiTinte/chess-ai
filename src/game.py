@@ -5,7 +5,7 @@ from src.unit import *
 from src.log import *
 from src.databaseLocationString import generateDatabaseLocationString
 from src.database import loadData, writeData
-from src.moveCalculations import calculatePossibleMoves
+from src.moveCalculations.moveCalculations import calculatePossibleMoves
 
 class Game:
     def __init__(self):

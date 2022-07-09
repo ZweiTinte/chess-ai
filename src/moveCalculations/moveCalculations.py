@@ -1,11 +1,11 @@
 # coding: utf-8
 
-from src.kingMoveCalculations import calculateKingMoves
-from src.queenMoveCalculations import calculateQueenMoves
-from src.bishopMoveCalculations import calculateBishopMoves
-from src.knightMoveCalculations import calculateKnightMoves
-from src.rookMoveCalculations import calculateRookMoves
-from src.pawnMoveCalculations import calculatePawnMoves
+from src.moveCalculations.kingMoveCalculations import calculateKingMoves
+from src.moveCalculations.queenMoveCalculations import calculateQueenMoves
+from src.moveCalculations.bishopMoveCalculations import calculateBishopMoves
+from src.moveCalculations.knightMoveCalculations import calculateKnightMoves
+from src.moveCalculations.rookMoveCalculations import calculateRookMoves
+from src.moveCalculations.pawnMoveCalculations import calculatePawnMoves
 from src.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, QUEEN, ROOK, CASTLING_LEFT, CASTLING_RIGHT
 
 # calculates the possible moves for all units of a player
