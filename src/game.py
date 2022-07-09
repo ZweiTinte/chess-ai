@@ -97,7 +97,7 @@ class Game:
                         return True
 
     # makes a turn
-    def makeATurn(self):
+    def makeATurn(self, turns):
         # prepare the possible moves file if it doesn't exist
         self.resetPossibleMoves()
         self.resetPassantPossible()
@@ -111,9 +111,10 @@ class Game:
             self.turn.addSituation(dbLocationString)
             self.turn.addMove(bestMove)
         # make the best move for the turn
-        self.moveUnit()
+        gameEnds = self.moveUnit(turns)
         # set the opponent player as turn
         self.turn = self.turn.opponent
+        return gameEnds
 
     # returns the character for the field number (A1, C5...)
     def getCharacterOfNumber(self, number):
@@ -143,7 +144,8 @@ class Game:
         self.noHitTurns = 0
 
     # moves a unit
-    def moveUnit(self):
+    def moveUnit(self, turns):
+        gameEnds = False
         move = self.getBestMove()
         unitPosition = self.getUnitPosition(move[0])
         upx = unitPosition[0]
@@ -151,6 +153,7 @@ class Game:
         x = move[1][0]
         y = move[1][1]
 
+        logToFile("\nTURN: " + str(turns + 1))
         logPossibleMoves(self, upx, upy)
         logMoveableUnits(self)
 
@@ -202,6 +205,7 @@ class Game:
             # king is target
             if self.board[x][y].power == 7:
                 self.endGame(self.turn)
+                gameEnds = True
         else:
             # increase no hit counter of the game
             self.increaseNoHitCounter()
@@ -233,6 +237,8 @@ class Game:
 
         # update en passant
         self.setEnPassant(move, x, y, upy)
+
+        return gameEnds
 
     # sets passant variable True for opponent pawns nextby
     def setEnPassant(self, move, x, y, upy):
@@ -322,9 +328,10 @@ class Game:
         # using a number because we're still in test
         turns = 0
         while True:
-            self.makeATurn()
+            if self.makeATurn(turns):
+                break
             turns += 1
-            if turns == 50:
+            if turns == 100:
                 break
         logToFile("--- GAME END ---")
 
