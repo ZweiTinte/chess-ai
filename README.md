@@ -17,3 +17,5 @@ To run many tests in a row, add a loop to the main file (it's not in there becau
 
 Commands:
 Run unit tests: python3 -m unittest discover -s test
+
+Run webserver: python3 manage.py runserver

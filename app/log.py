@@ -75,23 +75,37 @@ def getAllWinChances():
                 winChances.append(chances["w"] / (chances["w"] + chances["l"]))
     return winChances
 
-def logLearningProgress():
+def logLearningProgress(console = False):
     winChances = getAllWinChances()
     topTenAmount = 0
     bottomTenAmount = 0
     totalAmount = len(winChances)
+    dataAvailable = totalAmount > 0
 
-    for chance in winChances:
-        if chance >= 0.9:
-            topTenAmount += 1
-        elif chance <= 0.1:
-            bottomTenAmount += 1
+    if dataAvailable:
+        for chance in winChances:
+            if chance >= 0.9:
+                topTenAmount += 1
+            elif chance <= 0.1:
+                bottomTenAmount += 1
 
-    topTenPercentage = round(100 *topTenAmount / totalAmount, 2)
-    bottomTenPercentage = round(100 * bottomTenAmount / totalAmount, 2)
+        topTenPercentage = round(100 *topTenAmount / totalAmount, 2)
+        bottomTenPercentage = round(100 * bottomTenAmount / totalAmount, 2)
 
-    print("Total amount of moves stored: " + str(totalAmount))
-    print("Amount of moves with win chance >= 90%: " + str(topTenAmount))
-    print("Amount of moves with win chance <= 10%: " + str(bottomTenAmount))
-    print("Percentage of moves with win chance >= 90%: " + str(topTenPercentage) + "%")
-    print("Percentage of moves with win chance <= 10%: " + str(bottomTenPercentage) + "%")
+    if console:
+        if dataAvailable:
+            print("Total amount of moves stored: " + str(totalAmount))
+            print("Amount of moves with win chance >= 90%: " + str(topTenAmount))
+            print("Amount of moves with win chance <= 10%: " + str(bottomTenAmount))
+            print("Percentage of moves with win chance >= 90%: " + str(topTenPercentage) + "%")
+            print("Percentage of moves with win chance <= 10%: " + str(bottomTenPercentage) + "%")
+        else:
+            print("Sorry, the database is empty :(")
+    else:
+        return {
+            "Total amount of moves stored: ": str(totalAmount), 
+            "Amount of moves with win chance >= 90%: ": str(topTenAmount),
+            "Amount of moves with win chance <= 10%: ": str(bottomTenAmount),
+            "Percentage of moves with win chance >= 90%: ": str(topTenPercentage) + "%",
+            "Percentage of moves with win chance <= 10%: ": str(bottomTenPercentage) + "%"
+        } if dataAvailable else {}
