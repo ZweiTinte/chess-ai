@@ -1,12 +1,12 @@
 # coding: utf-8
 
-from src.moveCalculations.kingMoveCalculations import calculateKingMoves
-from src.moveCalculations.queenMoveCalculations import calculateQueenMoves
-from src.moveCalculations.bishopMoveCalculations import calculateBishopMoves
-from src.moveCalculations.knightMoveCalculations import calculateKnightMoves
-from src.moveCalculations.rookMoveCalculations import calculateRookMoves
-from src.moveCalculations.pawnMoveCalculations import calculatePawnMoves
-from src.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, QUEEN, ROOK, CASTLING_LEFT, CASTLING_RIGHT
+from app.moveCalculations.kingMoveCalculations import calculateKingMoves
+from app.moveCalculations.queenMoveCalculations import calculateQueenMoves
+from app.moveCalculations.bishopMoveCalculations import calculateBishopMoves
+from app.moveCalculations.knightMoveCalculations import calculateKnightMoves
+from app.moveCalculations.rookMoveCalculations import calculateRookMoves
+from app.moveCalculations.pawnMoveCalculations import calculatePawnMoves
+from app.unit import BISHOPL, BISHOPR, KNIGHT, PAWN, QUEEN, ROOK, CASTLING_LEFT, CASTLING_RIGHT
 
 # calculates the possible moves for all units of a player
 def calculatePossibleMoves(game, player, initialCall = True):

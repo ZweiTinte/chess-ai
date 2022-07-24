@@ -1,6 +1,6 @@
 # coding: utf-8
-from src.database import loadData
-from src.databaseLocationString import DB_DIR_NAME, generateDatabaseLocationString
+from .database import loadData
+from .databaseLocationString import DB_DIR_NAME, generateDatabaseLocationString
 import os
 
 LOG_FILE_NAME = "game_log.txt"

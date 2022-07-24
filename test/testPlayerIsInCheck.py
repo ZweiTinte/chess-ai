@@ -1,8 +1,8 @@
 # coding: utf-8
 import unittest
-from src.moveCalculations import playerIsInCheck
-from src.unit import *
-from src.game import *
+from app.moveCalculations import playerIsInCheck
+from app.unit import *
+from app.game import *
 
 class TestQueenMoves(unittest.TestCase):
 

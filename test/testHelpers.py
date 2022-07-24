@@ -1,7 +1,7 @@
 # coding: utf-8
 from unittest.case import TestCase
-from src.log import LOG_FILE_NAME
-from src.databaseLocationString import DB_DIR_NAME, getNumberOfUnits, getNumberOfWhiteUnits
+from app.log import LOG_FILE_NAME
+from app.databaseLocationString import DB_DIR_NAME, getNumberOfUnits, getNumberOfWhiteUnits
 from unittest import TestCase
 import shutil
 import os

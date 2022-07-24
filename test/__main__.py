@@ -1,7 +1,7 @@
 import sys
 import unittest
 
-sys.path.append("../src")
+sys.path.append("../app")
 loader = unittest.TestLoader()
 testSuite = loader.discover("test")
 testRunner = unittest.TextTestRunner(verbosity=2)

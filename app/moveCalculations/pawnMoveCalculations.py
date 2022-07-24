@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from src.unit import PAWN
+from app.unit import PAWN
 
 PASSANT_RIGHT = "pr"
 PASSANT_LEFT = "pl"

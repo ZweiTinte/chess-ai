@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from src.unit import KING
+from .unit import KING
 
 
 class Player:

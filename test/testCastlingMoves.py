@@ -1,7 +1,7 @@
 # coding: utf-8
 import unittest
-from src.unit import *
-from src.game import *
+from app.unit import *
+from app.game import *
 from test.testHelpers import *
 
 WHITE_KING_MOVES = ["41", "30", "50", "51", "31"]
@@ -76,13 +76,13 @@ class TestKingMoves(unittest.TestCase):
         calculatePossibleMoves(game, game.turn)
         self.whiteKingUnit.moves = ["41"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(1)
         # move back
         self.game.resetPossibleMoves()
         calculatePossibleMoves(game, game.turn)
         self.whiteKingUnit.moves = ["40"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(2)
         # set the rook units
         game.setUnitOnBoard(7, 0, Unit(ROOK, game.white))
         game.setUnitOnBoard(0, 0, Unit(ROOK, game.white))
@@ -102,13 +102,13 @@ class TestKingMoves(unittest.TestCase):
         calculatePossibleMoves(game, game.turn)
         leftRookUnit.moves = ["01"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(1)
         # move back
         self.game.resetPossibleMoves()
         calculatePossibleMoves(game, game.turn)
         leftRookUnit.moves = ["00"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(2)
         # set the right rook and king
         game.setUnitOnBoard(7, 0, Unit(ROOK, game.white))
         game.setUnitOnBoard(4, 0, self.whiteKingUnit)
@@ -129,13 +129,13 @@ class TestKingMoves(unittest.TestCase):
         calculatePossibleMoves(game, game.turn)
         rightRookUnit.moves = ["71"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(1)
         # move back
         self.game.resetPossibleMoves()
         calculatePossibleMoves(game, game.turn)
         rightRookUnit.moves = ["70"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(2)
         # set the left rook and king
         game.setUnitOnBoard(0, 0, Unit(ROOK, game.white))
         game.setUnitOnBoard(4, 0, self.whiteKingUnit)

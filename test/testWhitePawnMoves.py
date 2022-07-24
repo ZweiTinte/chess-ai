@@ -1,7 +1,7 @@
 # coding: utf-8
 import unittest
-from src.unit import *
-from src.game import *
+from app.unit import *
+from app.game import *
 from test.testHelpers import assertExpectedMovesResults, assertNumberOfWhiteAndTotalUnits, removeLogFileAndDatabase
 
 class TestWhitePawnMoves(unittest.TestCase):
@@ -159,7 +159,7 @@ class TestWhitePawnMoves(unittest.TestCase):
         assertExpectedMovesResults(["05", "04"], opponentUnit)
         opponentUnit.moves = ["04"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(1)
         game.turn = game.turn.opponent
         # white turn
         game.setUnitOnBoard(2, 4, opponentUnit2)
@@ -181,7 +181,7 @@ class TestWhitePawnMoves(unittest.TestCase):
         assertExpectedMovesResults(["25", "24"], opponentUnit)
         opponentUnit.moves = ["24"]
         game.writeUnitMovesToFile(game.turn)
-        game.moveUnit()
+        game.moveUnit(1)
         game.turn = game.turn.opponent
         # white turn
         game.setUnitOnBoard(0, 4, opponentUnit2)

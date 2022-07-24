@@ -1,7 +1,7 @@
 # coding: utf-8
 import unittest
-from src.unit import *
-from src.game import *
+from app.unit import *
+from app.game import *
 from test.testHelpers import *
 
 class TestKingMoves(unittest.TestCase):

@@ -1,11 +1,11 @@
 # coding: utf-8
 import os.path
-from src.player import *
-from src.unit import *
-from src.log import *
-from src.databaseLocationString import generateDatabaseLocationString
-from src.database import loadData, writeData
-from src.moveCalculations.moveCalculations import calculatePossibleMoves
+from .player import *
+from .unit import *
+from .log import *
+from .databaseLocationString import generateDatabaseLocationString
+from .database import loadData, writeData
+from .moveCalculations.moveCalculations import calculatePossibleMoves
 
 class Game:
     def __init__(self):

@@ -1,6 +1,6 @@
 # coding: utf-8
-from src.log import getAllDbFiles, logLearningProgress, printAllDbFiles
-from src.game import Game
+from app.log import getAllDbFiles, logLearningProgress, printAllDbFiles
+from app.game import Game
 
 game = Game()
 game.start()
