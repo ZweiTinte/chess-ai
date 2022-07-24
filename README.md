@@ -19,6 +19,7 @@ Prerequisites:
 
 1. Install Python on your machine first!
 2. Install Django: python3 -m pip install Django
+
    or: python -m pip install Django
 
 Commands:
@@ -26,6 +27,7 @@ Commands:
 - Run unit tests: python3 -m unittest discover -s test
 
 - Run webserver for the progress overview: python3 manage.py runserver
+
   (This requires to run the chess AI a few times to have data to work with, else the index page will not show data! )
 
 - Run the AI without server locally: python3 main.py
