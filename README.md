@@ -14,11 +14,12 @@ Current state of this project:
 - Important! Separate Unit Test DB and AI DB necessary
 
 Important Notes:
-The unit tests use and delete the logfile and database!
 
-Do not run them on a directory where you want to store a trained AI database!
+- The unit tests use and delete the logfile and database!
 
-To run many tests in a row, add a loop to the main file (it's not in there because I don't want you to accidently flood your hard drive with tons of GB of data when running the code the first time)
+- Do not run them on a directory where you want to store a trained AI database!
+
+- To run many tests in a row, add a loop to the main file (it's not in there because I don't want you to accidently flood your hard drive with tons of GB of data when running the code the first time)
 
 Prerequisites:
 
