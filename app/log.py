@@ -89,7 +89,7 @@ def logLearningProgress(console = False):
             elif chance <= 0.1:
                 bottomTenAmount += 1
 
-        topTenPercentage = round(100 *topTenAmount / totalAmount, 2)
+        topTenPercentage = round(100 * topTenAmount / totalAmount, 2)
         bottomTenPercentage = round(100 * bottomTenAmount / totalAmount, 2)
 
     if console:
