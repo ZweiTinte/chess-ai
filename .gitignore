@@ -3,3 +3,5 @@ game_log.txt
 *.pyc
 app/__pycache__/
 app/*/__pycache__/
+stats.json
+warnings.txt

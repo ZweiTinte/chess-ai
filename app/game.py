@@ -7,6 +7,8 @@ from .databaseLocationString import generateDatabaseLocationString
 from .database import loadData, writeData
 from .moveCalculations.moveCalculations import calculatePossibleMoves
 
+TURNS_LIMIT_WARNING = "The Game ended because it reached your set turns limit!"
+
 class Game:
     def __init__(self):
         # setting players
@@ -323,16 +325,16 @@ class Game:
         unit.addMove(str(x) + str(y) + "3")
 
     # starts the game
-    def start(self):
+    def start(self, turnLimit):
         logToFile("\n--- NEW GAME ---")
-        # using a number because we're still in test
         turns = 0
-        while True:
+        while turns < turnLimit:
             if self.makeATurn(turns):
                 break
             turns += 1
-            if turns == 100:
-                break
+        if turns == turnLimit:
+            logToFile(TURNS_LIMIT_WARNING, WARNINGS_FILE)
+        logTurnsTaken(turns)
         logToFile("--- GAME END ---")
 
     # generates a blank chess board

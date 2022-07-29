@@ -1,13 +1,15 @@
 # coding: utf-8
-from .database import loadData
+from .database import loadData, writeData
 from .databaseLocationString import DB_DIR_NAME, generateDatabaseLocationString
 import os
 
 LOG_FILE_NAME = "game_log.txt"
+STATISTICS_DATA_FILE = "stats.json"
+WARNINGS_FILE = "warnings.txt"
 
 # appends text to the log file
-def logToFile(text):
-    f = open(LOG_FILE_NAME, "a")
+def logToFile(text, fileName = LOG_FILE_NAME):
+    f = open(fileName, "a")
     f.write(text + "\n")
     f.close()
 
@@ -74,6 +76,15 @@ def getAllWinChances():
                 chances = data[unit][move]
                 winChances.append(chances["w"] / (chances["w"] + chances["l"]))
     return winChances
+
+def logTurnsTaken(turns):
+    data = {}
+    if os.path.exists(STATISTICS_DATA_FILE):
+        data = loadData(STATISTICS_DATA_FILE)
+    else:
+        data["turns"] = []
+    data["turns"].append(turns)
+    writeData(STATISTICS_DATA_FILE, data)
 
 def logLearningProgress(console = False):
     winChances = getAllWinChances()
