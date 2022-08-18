@@ -3,97 +3,60 @@ import os.path
 
 DB_DIR_NAME = "db"
 
+def makeDir(location):
+    if not os.path.exists(location):
+        os.makedirs(location)
+
 # returns database location string for current state
 def generateDatabaseLocationString(game):
-    dbLocationString = DB_DIR_NAME + "/"
-    dbLocationString += str(getNumberOfUnits(game)) + "/"
-    if not os.path.exists(dbLocationString):
-        os.makedirs(dbLocationString)
-    dbLocationString += str(getNumberOfWhiteUnits(game)) + "/"
-    if not os.path.exists(dbLocationString):
-        os.makedirs(dbLocationString)
-    dbLocationString += getWhiteUnitsString(game) + "/"
-    if not os.path.exists(dbLocationString):
-        os.makedirs(dbLocationString)
-    dbLocationString += getBlackUnitsString(game) + "/"
-    if not os.path.exists(dbLocationString):
-        os.makedirs(dbLocationString)
-    dbLocationString += getWhiteUnitsPositionsString(game) + "/"
-    if not os.path.exists(dbLocationString):
-        os.makedirs(dbLocationString)
-    dbLocationString += getBlackUnitsPositionsString(game) + "/"
-    if not os.path.exists(dbLocationString):
-        os.makedirs(dbLocationString)
-    dbLocationString += game.turn.color + "/"
-    if not os.path.exists(dbLocationString):
-        os.makedirs(dbLocationString)
-    return dbLocationString + "data.json"
+    (   numberOfUnits, numberOfWhiteUnits, whiteUnitsString, 
+        blackUnitsString, whiteUnitsPositionsString, blackUnitsPositionsString
+    ) = getBoardInformation(game)
+    paths = [
+        f"{str(numberOfWhiteUnits)}/",
+        f"{whiteUnitsString}/",
+        f"{blackUnitsString}/",
+        f"{whiteUnitsPositionsString}/",
+        f"{blackUnitsPositionsString}/",
+        f"{game.turn.color}/",
+        "data.json"
+    ]
+    dbLocationString = f"{DB_DIR_NAME}/{str(numberOfUnits)}/"
+    for path in paths:
+        makeDir(dbLocationString)
+        dbLocationString += path
+    return dbLocationString
 
-# returns the black units positions string for the database
-def getBlackUnitsPositionsString(game):
-    blackUnitsPositionsString = ""
+def getBoardInformation(game):
+    numberOfUnits = numberOfWhiteUnits = 0
+    whiteUnitsString = blackUnitsString = whiteUnitsPositionsString = blackUnitsPositionsString = ""
     for p in range(7):
         for x in range(8):
             for y in range(8):
-                if game.board[x][y] != None:
-                    if game.board[x][y].owner == game.black:
-                        if game.board[x][y].power == p + 1:
-                            blackUnitsPositionsString += str(x)
-                            blackUnitsPositionsString += str(y)
-    return blackUnitsPositionsString
-
-# returns the white units positions string for the database
-def getWhiteUnitsPositionsString(game):
-    whiteUnitsPositionsString = ""
-    for p in range(7):
-        for x in range(8):
-            for y in range(8):
-                if game.board[x][y] != None:
-                    if game.board[x][y].owner == game.white:
-                        if game.board[x][y].power == p + 1:
-                            whiteUnitsPositionsString += str(x)
-                            whiteUnitsPositionsString += str(y)
-    return whiteUnitsPositionsString
-
-# returns the black units string for the database
-def getBlackUnitsString(game):
-    blackUnitsString = ""
-    for p in range(7):
-        for x in range(8):
-            for y in range(8):
-                if game.board[x][y] != None:
-                    if game.board[x][y].owner == game.black:
-                        if game.board[x][y].power == p + 1:
-                            blackUnitsString += str(p + 1)
-    return blackUnitsString
-
-# returns the white units string for the database
-def getWhiteUnitsString(game):
-    whiteUnitsString = ""
-    for p in range(7):
-        for x in range(8):
-            for y in range(8):
-                if game.board[x][y] != None:
-                    if game.board[x][y].owner == game.white:
-                        if game.board[x][y].power == p + 1:
+                unit = game.board[x][y]
+                if unit is not None:
+                    numberOfUnits += 1
+                    if unit.owner is game.white:
+                        numberOfWhiteUnits += 1
+                        if unit.power is p + 1:
+                            whiteUnitsPositionsString += str(x) + str(y)
                             whiteUnitsString += str(p + 1)
-    return whiteUnitsString
+                    if unit.owner is game.black:
+                        if unit.power is p + 1:
+                            blackUnitsPositionsString += str(x) + str(y)
+                            blackUnitsString += str(p + 1)
+    return (
+        numberOfUnits, numberOfWhiteUnits, whiteUnitsString,
+        blackUnitsString, whiteUnitsPositionsString, blackUnitsPositionsString
+    )
 
-# returns number of units on the board
 def getNumberOfUnits(game):
-    numberOfUnits = 0
+    numberOfUnits = numberOfWhiteUnits = 0
     for x in range(8):
         for y in range(8):
-            if game.board[x][y] != None:
+            unit = game.board[x][y]
+            if unit is not None:
                 numberOfUnits += 1
-    return numberOfUnits
-
-# returns number of white units on the board
-def getNumberOfWhiteUnits(game):
-    numberOfWhiteUnits = 0
-    for x in range(8):
-        for y in range(8):
-            if game.board[x][y] != None:
-                if game.board[x][y].owner == game.white:
+                if unit.owner is game.white:
                     numberOfWhiteUnits += 1
-    return numberOfWhiteUnits
+    return (numberOfUnits, numberOfWhiteUnits)

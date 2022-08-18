@@ -1,7 +1,7 @@
 # coding: utf-8
 from unittest.case import TestCase
 from app.log import LOG_FILE_NAME
-from app.databaseLocationString import DB_DIR_NAME, getNumberOfUnits, getNumberOfWhiteUnits
+from app.databaseLocationString import DB_DIR_NAME, getNumberOfUnits
 from unittest import TestCase
 import shutil
 import os
@@ -9,8 +9,9 @@ import os
 tc = TestCase()
 
 def assertNumberOfWhiteAndTotalUnits(game, expectedWhite, expectedTotal):
-    tc.assertEqual(getNumberOfWhiteUnits(game), expectedWhite)
-    tc.assertEqual(getNumberOfUnits(game), expectedTotal)
+    numberOfunits, numberOfWhiteUnits = getNumberOfUnits(game)
+    tc.assertEqual(numberOfWhiteUnits, expectedWhite)
+    tc.assertEqual(numberOfunits, expectedTotal)
 
 def assertExpectedMovesResults(expectedMoves, unit):
     for move in expectedMoves:

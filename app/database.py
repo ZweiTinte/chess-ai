@@ -5,8 +5,7 @@ import json
 # load the data from file
 def loadData(locationString):
 	with codecs.open(locationString, encoding='utf-8') as json_file:
-		data = json.load(json_file)
-	return data
+		return json.load(json_file)
 	
 # writes the data to file
 def writeData(locationString, data):
