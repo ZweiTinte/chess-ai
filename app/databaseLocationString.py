@@ -34,15 +34,15 @@ def getBoardInformation(game):
         for x in range(8):
             for y in range(8):
                 unit = game.board[x][y]
-                if unit is not None:
+                if unit != None:
                     numberOfUnits += 1
-                    if unit.owner is game.white:
+                    if unit.owner == game.white:
                         numberOfWhiteUnits += 1
-                        if unit.power is p + 1:
+                        if unit.power == p + 1:
                             whiteUnitsPositionsString += str(x) + str(y)
                             whiteUnitsString += str(p + 1)
-                    if unit.owner is game.black:
-                        if unit.power is p + 1:
+                    if unit.owner == game.black:
+                        if unit.power == p + 1:
                             blackUnitsPositionsString += str(x) + str(y)
                             blackUnitsString += str(p + 1)
     return (
@@ -55,8 +55,8 @@ def getNumberOfUnits(game):
     for x in range(8):
         for y in range(8):
             unit = game.board[x][y]
-            if unit is not None:
+            if unit != None:
                 numberOfUnits += 1
-                if unit.owner is game.white:
+                if unit.owner == game.white:
                     numberOfWhiteUnits += 1
     return (numberOfUnits, numberOfWhiteUnits)

@@ -4,8 +4,7 @@ def calculateKingMoves(unit, player, game):
     position = game.getPositionOfUnit(unit)
     global x
     global y
-    x = position[0]
-    y = position[1]
+    x, y = position
     if y < 7:
         calculateUpperMoves(unit, player, game)
     if y > game.lowerLimit:

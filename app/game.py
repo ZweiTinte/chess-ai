@@ -155,7 +155,7 @@ class Game:
         x = move[1][0]
         y = move[1][1]
 
-        logToFile("\nTURN: " + str(turns + 1))
+        logToFile(f"\nTURN: {str(turns + 1)}")
         logPossibleMoves(self, upx, upy)
         logMoveableUnits(self)
 

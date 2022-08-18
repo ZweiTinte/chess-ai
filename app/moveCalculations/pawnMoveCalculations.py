@@ -6,9 +6,7 @@ PASSANT_RIGHT = "pr"
 PASSANT_LEFT = "pl"
 
 def calculatePawnMoves(unit, player, game):
-    position = game.getPositionOfUnit(unit)
-    x = position[0]
-    y = position[1]
+    x, y = game.getPositionOfUnit(unit)
     if player == game.white:
         calculateWhitePawnMoves(unit, game, x, y)
     elif player == game.black:
