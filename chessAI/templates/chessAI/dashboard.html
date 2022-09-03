@@ -1,0 +1,17 @@
+<form action="{% url 'chess-ai:runAI' %}" method="post">
+  {% csrf_token %}
+  <label for="runs">How many runs? (between 1 and 20):</label>
+  <input type="number" min="1" max="20" name="runs" value="1" />
+  <br />
+  <button type="submit" name="runAI">Run the AI</button>
+</form>
+
+{% if data %}
+<div>
+  {% for key, value in data.items %}
+  <div>{{ key }} {{ value }}</div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No data available.</p>
+{% endif %}

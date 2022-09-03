@@ -97,7 +97,7 @@ def logLearningProgress(console = False):
 
     if console:
         if dataAvailable:
-            print("Total amount of moves stored: " + str(totalAmount))
+            print("Total amount of moves stored: " + str(format(totalAmount, ",d")))
             print("Amount of moves with win chance >= 90%: " + str(topTenAmount))
             print("Amount of moves with win chance <= 10%: " + str(bottomTenAmount))
             print("Percentage of moves with win chance >= 90%: " + str(topTenPercentage) + "%")
@@ -106,7 +106,7 @@ def logLearningProgress(console = False):
             print("Sorry, the database is empty :(")
     else:
         return {
-            "Total amount of moves stored: ": str(totalAmount), 
+            "Total amount of moves stored: ": str(format(totalAmount, ",d")), 
             "Amount of moves with win chance >= 90%: ": str(topTenAmount),
             "Amount of moves with win chance <= 10%: ": str(bottomTenAmount),
             "Percentage of moves with win chance >= 90%: ": str(topTenPercentage) + "%",

@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from app.log import logLearningProgress
+from main import runAILearning
 
 # Create your views here.
-def index(request):
+def dashboard(request):
     data = logLearningProgress()
     context = {"data": data}
-    return render(request, 'chessAI/index.html', context)
+    return render(request, 'chessAI/dashboard.html', context)
+
+def runAI(request):
+    runAILearning(int(request.POST['runs']))
+    return redirect('chess-ai:dashboard')
