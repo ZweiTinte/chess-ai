@@ -10,5 +10,5 @@ def dashboard(request):
     return render(request, 'chessAI/dashboard.html', context)
 
 def runAI(request):
-    runAILearning(int(request.POST['runs']))
+    runAILearning(int(request.POST['runs']), int(request.POST['turnLimit']))
     return redirect('chess-ai:dashboard')
