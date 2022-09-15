@@ -18,6 +18,15 @@ body {
   background-color: $bgColorHeadlineOne;
 }
 
+h1 {
+  text-align: center;
+  background-color: $bgColorHeadlineOne;
+}
+
+h2 {
+  text-align: center;
+}
+
 .contentBox {
   padding: $space0_5;
   box-sizing: border-box;
@@ -72,7 +81,7 @@ form {
 button {
   justify-content: left;
   outline: none;
-  width: 20rem;
+  width: auto;
   text-align: center;
   font-weight: 400;
   font-style: normal;

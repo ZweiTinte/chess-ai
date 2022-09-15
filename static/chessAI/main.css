@@ -9,6 +9,13 @@ body {
   justify-content: center;
   background-color: #295f29; }
 
+h1 {
+  text-align: center;
+  background-color: #295f29; }
+
+h2 {
+  text-align: center; }
+
 .contentBox {
   padding: 0.5rem;
   box-sizing: border-box;
@@ -55,7 +62,7 @@ form input[type="number"] {
 button {
   justify-content: left;
   outline: none;
-  width: 20rem;
+  width: auto;
   text-align: center;
   font-weight: 400;
   font-style: normal;
