@@ -12,7 +12,7 @@ def runAILearning(runs=GAME_RUNS, turnLimit=TURN_LIMIT):
         game.start(turnLimit)
         games += 1
 
-runAILearning(1)
+runAILearning()
 
 # print the learning progress of the AI to the console
 #logLearningProgress()
