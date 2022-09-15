@@ -13,27 +13,50 @@
   </head>
 
   <body>
-    <form action="{% url 'chess-ai:runAI' %}" method="post">
-      {% csrf_token %}
-      <label for="runs">How many runs? (between 1 and 20):</label>
-      <input type="number" min="1" max="20" name="runs" value="1" />
-      <br />
-      <label for="turnLimit"
-        >What is the max turn limit? (between 1 and 500):</label
-      >
-      <input type="number" min="1" max="500" name="turnLimit" value="250" />
-      <br />
-      <button type="submit" name="runAI">Run the AI</button>
-    </form>
-
-    {% if data %}
-    <div>
-      {% for key, value in data.items %}
-      <div>{{ key }} {{ value }}</div>
-      {% endfor %}
+    <div class="headlineOne">
+      <h1>Chess AI Dashboard</h1>
     </div>
-    {% else %}
-    <p>No data available.</p>
-    {% endif %}
+
+    <div class="content">
+      <div class="contentBox">
+        <h2>Run the AI with your configuration</h2>
+        <form action="{% url 'chess-ai:runAI' %}" method="post">
+          {% csrf_token %}
+          <div class="labelInput">
+            <label for="runs">How many runs? (between 1 and 20):</label>
+            <input type="number" min="1" max="20" name="runs" value="1" />
+          </div>
+          <div class="labelInput">
+            <label for="turnLimit"
+              >What is the max turn limit? (between 1 and 500):</label
+            >
+            <input
+              type="number"
+              min="1"
+              max="500"
+              name="turnLimit"
+              value="250"
+            />
+          </div>
+          <button type="submit" name="runAI">Run the AI</button>
+        </form>
+      </div>
+
+      <div class="contentBox">
+        <h2>Current Learning Progress</h2>
+        {% if data %}
+        <div>
+          {% for key, value in data.items %}
+          <div class="labelInput">
+            <div class="bodyText">{{ key }}</div>
+            <div class="bodyText">{{ value }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p>No data available.</p>
+        {% endif %}
+      </div>
+    </div>
   </body>
 </html>

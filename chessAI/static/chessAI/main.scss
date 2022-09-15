@@ -1,7 +1,95 @@
 $bgColor: #393b39;
-$fontColor: #FFFFFF;
+$itemColor: #303030;
+$fontColor: #ffffff;
+$bgColorHeadlineOne: #295f29;
+$space0_25: 0.25rem;
+$space0_5: 0.5rem;
 
 body {
-    background-color: $bgColor;
-    Color: $fontColor;
+  background-color: $bgColor;
+  color: $fontColor;
+  font-family: "Ubuntu";
+  margin: 0;
+}
+
+.headlineOne {
+  display: flex;
+  justify-content: center;
+  background-color: $bgColorHeadlineOne;
+}
+
+.contentBox {
+  padding: $space0_5;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  border-color: #5a6969;
+  border-style: solid;
+  margin: $space0_5;
+  width: 120%;
+}
+
+.content {
+  display: flex;
+  padding: $space0_5;
+}
+
+.labelInput {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bodyText {
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  font-size: 1rem;
+  padding: $space0_25;
+}
+
+form {
+  label {
+    padding: $space0_5;
+  }
+
+  input[type="number"] {
+    border-radius: $space0_25;
+    border-color: $bgColorHeadlineOne;
+    border-style: solid;
+    color: $fontColor;
+    background-color: $itemColor;
+    font-weight: 400;
+    font-style: normal;
+    line-height: normal;
+    font-size: 1rem;
+    width: 10rem;
+    padding: $space0_25;
+    margin: $space0_25;
+    -moz-appearance: textfield;
+    outline: none;
+  }
+}
+
+button {
+  justify-content: left;
+  outline: none;
+  width: 20rem;
+  text-align: center;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  display: inline-flex;
+  cursor: pointer;
+  padding: $space0_5;
+  font-size: 1rem;
+  color: $fontColor;
+  background-color: $itemColor;
+  border-radius: $space0_25;
+  border-color: $bgColorHeadlineOne;
+  border-style: solid;
+  margin: $space0_25;
+}
+
+button:hover {
+  background-color: $bgColorHeadlineOne;
+  border-color: $itemColor;
 }

@@ -1,5 +1,78 @@
 body {
   background-color: #393b39;
-  Color: #FFFFFF; }
+  color: #ffffff;
+  font-family: "Ubuntu";
+  margin: 0; }
+
+.headlineOne {
+  display: flex;
+  justify-content: center;
+  background-color: #295f29; }
+
+.contentBox {
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  border-color: #5a6969;
+  border-style: solid;
+  margin: 0.5rem;
+  width: 120%; }
+
+.content {
+  display: flex;
+  padding: 0.5rem; }
+
+.labelInput {
+  display: flex;
+  justify-content: space-between; }
+
+.bodyText {
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  font-size: 1rem;
+  padding: 0.25rem; }
+
+form label {
+  padding: 0.5rem; }
+
+form input[type="number"] {
+  border-radius: 0.25rem;
+  border-color: #295f29;
+  border-style: solid;
+  color: #ffffff;
+  background-color: #303030;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  font-size: 1rem;
+  width: 10rem;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  -moz-appearance: textfield;
+  outline: none; }
+
+button {
+  justify-content: left;
+  outline: none;
+  width: 20rem;
+  text-align: center;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  display: inline-flex;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #303030;
+  border-radius: 0.25rem;
+  border-color: #295f29;
+  border-style: solid;
+  margin: 0.25rem; }
+
+button:hover {
+  background-color: #295f29;
+  border-color: #303030; }
 
 /*# sourceMappingURL=main.css.map */
