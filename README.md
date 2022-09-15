@@ -28,6 +28,8 @@ Prerequisites:
 
    or: python -m pip install Django
 
+3. Install SASS: pip install libsass django-compressor django-sass-processor
+
 Commands:
 
 - Run unit tests: python3 -m unittest discover -s test

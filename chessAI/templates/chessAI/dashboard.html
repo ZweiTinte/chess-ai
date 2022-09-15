@@ -1,22 +1,39 @@
-<form action="{% url 'chess-ai:runAI' %}" method="post">
-  {% csrf_token %}
-  <label for="runs">How many runs? (between 1 and 20):</label>
-  <input type="number" min="1" max="20" name="runs" value="1" />
-  <br />
-  <label for="turnLimit"
-    >What is the max turn limit? (between 1 and 500):</label
-  >
-  <input type="number" min="1" max="500" name="turnLimit" value="250" />
-  <br />
-  <button type="submit" name="runAI">Run the AI</button>
-</form>
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="{% sass_src 'chessAI/main.scss' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>Chess AI Dashboard</title>
+  </head>
 
-{% if data %}
-<div>
-  {% for key, value in data.items %}
-  <div>{{ key }} {{ value }}</div>
-  {% endfor %}
-</div>
-{% else %}
-<p>No data available.</p>
-{% endif %}
+  <body>
+    <form action="{% url 'chess-ai:runAI' %}" method="post">
+      {% csrf_token %}
+      <label for="runs">How many runs? (between 1 and 20):</label>
+      <input type="number" min="1" max="20" name="runs" value="1" />
+      <br />
+      <label for="turnLimit"
+        >What is the max turn limit? (between 1 and 500):</label
+      >
+      <input type="number" min="1" max="500" name="turnLimit" value="250" />
+      <br />
+      <button type="submit" name="runAI">Run the AI</button>
+    </form>
+
+    {% if data %}
+    <div>
+      {% for key, value in data.items %}
+      <div>{{ key }} {{ value }}</div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No data available.</p>
+    {% endif %}
+  </body>
+</html>
