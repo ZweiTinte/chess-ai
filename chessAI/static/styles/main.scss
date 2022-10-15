@@ -78,6 +78,31 @@ form {
   }
 }
 
+.submit {
+  display: flex;
+  align-items: center;
+}
+
+#loader {
+  border: 4px solid $bgColorHeadlineOne;
+  border-top: 4px solid $bgColor;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: 1rem;
+  animation: spin 1s linear infinite;
+  visibility: hidden;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 button {
   justify-content: left;
   outline: none;

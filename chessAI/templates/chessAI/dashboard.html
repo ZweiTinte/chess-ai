@@ -2,13 +2,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="{% sass_src 'chessAI/main.scss' %}"
+      href="{% sass_src 'styles/main.scss' %}"
       rel="stylesheet"
       type="text/css"
     />
+    <script src="{% static 'scripts/uiHelpers.js' %}"></script>
     <title>Chess AI Dashboard</title>
   </head>
 
@@ -38,7 +40,12 @@
               value="250"
             />
           </div>
-          <button type="submit" name="runAI">Run the AI</button>
+          <div class="submit">
+            <button type="submit" name="runAI" onClick="load()">
+              Run the AI
+            </button>
+            <div id="loader"></div>
+          </div>
         </form>
       </div>
 

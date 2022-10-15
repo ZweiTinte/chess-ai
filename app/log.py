@@ -70,6 +70,15 @@ def getAllWinChances():
                 winChances.append(chances["w"] / (chances["w"] + chances["l"]))
     return winChances
 
+def getDatabaseSize(path=DB_DIR_NAME):
+    dbSize = 0
+    with os.scandir(path) as it:
+        for entry in it:
+            dbSize += os.path.getsize(entry)
+            if entry.is_dir():
+                dbSize += getDatabaseSize(entry.path)
+    return dbSize
+
 def logTurnsTaken(turns):
     data = {}
     if os.path.exists(STATISTICS_DATA_FILE):
@@ -81,6 +90,7 @@ def logTurnsTaken(turns):
 
 def logLearningProgress(console = False):
     winChances = getAllWinChances()
+    dbSize = getDatabaseSize()
     topTenAmount = bottomTenAmount = 0
     totalAmount = len(winChances)
     dataAvailable = totalAmount > 0
@@ -97,6 +107,7 @@ def logLearningProgress(console = False):
 
     if console:
         if dataAvailable:
+            print("Size of AI database: " + str(format(dbSize, ",d")) + " Bytes"),
             print("Total amount of moves stored: " + str(format(totalAmount, ",d")))
             print("Amount of moves with win chance >= 90%: " + str(topTenAmount))
             print("Amount of moves with win chance <= 10%: " + str(bottomTenAmount))
@@ -106,6 +117,7 @@ def logLearningProgress(console = False):
             print("Sorry, the database is empty :(")
     else:
         return {
+            "Size of AI database: ": str(format(dbSize, ",d")) + " Bytes",
             "Total amount of moves stored: ": str(format(totalAmount, ",d")), 
             "Amount of moves with win chance >= 90%: ": str(topTenAmount),
             "Amount of moves with win chance <= 10%: ": str(bottomTenAmount),
