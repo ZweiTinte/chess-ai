@@ -1,8 +1,7 @@
-{% load sass_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% load static %}
+    {% load sass_tags static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -21,7 +20,9 @@
 
     <div class="content">
       <div class="contentBox">
-        <h2>Run the AI with your configuration</h2>
+        <div class="headlineTwo">
+          <h2>Run the AI with your configuration</h2>
+        </div>
         <form action="{% url 'chess-ai:runAI' %}" method="post">
           {% csrf_token %}
           <div class="labelInput">
@@ -50,11 +51,13 @@
       </div>
 
       <div class="contentBox">
-        <h2>Current Learning Progress</h2>
+        <div class="headlineTwo">
+          <h2>Current Learning Progress</h2>
+        </div>
         {% if data %}
         <div>
           {% for key, value in data.items %}
-          <div class="labelInput">
+          <div class="labelValue">
             <div class="bodyText">{{ key }}</div>
             <div class="bodyText">{{ value }}</div>
           </div>

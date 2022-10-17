@@ -1,0 +1,21 @@
+@import "variables";
+
+#loader {
+  border: 0.25rem solid $bgColorHeadlineOne;
+  border-top: 0.25rem solid $bgColor;
+  border-radius: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 1rem;
+  animation: spin 1s linear infinite;
+  visibility: hidden;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

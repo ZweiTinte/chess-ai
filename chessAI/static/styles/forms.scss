@@ -1,0 +1,23 @@
+form {
+  label {
+    padding: 0.5rem;
+  }
+
+  input[type="number"] {
+    border-radius: 0.25rem;
+    border: 0.15rem solid $bgColorHeadlineOne;
+    color: $fontColor;
+    background-color: $itemColor;
+    display: inline-block;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    width: 10rem;
+    padding: 0.25rem;
+    margin: 0.25rem;
+    -moz-appearance: textfield;
+    outline: none;
+  }
+}
