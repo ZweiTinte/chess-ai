@@ -5,3 +5,4 @@ app/__pycache__/
 app/*/__pycache__/
 stats.json
 warnings.txt
+chessAI/static/img/*

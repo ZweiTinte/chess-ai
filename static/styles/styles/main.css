@@ -32,6 +32,7 @@ form input[type="number"] {
   padding: 0.25rem;
   margin: 0.25rem;
   -moz-appearance: textfield;
+  appearance: textfield;
   outline: none; }
 
 body {
