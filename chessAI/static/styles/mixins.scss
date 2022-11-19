@@ -7,3 +7,19 @@
   display: flex;
   justify-content: space-between;
 }
+
+@mixin chessBoardTopBottom {
+  display: grid;
+  align-items: stretch;
+  background-color: $bgColorHeadlineOne;
+  grid-column-start: 1;
+  grid-column-end: 9;
+}
+
+@mixin chessBoardLeftRight {
+  display: grid;
+  align-items: stretch;
+  background-color: $bgColorHeadlineOne;
+  grid-row-start: 1;
+  grid-row-end: 9;
+}

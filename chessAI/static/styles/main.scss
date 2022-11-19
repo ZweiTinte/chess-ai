@@ -2,6 +2,7 @@
 @import "animations";
 @import "mixins";
 @import "forms";
+@import "chessBoard";
 
 body {
   background-color: $bgColor;
@@ -42,7 +43,8 @@ h2 {
 
 .content {
   display: flex;
-  padding: 0.5rem;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .labelInput {

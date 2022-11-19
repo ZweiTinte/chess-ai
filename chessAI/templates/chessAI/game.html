@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load sass_tags static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="{% sass_src 'styles/main.scss' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script>
+      const imgStyle =
+        "width: 4.25rem; height: 4.25rem; border: 0.15rem solid #FFFFFF; cursor: pointer;";
+
+      const imgRotatedStyle =
+        "width: 4.25rem; height: 4.25rem; border: 0.15rem solid #000000; cursor: pointer; transform: rotate(180deg);";
+
+      window.addEventListener("load", (event) => {
+        let king = document.createElement("img");
+        king.setAttribute("src", "{% static 'img/king.jpg' %}");
+        king.setAttribute("style", imgStyle);
+        king.setAttribute("alt", "king");
+        document.getElementById("74").appendChild(king);
+
+        let opKing = document.createElement("img");
+        opKing.setAttribute("src", "{% static 'img/king.jpg' %}");
+        opKing.setAttribute("style", imgRotatedStyle);
+        opKing.setAttribute("alt", "opKing");
+        document.getElementById("04").appendChild(opKing);
+
+        let queen = document.createElement("img");
+        queen.setAttribute("src", "{% static 'img/queen.jpg' %}");
+        queen.setAttribute("style", imgStyle);
+        queen.setAttribute("alt", "queen");
+        document.getElementById("73").appendChild(queen);
+
+        let opQueen = document.createElement("img");
+        opQueen.setAttribute("src", "{% static 'img/queen.jpg' %}");
+        opQueen.setAttribute("style", imgRotatedStyle);
+        opQueen.setAttribute("alt", "opQueen");
+        document.getElementById("03").appendChild(opQueen);
+
+        for (let i = 0; i < 8; i++) {
+          let pawn = document.createElement("img");
+          pawn.setAttribute("src", "{% static 'img/pawn.jpg' %}");
+          pawn.setAttribute("style", imgStyle);
+          pawn.setAttribute("alt", "pawn");
+          document.getElementById("6" + i).appendChild(pawn);
+        }
+
+        for (let i = 0; i < 8; i++) {
+          let opPawn = document.createElement("img");
+          opPawn.setAttribute("src", "{% static 'img/pawn.jpg' %}");
+          opPawn.setAttribute("style", imgRotatedStyle);
+          opPawn.setAttribute("alt", "opPawn");
+          document.getElementById("1" + i).appendChild(opPawn);
+        }
+
+        for (let i = 0; i < 2; i++) {
+          let bishop = document.createElement("img");
+          bishop.setAttribute("src", "{% static 'img/bishop.jpg' %}");
+          bishop.setAttribute("style", imgStyle);
+          bishop.setAttribute("alt", "bishop");
+          const bishopIndex = i + 2 * (i + 1);
+          document.getElementById("7" + bishopIndex).appendChild(bishop);
+        }
+
+        for (let i = 0; i < 2; i++) {
+          let opBishop = document.createElement("img");
+          opBishop.setAttribute("src", "{% static 'img/bishop.jpg' %}");
+          opBishop.setAttribute("style", imgRotatedStyle);
+          opBishop.setAttribute("alt", "opBishop");
+          const opBishopIndex = i + 2 * (i + 1);
+          document.getElementById("0" + opBishopIndex).appendChild(opBishop);
+        }
+
+        for (let i = 0; i < 2; i++) {
+          let rook = document.createElement("img");
+          rook.setAttribute("src", "{% static 'img/rook.jpg' %}");
+          rook.setAttribute("style", imgStyle);
+          rook.setAttribute("alt", "rook");
+          const rookIndex = i * 7;
+          document.getElementById("7" + rookIndex).appendChild(rook);
+        }
+
+        for (let i = 0; i < 2; i++) {
+          let opRook = document.createElement("img");
+          opRook.setAttribute("src", "{% static 'img/rook.jpg' %}");
+          opRook.setAttribute("style", imgRotatedStyle);
+          opRook.setAttribute("alt", "opRook");
+          const opRookIndex = i * 7;
+          document.getElementById("0" + opRookIndex).appendChild(opRook);
+        }
+
+        for (let i = 0; i < 2; i++) {
+          let knight = document.createElement("img");
+          knight.setAttribute("src", "{% static 'img/knight.jpg' %}");
+          knight.setAttribute("style", imgStyle);
+          knight.setAttribute("alt", "knight");
+          const knightIndex = i * 5 + 1;
+          document.getElementById("7" + knightIndex).appendChild(knight);
+        }
+
+        for (let i = 0; i < 2; i++) {
+          let opKnight = document.createElement("img");
+          opKnight.setAttribute("src", "{% static 'img/knight.jpg' %}");
+          opKnight.setAttribute("style", imgRotatedStyle);
+          opKnight.setAttribute("alt", "opKnight");
+          const opKnightIndex = i * 5 + 1;
+          document.getElementById("0" + opKnightIndex).appendChild(opKnight);
+        }
+      });
+    </script>
+    <title>Play against the AI</title>
+  </head>
+
+  <body>
+    <div class="headlineOne">
+      <h1>Chess AI Test Game</h1>
+    </div>
+
+    <div class="content">
+      <div class="chessBoardContent">
+        <div class="chessBoardLeft">
+          <div class="outerWrapper">
+            <div class="field-inner">8</div>
+            <div class="field-inner">7</div>
+            <div class="field-inner">6</div>
+            <div class="field-inner">5</div>
+            <div class="field-inner">4</div>
+            <div class="field-inner">3</div>
+            <div class="field-inner">2</div>
+            <div class="field-inner">1</div>
+          </div>
+        </div>
+        <div class="chessBoard">
+          <div class="chessBoardTop">
+            <div class="innerWrapper">
+              <div class="field-inner">A</div>
+              <div class="field-inner">B</div>
+              <div class="field-inner">C</div>
+              <div class="field-inner">D</div>
+              <div class="field-inner">E</div>
+              <div class="field-inner">F</div>
+              <div class="field-inner">G</div>
+              <div class="field-inner">H</div>
+            </div>
+          </div>
+          <div class="field" id="00"></div>
+          <div class="field" id="01"></div>
+          <div class="field" id="02"></div>
+          <div class="field" id="03"></div>
+          <div class="field" id="04"></div>
+          <div class="field" id="05"></div>
+          <div class="field" id="06"></div>
+          <div class="field" id="07"></div>
+
+          <div class="field" id="10"></div>
+          <div class="field" id="11"></div>
+          <div class="field" id="12"></div>
+          <div class="field" id="13"></div>
+          <div class="field" id="14"></div>
+          <div class="field" id="15"></div>
+          <div class="field" id="16"></div>
+          <div class="field" id="17"></div>
+
+          <div class="field" id="20"></div>
+          <div class="field" id="21"></div>
+          <div class="field" id="22"></div>
+          <div class="field" id="23"></div>
+          <div class="field" id="24"></div>
+          <div class="field" id="25"></div>
+          <div class="field" id="26"></div>
+          <div class="field" id="27"></div>
+
+          <div class="field" id="30"></div>
+          <div class="field" id="31"></div>
+          <div class="field" id="32"></div>
+          <div class="field" id="33"></div>
+          <div class="field" id="34"></div>
+          <div class="field" id="35"></div>
+          <div class="field" id="36"></div>
+          <div class="field" id="37"></div>
+
+          <div class="field" id="40"></div>
+          <div class="field" id="41"></div>
+          <div class="field" id="42"></div>
+          <div class="field" id="43"></div>
+          <div class="field" id="44"></div>
+          <div class="field" id="45"></div>
+          <div class="field" id="46"></div>
+          <div class="field" id="47"></div>
+
+          <div class="field" id="50"></div>
+          <div class="field" id="51"></div>
+          <div class="field" id="52"></div>
+          <div class="field" id="53"></div>
+          <div class="field" id="54"></div>
+          <div class="field" id="55"></div>
+          <div class="field" id="56"></div>
+          <div class="field" id="57"></div>
+
+          <div class="field" id="60"></div>
+          <div class="field" id="61"></div>
+          <div class="field" id="62"></div>
+          <div class="field" id="63"></div>
+          <div class="field" id="64"></div>
+          <div class="field" id="65"></div>
+          <div class="field" id="66"></div>
+          <div class="field" id="67"></div>
+
+          <div class="field" id="70"></div>
+          <div class="field" id="71"></div>
+          <div class="field" id="72"></div>
+          <div class="field" id="73"></div>
+          <div class="field" id="74"></div>
+          <div class="field" id="75"></div>
+          <div class="field" id="76"></div>
+          <div class="field" id="77"></div>
+          <div class="chessBoardBottom">
+            <div class="innerWrapper">
+              <div class="field-inner">A</div>
+              <div class="field-inner">B</div>
+              <div class="field-inner">C</div>
+              <div class="field-inner">D</div>
+              <div class="field-inner">E</div>
+              <div class="field-inner">F</div>
+              <div class="field-inner">G</div>
+              <div class="field-inner">H</div>
+            </div>
+          </div>
+        </div>
+        <div class="chessBoardRight">
+          <div class="outerWrapper">
+            <div class="field-inner">8</div>
+            <div class="field-inner">7</div>
+            <div class="field-inner">6</div>
+            <div class="field-inner">5</div>
+            <div class="field-inner">4</div>
+            <div class="field-inner">3</div>
+            <div class="field-inner">2</div>
+            <div class="field-inner">1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

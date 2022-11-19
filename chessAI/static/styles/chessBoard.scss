@@ -1,0 +1,81 @@
+@import "mixins";
+@import "variables";
+
+.chessBoard {
+  display: grid;
+  grid-template-columns: repeat(8, 5rem);
+  grid-template-rows: 2rem repeat(8, 5rem) 2rem;
+  grid-gap: 0;
+  grid-auto-flow: row;
+}
+
+.chessBoardContent {
+  display: flex;
+  border-radius: 0.25rem;
+  border: 0.25rem solid $contentBoxBorder;
+}
+
+.chessBoardTop {
+  @include chessBoardTopBottom;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+
+.chessBoardBottom {
+  @include chessBoardTopBottom;
+  grid-row-start: 10;
+  grid-row-end: 10;
+}
+
+.chessBoardLeft {
+  @include chessBoardLeftRight;
+  grid-column-start: 1;
+  grid-column-end: 1;
+}
+
+.chessBoardRight {
+  @include chessBoardLeftRight;
+  grid-row-start: 10;
+  grid-row-end: 10;
+}
+
+.innerWrapper {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(8, auto);
+  grid-template-rows: auto;
+  grid-auto-flow: row;
+  align-items: strech;
+}
+
+.outerWrapper {
+  padding-top: 2rem;
+  display: grid;
+  grid-gap: 0;
+  grid-template-rows: repeat(8, 5rem);
+  grid-template-columns: 2rem;
+  grid-auto-flow: row;
+  align-items: strech;
+}
+
+.field {
+  padding: 0.25rem;
+  background-color: $chessBoardWhite;
+}
+
+.field-inner {
+  text-align: center;
+  align-self: center;
+}
+
+.field:nth-child(-2n + 9),
+.field:nth-child(9) ~ div:nth-child(-2n + 16),
+.field:nth-child(17) ~ div:nth-child(-2n + 25),
+.field:nth-child(25) ~ div:nth-child(-2n + 32),
+.field:nth-child(33) ~ div:nth-child(-2n + 41),
+.field:nth-child(41) ~ div:nth-child(-2n + 48),
+.field:nth-child(49) ~ div:nth-child(-2n + 57),
+.field:nth-child(57) ~ div:nth-child(-2n + 64) {
+  background-color: $bgColor;
+  color: $fontColor;
+}
